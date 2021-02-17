@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "pages/deleteme.js"  ],
   "exclude": [
     "node_modules"
   ]
