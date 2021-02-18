@@ -1,14 +1,17 @@
 import type { AppProps /*, AppContext */ } from 'next/app'
 import { AuthProvider } from '../utils/auth'
-import { ChakraProvider } from "@chakra-ui/react"
-import Navbar from '../components/Navbar'
+import Navigation from '../components/Navigation'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Layout from '../components/Layout'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  return <AuthProvider>
-    <ChakraProvider>
-      <Navbar />
-      <Component {...pageProps} />
-    </ChakraProvider>
-  </AuthProvider>
+  return (
+    <AuthProvider>
+      <Layout>
+        <Navigation />
+        <Component {...pageProps} />
+      </Layout>
+    </AuthProvider>
+  )
 
 }

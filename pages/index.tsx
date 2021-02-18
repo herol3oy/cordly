@@ -1,22 +1,20 @@
 import { useState, useEffect } from 'react'
 import { firestore } from '../lib/firebase'
+import Musician from '../components/Musician'
 
 export default function Home() {
-	const [users, usersSet] = useState([])
+	const [musicians, musiciansSet] = useState([])
 
 	useEffect(async () => {
 		const query = firestore
 			.collection('users')
 		const user = (await query.get()).docs.map((doc) => doc.data())
-		usersSet(users.concat(user))
+		musiciansSet(musicians.concat(user))
 	}, [])
 
 	return (
 		<>
-			<pre>
-				{JSON.stringify(users, null, 2)}
-			</pre>
- 
+			<Musician data={musicians}/>
 		</>
 	)
 }

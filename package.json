@@ -8,6 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.1.5",
     "bootstrap": "^4.6.0",
     "firebase": "^8.2.7",
     "lodash": "^4.17.20",

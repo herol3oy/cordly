@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, createContext } from 'react'
-import { auth, googleAuthProvider } from '../lib/firebase'
+import { auth, googleAuthProvider, facebookAuthProvider } from '../lib/firebase'
 import { createUser } from './db'
 
 const authContext = createContext(null)
@@ -35,6 +35,12 @@ const useProvideAuth = () => {
             .then((response) => handleUser(response.user))
     }
 
+    const signinWithFacebook = () => {
+        return auth
+            .signInWithPopup(facebookAuthProvider)
+            .then((response) => handleUser(response.user))
+    }
+
     const signout = () => {
         return auth
             .signOut()
@@ -49,6 +55,7 @@ const useProvideAuth = () => {
     return {
         user,
         signinWithGoogle,
+        signinWithFacebook,
         signout,
     }
 }
