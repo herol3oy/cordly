@@ -1,6 +1,8 @@
 import { useAuth } from '../../utils/auth'
 import { useForm } from "react-hook-form"
 import { firestore } from '../../lib/firebase'
+import Form from 'react-bootstrap/Form'
+import Col from 'react-bootstrap/Col'
 
 export default function Dashboard() {
     const auth = useAuth()
@@ -23,7 +25,7 @@ export default function Dashboard() {
             })
     }
 
-    
+
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -32,6 +34,18 @@ export default function Dashboard() {
                 {errors.exampleRequired && <span>This field is required</span>}
                 <input type="submit" />
             </form>
+
+
+            <Form>
+                <Form.Row>
+                    <Col>
+                        <Form.Control placeholder="First name" />
+                    </Col>
+                    <Col>
+                        <Form.Control placeholder="Last name" />
+                    </Col>
+                </Form.Row>
+            </Form>
         </>
     )
 }

@@ -1,3 +1,4 @@
+import { GetServerSideProps } from 'next'
 import { firestore } from '../lib/firebase'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -32,7 +33,7 @@ export default function User({ data }) {
     )
 }
 
-export async function getServerSideProps({ params }) {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const ref = firestore.collection('users').where("uid", "==", params.slug)
     const data = (await ref.get()).docs.map((doc) => doc.data())
     return {
