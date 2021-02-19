@@ -1,25 +1,44 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../../utils/auth'
 import { firestore, arrayUnion } from '../../lib/firebase'
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
+import _mapKeys from 'lodash/mapKeys'
+import Link from 'next/link'
 
 export default function Dashboard() {
     const [state, stateSet] = useState({ title: '', link: '', })
+    const [urls, urlsSet] = useState([])
 
     const auth = useAuth()
+    
+    useEffect(() => {
+        const getAllUrls = async () => {
+            (await firestore
+                .collection('users')
+                .where('uid', '==', auth.user.uid).get())
+                .docs.map((doc) => urlsSet(doc.data().urls))
+            // urlsSet(urls.concat(query))
+        }
+        getAllUrls()
+    }, [auth.user.uid]);
 
     const addLink = () => {
-        const ref = firestore.collection('users')
-        ref
-            .where('uid', '==', auth.user.uid)
-            .get()
+        const query = firestore.collection('users')
+        const getData = query.where('uid', '==', auth.user.uid).get()
+        getData
             .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     const urlRef = firestore.collection('users').doc(doc.id)
                     urlRef.update({
                         urls: arrayUnion({ [state.title]: state.link })
+                    })
+                })
+                // const newData = (getData.docs.map((doc) => doc.data())
+                const newData = getData.then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+                        urlsSet(doc.data().urls)
                     })
                 })
             })
@@ -51,6 +70,14 @@ export default function Dashboard() {
                     </Col>
                 </Form.Row>
             </Form>
+            <pre>
+                {JSON.stringify(urls, null, 2)}
+            </pre>
+
+            {
+                // _mapKeys(urls[0], (value, keys) => console.log(key,value))
+                console.log(urls[0])
+            }
         </>
     )
 }

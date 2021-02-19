@@ -7,8 +7,7 @@ export default function Home() {
 
 	useEffect(() => {
 		const getAllMusicians = async () => {
-			const query = firestore
-				.collection('users')
+			const query = firestore.collection('users')
 			const user = (await query.get()).docs.map((doc) => doc.data())
 			musiciansSet(musicians.concat(user))
 		}

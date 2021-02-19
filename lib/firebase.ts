@@ -1,4 +1,3 @@
- 
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
@@ -17,12 +16,10 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
 
-// Auth exports
 export const auth = firebase.auth()
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
 export const facebookAuthProvider = new firebase.auth.FacebookAuthProvider()
 
-// Firestore exports
 export const firestore = firebase.firestore()
 export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp
 export const fromMillis = firebase.firestore.Timestamp.fromMillis

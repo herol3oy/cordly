@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 export default function Musician({ data }) {
 
-    const musicians = map(data, (i, idx: number) => (
+    const musicians = map(data, (i, idx) => (
         <div key={idx} className='col-3'>
             <Link href={i.uid}>
                 <Card style={{ width: '18rem' }}>
