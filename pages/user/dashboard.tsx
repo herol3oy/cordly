@@ -5,7 +5,6 @@ import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import _mapKeys from 'lodash/mapKeys'
-import Link from 'next/link'
 
 export default function Dashboard() {
     const [state, stateSet] = useState({ title: '', link: '', })
@@ -73,11 +72,6 @@ export default function Dashboard() {
             <pre>
                 {JSON.stringify(urls, null, 2)}
             </pre>
-
-            {
-                // _mapKeys(urls[0], (value, keys) => console.log(key,value))
-                console.log(urls[0])
-            }
         </>
     )
 }

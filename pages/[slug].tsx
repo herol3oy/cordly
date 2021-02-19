@@ -18,33 +18,28 @@ export default function User({ data }) {
         urls,
     } = data[0]
 
+    const links = urls?.map((i, idx) => (
+        <a key={idx} href={Object.values(i)[0].toString()} target='_blank'>
+            <Button className='mb-2 w-100' variant="outline-primary">
+                {Object.keys(i)[0]}
+            </Button>
+        </a>
+    ))
+
     return (
-        <>
-            <Row className="d-flex justify-content-center text-center">
-                <Col lg={7}>
-                    <StyledImage
-                        src={photoUrl}
-                        alt="Profile picture"
-                        width={100}
-                        height={100}
-                    />
-                    <p>@{email.split('@')?.[0]}</p>
+        <Row className="d-flex justify-content-center text-center">
+            <Col lg={7}>
+                <StyledImage
+                    src={photoUrl}
+                    alt="Profile picture"
+                    width={100}
+                    height={100}
+                />
+                <p>@{email.split('@')?.[0]}</p>
 
-                    {
-                        urls?.map((i, idx) => (
-                            <a key={idx} href={Object.values(i)[0]}>
-                                <Button className='mb-2 w-100' variant="outline-primary">{Object.keys(i)[0]}</Button>
-                            </a>
-                        ))
-
-                    }
-                </Col>
-            </Row>
-
-
-
-
-        </>
+                {links}
+            </Col>
+        </Row>
     )
 }
 
