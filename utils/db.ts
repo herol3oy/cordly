@@ -10,7 +10,3 @@ export function createUser(uid, data) {
 		.doc(uid)
 		.set({ uid, ...data }, { merge: true })
 }
-
-export function trueFalse(uid, boolean) {
-	return firestore.collection('users').doc(uid).update({ boolean })
-}

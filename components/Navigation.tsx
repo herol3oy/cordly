@@ -18,8 +18,8 @@ export default function Navigation() {
 			</Nav>
 			{!auth.user && (
 				<>
-					<Button onClick={(e) => auth.signinWithGoogle()} variant="outline-info">Google</Button>
-					<Button onClick={(e) => auth.signinWithFacebook()} variant="outline-success">Facebook</Button>
+					<Button onClick={() => auth.signinWithGoogle()} variant="outline-info">Google</Button>
+					<Button onClick={() => auth.signinWithFacebook()} variant="outline-success">Facebook</Button>
 				</>
 			)}
 			{auth.user && (

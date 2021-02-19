@@ -19,6 +19,7 @@ function DashboardPanel() {
     const [urls, urlsSet] = useState([])
 
     const auth = useAuth()
+    
     const query = firestore.collection('users')
 
     useEffect(() => {
