@@ -1,54 +1,56 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../../utils/auth'
-import { firestore, arrayUnion } from '../../lib/firebase'
+import { firestore, arrayUnion, arrayRemove } from '../../lib/firebase'
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-import _mapKeys from 'lodash/mapKeys'
+import AuthCheck from '../../components/AuthCheck'
 
-export default function Dashboard() {
+export default function Dashboard(props) {
+    return (
+        <AuthCheck>
+            <DashboardPanel />
+        </AuthCheck>
+    )
+}
+
+function DashboardPanel() {
     const [state, stateSet] = useState({ title: '', link: '', })
     const [urls, urlsSet] = useState([])
 
     const auth = useAuth()
-    
+    const query = firestore.collection('users')
+
     useEffect(() => {
         const getAllUrls = async () => {
-            (await firestore
-                .collection('users')
-                .where('uid', '==', auth.user.uid).get())
-                .docs.map((doc) => urlsSet(doc.data().urls))
-            // urlsSet(urls.concat(query))
+            const userData = await query.where('uid', '==', auth.user.uid)
+                .onSnapshot(snapshot => {
+                    let changes = snapshot.docChanges()
+                    changes.forEach(i => {
+                        urlsSet(i.doc.data().urls)
+                    })
+                })
         }
         getAllUrls()
-    }, [auth.user.uid]);
+    }, [auth.user.uid])
 
     const addLink = () => {
-        const query = firestore.collection('users')
-        const getData = query.where('uid', '==', auth.user.uid).get()
-        getData
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    const urlRef = firestore.collection('users').doc(doc.id)
-                    urlRef.update({
-                        urls: arrayUnion({ [state.title]: state.link })
-                    })
-                })
-                // const newData = (getData.docs.map((doc) => doc.data())
-                const newData = getData.then(querySnapshot => {
-                    querySnapshot.forEach(doc => {
-                        urlsSet(doc.data().urls)
-                    })
-                })
-            })
-            .catch((error) => {
-                console.log('Error updateing documents: ', error)
-            })
+        query.doc(auth.user.uid).update({
+            urls: arrayUnion({ [state.title]: state.link })
+        })
+
+        stateSet({ title: '', link: '', })
+    }
+
+    const deleteLink = (title, link) => {
+        query.doc(auth.user.uid).update({
+            urls: arrayRemove({ [title]: link })
+        })
     }
 
     return (
         <>
-            <Form>
+            <Form className='my-5'>
                 <Form.Row>
                     <Col lg={3}>
                         <Form.Control
@@ -65,13 +67,24 @@ export default function Dashboard() {
                         />
                     </Col>
                     <Col lg={3}>
-                        <Button variant="success" onClick={() => addLink()}>+ Add</Button>
+                        <Button className='w-100' variant="success" onClick={addLink}>+ Add</Button>
                     </Col>
                 </Form.Row>
             </Form>
-            <pre>
-                {JSON.stringify(urls, null, 2)}
-            </pre>
+
+            {urls?.map((i, idx) => (
+                <div className='my-2' key={idx}>
+                    <a href={Object.values(i)[0].toString()} target='_blank'>
+                        <Button className=' w-75' variant="outline-primary">
+                            {Object.keys(i)[0]}
+                        </Button>
+                    </a>
+                    <Button
+                        className='w-25'
+                        variant="outline-danger"
+                        onClick={() => deleteLink(Object.keys(i)[0], Object.values(i)[0])}>X</Button>
+                </div>
+            ))}
         </>
     )
 }

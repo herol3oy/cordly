@@ -47,6 +47,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const ref = firestore.collection('users').where("uid", "==", params.slug)
     const data = (await ref.get()).docs.map((doc) => doc.data())
     return {
-        props: { data },
+        props: { data }
     };
 }
