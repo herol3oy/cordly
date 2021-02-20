@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import { useAuth } from '../../utils/auth'
-import { firestore, arrayUnion, arrayRemove } from '../../lib/firebase'
+import { useAuth } from '../utils/auth'
+import { firestore, arrayUnion, arrayRemove } from '../lib/firebase'
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-import AuthCheck from '../../components/AuthCheck'
+import AuthCheck from '../components/AuthCheck'
 
 export default function Dashboard(props) {
     return (

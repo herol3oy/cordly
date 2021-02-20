@@ -26,7 +26,7 @@ export default function Navigation() {
 				<>
 					<small className='text-light'>Welcome {auth.user.email}!</small>
 					<Button onClick={(e) => auth.signout()} variant="outline-danger">Sign out</Button>
-					<Link href='/user/dashboard'>
+					<Link href='/dashboard'>
 						<Button variant="outline-success">Dashboard</Button>
 					</Link>
 				</>
