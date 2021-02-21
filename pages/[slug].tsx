@@ -1,17 +1,8 @@
 import { GetServerSideProps } from 'next'
-import { firestore, storage } from '../lib/firebase'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
-import Image from 'next/image'
-import styled from '@emotion/styled'
-
-const StyledImage = styled(Image)`
-    border-radius: 50%;
-`
+import { firestore } from '../lib/firebase'
+import { Image, VStack, Box, Flex, Heading } from "@chakra-ui/react"
 
 export default function User({ data }) {
-
     const {
         photoUrl,
         email,
@@ -19,27 +10,67 @@ export default function User({ data }) {
     } = data[0]
 
     const links = urls?.map((i, idx) => (
-        <a key={idx} href={Object.values(i)[0].toString()} target='_blank'>
-            <Button className='mb-2 w-100' variant="outline-primary">
+
+        <Box
+            key={idx}
+            display={{ base: "flex", md: "flex" }}
+            alignItems="center"
+            as="a"
+            aria-label={`Corldly ${email} social links`}
+            href={Object.values(i)[0].toString()}
+            target="_blank"
+            rel="noopener noreferrer"
+            bg="green.300"
+            color="white"
+            p={3}
+            borderWidth="1px"
+            borderColor="gray.200"
+            px="1em"
+            minH="36px"
+            minW='sm'
+            borderRadius="md"
+            fontSize="sm"
+            outline="0"
+            transition="all 0.3s"
+            _hover={{
+                bg: "green.100",
+                borderColor: "green.100",
+            }}
+            _active={{
+                borderColor: "gray.200",
+            }}
+            _focus={{
+                boxShadow: "outline",
+            }}
+        >
+            <Box m={'auto'} as="strong" lineHeight="inherit" fontWeight="semibold">
                 {Object.keys(i)[0]}
-            </Button>
-        </a>
+            </Box>
+        </Box>
     ))
 
     return (
-        <Row className="d-flex justify-content-center text-center">
-            <Col lg={7}>
-                <StyledImage
+        <Flex align='center' direction='column'>
+            <Box mb={6}>
+                <Image
                     src={photoUrl}
+                    borderRadius="full"
+                    boxSize="100px"
+                    objectFit="cover"
                     alt="Profile picture"
-                    width={100}
-                    height={100}
+                    mb={2}
                 />
-                <p>@{email.split('@')?.[0]}</p>
-
+                <Heading as="h6" size="sm">@{email.split('@')?.[0]}</Heading>
+            </Box>
+            <VStack
+                direction={["column", "row"]}
+                spacing={4}
+                align="stretch"
+            >
                 {links}
-            </Col>
-        </Row>
+            </VStack>
+
+        </Flex>
     )
 }
 

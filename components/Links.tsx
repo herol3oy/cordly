@@ -1,9 +1,14 @@
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../utils/auth'
 import { firestore, arrayUnion, arrayRemove } from '../lib/firebase'
-import Form from 'react-bootstrap/Form'
-import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
+import {
+    Button,
+    FormControl,
+    FormLabel,
+    FormErrorMessage,
+    FormHelperText,
+} from "@chakra-ui/react"
+
 
 export default function Links() {
     const [state, stateSet] = useState({ title: '', link: '', })
@@ -42,37 +47,28 @@ export default function Links() {
 
     return (
         <>
-            <Form className='my-5'>
-                <Form.Row>
-                    <Col lg={3}>
-                        <Form.Control
-                            value={state.title}
-                            onChange={(e) => stateSet({ ...state, title: e.target.value })}
-                            name='title' placeholder='Link title'
-                        />
-                    </Col>
-                    <Col lg={6}>
-                        <Form.Control
-                            value={state.link}
-                            onChange={(e) => stateSet({ ...state, link: e.target.value })}
-                            name='link' placeholder='Add your social link'
-                        />
-                    </Col>
-                    <Col lg={3}>
-                        <Button className='w-100' variant="success" onClick={addLink}>+ Add</Button>
-                    </Col>
-                </Form.Row>
-            </Form>
+            <FormControl className='my-5'>
+                <input
+                    value={state.title}
+                    onChange={(e) => stateSet({ ...state, title: e.target.value })}
+                    name='title' placeholder='Link title'
+                />
+                <input
+                    value={state.link}
+                    onChange={(e) => stateSet({ ...state, link: e.target.value })}
+                    name='link' placeholder='Add your social link'
+                />
+                <Button onClick={addLink}>+ Add</Button>
+            </FormControl>
+
             {urls?.map((i, idx) => (
-                <div className='my-2' key={idx}>
+                <div key={idx}>
                     <a href={Object.values(i)[0].toString()} target='_blank'>
-                        <Button className=' w-75' variant="outline-primary">
+                        <Button>
                             {Object.keys(i)[0]}
                         </Button>
                     </a>
                     <Button
-                        className='w-25'
-                        variant="outline-danger"
                         onClick={() => deleteLink(Object.keys(i)[0], Object.values(i)[0])}>X</Button>
                 </div>
             ))}

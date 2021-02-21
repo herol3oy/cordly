@@ -1,26 +1,24 @@
-import Card from 'react-bootstrap/Card'
-import Row from 'react-bootstrap/Row'
-import map from 'lodash/map'
 import Link from 'next/link'
+import _ from 'lodash'
+import { Box, Image, Text } from "@chakra-ui/react"
 
 export default function Musician({ data }) {
-
-    const musicians = map(data, (i, idx) => (
-        <div key={idx} className='col-3'>
+    const musicians = _.map(data, (i, idx) => (
+        <Box key={idx}>
             <Link href={i.uid}>
-                <Card style={{ width: '18rem' }}>
-                    <Card.Img variant="top" src={i.photoUrl} />
-                    <Card.Body>
-                        <Card.Title>{i.email}</Card.Title>
-                    </Card.Body>
-                </Card>
+                <Box>
+                    <Image src={i.photoUrl} />
+                    <Box>
+                        <Text>{i.email}</Text>
+                    </Box>
+                </Box>
             </Link>
-        </div>
+        </Box>
     ))
 
     return (
-        <Row>
+        <>
             {musicians}
-        </Row>
+        </>
     )
 }
