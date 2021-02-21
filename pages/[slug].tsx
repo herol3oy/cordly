@@ -8,6 +8,7 @@ import {
     TabList,
     Image,
     VStack,
+    Text,
     Box,
     Flex,
     Heading
@@ -17,7 +18,16 @@ export default function User({ data }) {
 
     return (
         <>
-            <Tabs variant="soft-rounded" colorScheme="green">
+            <Tabs
+                paddingTop='12'
+                height='90vh'
+                isFitted
+                width='min-content'
+                align='center'
+                variant="line"
+                colorScheme="green"
+                margin='auto'
+            >
                 <TabList>
                     <Tab>Links</Tab>
                     <Tab>Bio</Tab>
@@ -31,6 +41,7 @@ export default function User({ data }) {
                     </TabPanel>
                 </TabPanels>
             </Tabs>
+            <Text textAlign='center'>CORDLY</Text>
         </>
     )
 }
@@ -83,7 +94,11 @@ const ProfileLinks = ({ data }) => {
     ))
 
     return (
-        <Flex align='center' direction='column'>
+        <Flex
+            align='center'
+            alignItems='stretch'
+            direction='column'
+        >
             <Box mb={6}>
                 <Image
                     src={photoUrl}
@@ -91,7 +106,7 @@ const ProfileLinks = ({ data }) => {
                     boxSize="100px"
                     objectFit="cover"
                     alt="Profile picture"
-                    mb={2}
+                    my={3}
                 />
                 <Heading as="h6" size="sm">@{email.split('@')?.[0]}</Heading>
             </Box>
@@ -99,10 +114,10 @@ const ProfileLinks = ({ data }) => {
                 direction={["column", "row"]}
                 spacing={4}
                 align="stretch"
+                mt={3}
             >
                 {links}
             </VStack>
-
         </Flex>
     )
 }
