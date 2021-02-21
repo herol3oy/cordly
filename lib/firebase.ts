@@ -1,6 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/storage'
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyD3jgqbNUIRz4XldcP5ghl8Cdk3_6v3QX0',
@@ -23,3 +24,6 @@ export const facebookAuthProvider = new firebase.auth.FacebookAuthProvider()
 export const firestore = firebase.firestore()
 export const arrayUnion = firebase.firestore.FieldValue.arrayUnion
 export const arrayRemove = firebase.firestore.FieldValue.arrayRemove
+
+export const storage = firebase.storage();
+export const STATE_CHANGED = firebase.storage.TaskEvent.STATE_CHANGED;

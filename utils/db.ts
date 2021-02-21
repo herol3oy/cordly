@@ -10,3 +10,12 @@ export function createUser(uid, data) {
 		.doc(uid)
 		.set({ uid, ...data }, { merge: true })
 }
+
+export function updateProfilePicture(uid, image) {
+	console.log(uid, image);
+	
+	return firestore
+	.collection('users')
+	.doc(uid)
+	.update({profileImg: image})
+}

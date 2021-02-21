@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next'
-import { firestore } from '../lib/firebase'
+import { firestore, storage } from '../lib/firebase'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
