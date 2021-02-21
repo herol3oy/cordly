@@ -17,16 +17,19 @@ import {
 export default function User({ data }) {
 
     return (
-        <>
+        <Flex
+            as='section'
+            minH='100vh'
+            direction='column'
+            alignItems='center'
+        >
             <Tabs
                 paddingTop='12'
-                height='90vh'
                 isFitted
                 width='min-content'
                 align='center'
                 variant="line"
                 colorScheme="green"
-                margin='auto'
             >
                 <TabList>
                     <Tab>Links</Tab>
@@ -41,8 +44,8 @@ export default function User({ data }) {
                     </TabPanel>
                 </TabPanels>
             </Tabs>
-            <Text textAlign='center'>CORDLY</Text>
-        </>
+            <Text mt='auto' textAlign='center'>CORDLY</Text>
+        </Flex>
     )
 }
 
@@ -127,5 +130,5 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const data = (await ref.get()).docs.map((doc) => doc.data())
     return {
         props: { data }
-    };
+    }
 }
