@@ -4,9 +4,6 @@ import { firestore, arrayUnion, arrayRemove } from '../lib/firebase'
 import {
     Button,
     FormControl,
-    FormLabel,
-    FormErrorMessage,
-    FormHelperText,
 } from "@chakra-ui/react"
 
 

@@ -1,8 +1,41 @@
 import { GetServerSideProps } from 'next'
 import { firestore } from '../lib/firebase'
-import { Image, VStack, Box, Flex, Heading } from "@chakra-ui/react"
+import {
+    Tab,
+    Tabs,
+    TabPanel,
+    TabPanels,
+    TabList,
+    Image,
+    VStack,
+    Box,
+    Flex,
+    Heading
+} from "@chakra-ui/react"
 
 export default function User({ data }) {
+
+    return (
+        <>
+            <Tabs variant="soft-rounded" colorScheme="green">
+                <TabList>
+                    <Tab>Links</Tab>
+                    <Tab>Bio</Tab>
+                </TabList>
+                <TabPanels>
+                    <TabPanel>
+                        <ProfileLinks data={data} />
+                    </TabPanel>
+                    <TabPanel>
+                        <p>two!</p>
+                    </TabPanel>
+                </TabPanels>
+            </Tabs>
+        </>
+    )
+}
+
+const ProfileLinks = ({ data }) => {
     const {
         photoUrl,
         email,

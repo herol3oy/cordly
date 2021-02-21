@@ -32,7 +32,11 @@ export default function Navigation() {
 			justify="center"
 			align={{ base: 'flex-start', sm: 'center' }}
 		>
-			<Heading>Cordly</Heading>
+			<Link href='/'>
+				<a>
+					<Heading>Cordly</Heading>
+				</a>
+			</Link>
 			<Spacer />
 			<IconButton
 				size="md"
