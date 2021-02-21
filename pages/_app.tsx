@@ -1,12 +1,14 @@
 import type { AppProps } from 'next/app'
-import { AuthProvider } from '../utils/auth'
 import Navigation from '../components/Navigation'
-import { ChakraProvider, theme } from "@chakra-ui/react"
+import { AuthProvider } from '../utils/auth'
+import { ChakraProvider } from "@chakra-ui/react"
+import theme from '../theme'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthProvider>
       <ChakraProvider
+        resetCSS
         theme={theme}
       >
         <Navigation />

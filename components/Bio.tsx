@@ -27,9 +27,9 @@ export default function Bio() {
     }, [auth.user.uid])
 
     const uploadFile = async (e) => {
-        // Get the file
-        const file = Array.from(e.target.files)[0]
-        const extension = file.type.split('/')[1]
+
+        const file = e.target.files[0]
+        const extension = file['type'].split('/')[1]
 
         const ref = storage.ref(`uploads/${auth.user.uid}/${Date.now()}.${extension}`)
         setUploading(true)
@@ -38,7 +38,7 @@ export default function Bio() {
 
         task.on(STATE_CHANGED, (snapshot) => {
             const pct = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0)
-            setProgress(pct)
+            setProgress(+pct)
         })
 
         task
@@ -49,11 +49,12 @@ export default function Bio() {
                 setUploading(false)
             })
     }
+
     return (
         <main>
             <label className="btn">
                 📸 Upload Img
-            <input type="file" onChange={uploadFile} accept="image/x-png,image/gif,image/jpeg" />
+            <input type="file" onChange={(e) => uploadFile(e)} accept="image/x-png,image/gif,image/jpeg" />
 
             </label>
             <Image
