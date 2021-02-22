@@ -18,7 +18,7 @@ function DashboardPanel() {
     return (
         <>
             <Links />
-            <Bio />
+            {/* <Bio /> */}
         </>
     )
 }
