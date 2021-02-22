@@ -26,7 +26,6 @@ export default function User({ data }) {
             <Tabs
                 paddingTop='12'
                 isFitted
-                width='min-content'
                 align='center'
                 variant="line"
                 colorScheme="green"
