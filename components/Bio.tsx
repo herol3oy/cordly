@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { updateProfilePicture } from '../utils/db'
 import { useAuth } from '../utils/auth'
 import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
+import { CUIAutoComplete } from 'chakra-ui-autocomplete'
 import {
     Divider,
     Flex,
