@@ -16,8 +16,6 @@ import {
     InputLeftAddon,
     FormControl,
 } from "@chakra-ui/react"
-import { Head } from 'next/document';
-
 
 export default function Links() {
     const [state, stateSet] = useState({ title: '', link: '', })
@@ -75,7 +73,6 @@ export default function Links() {
             margin='auto'
             flexDirection='column'
             w={['90vw', '70vw', '60vw', '30vw']}
-            mt={24}
         >
             <FormControl>
                 <Stack spacing={2}>
@@ -113,9 +110,9 @@ export default function Links() {
                     w={['90vw', '70vw', '60vw', '30vw']}
                     key={idx}
                 >
-                    <Flex mb='2' width='100%'>
-                        <Link width='90%' href={Object.values(i)[0].toString()} isExternal>
-                            <Button size='sm' minWidth='100%'  >
+                    <Flex mb='2' width='100%' textAlign='left'>
+                        <Link width='100%' href={Object.values(i)[0].toString()} isExternal>
+                            <Button size='sm' minWidth='95%'  >
                                 {Object.keys(i)[0]}
                             </Button>
                         </Link>

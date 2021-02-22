@@ -24,13 +24,14 @@ export default function Navigation() {
 
 	return (
 		<Flex
-			py="3"
-			direction={{ base: 'row', sm: 'row' }}
-			px={{ base: '3', md: '6', lg: '8' }}
-			color="white"
-			bg={useColorModeValue('blue.600', 'blue.400')}
-			justify="center"
-			align={{ base: 'flex-start', sm: 'center' }}
+		align={{ base: 'flex-start', sm: 'center' }}
+		direction={{ base: 'row', sm: 'row' }}
+		justify="center"
+		px={{ base: '3', md: '6', lg: '8' }}
+		py="3"
+		bg={useColorModeValue('gray.900', 'green.600')}
+		color="white"
+		boxShadow="lg"
 		>
 			<Link href='/'>
 				<a>

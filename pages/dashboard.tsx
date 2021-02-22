@@ -1,8 +1,9 @@
-import { useState } from 'react'
 import AuthCheck from '../components/AuthCheck'
 import Bio from '../components/Bio'
 import Links from '../components/Links'
+import { FaLink } from 'react-icons/fa'
 import {
+    Box,
     Flex,
     Tabs,
     Tab,
@@ -37,8 +38,14 @@ function DashboardPanel() {
                 colorScheme="green"
             >
                 <TabList>
-                    <Tab>Links</Tab>
-                    <Tab>Profile</Tab>
+                    <Tab>
+                        <Box>🔗</Box>
+                        <Text ml={3}>Links</Text>
+                    </Tab>
+                    <Tab>
+                        <Box>✍️</Box>
+                        <Text ml={3}>Bio</Text>
+                    </Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel>
