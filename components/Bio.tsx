@@ -12,10 +12,24 @@ import {
     InputLeftAddon,
     InputGroup,
     FormControl,
+    Text,
     FormHelperText,
     Input,
     Code,
 } from '@chakra-ui/react'
+
+export interface Item {
+    label: string;
+    value: string;
+}
+
+const countries = [
+    { value: "guitaris", label: "Guitaris" },
+    { value: "drummer", label: "Drummer" },
+    { value: "vocalist", label: "Vocalist" },
+    { value: "bassist", label: "Bassist" },
+    { value: "keyboardist", label: "Keyboardist" },
+];
 
 export default function Bio() {
     const [uploading, setUploading] = useState(false)
@@ -23,6 +37,28 @@ export default function Bio() {
     const [downloadURL, downloadURLSet] = useState(null)
     const [data, dataSet] = useState('/avatar.png')
     const [avatarName, avatarNameSet] = useState('No file choosen')
+    const [pickerItems, setPickerItems] = useState(countries);
+    const [selectedItems, setSelectedItems] = useState([]);
+
+    const handleCreateItem = (item) => {
+        setPickerItems((curr) => [...curr, item]);
+        setSelectedItems((curr) => [...curr, item]);
+    };
+
+    const handleSelectedItemsChange = (selectedItems) => {
+        if (selectedItems) {
+            setSelectedItems(selectedItems);
+        }
+    };
+
+    const customRender = (selected) => {
+        return (
+            <Flex flexDir="row" alignItems="center">
+                <Avatar mr={2} size="sm" name={selected.label} />
+                <Text>{selected.label}</Text>
+            </Flex>
+        )
+    }
 
     const auth = useAuth()
     const query = firestore.collection('users').where("uid", "==", auth.user.uid)
@@ -137,15 +173,26 @@ export default function Bio() {
                     </FormHelperText>
                 </FormControl>
 
-                <FormControl>
-                    <InputGroup>
-                        <InputLeftAddon children="🤹🏽 Skills" />
-                        <Input placeholder="Your main skills" />
-                    </InputGroup>
-                    <FormHelperText textAlign='left'>
-                        Add your main skills. Try to narrow it down to 2 or 3 at most.
-                    </FormHelperText>
-                </FormControl>
+                <CUIAutoComplete
+                    tagStyleProps={{
+                        rounded: 'full',
+                    }}
+                    listStyleProps={{
+                        bg:'gray.900',
+                        textAlign: 'left'
+                        
+                    }}
+                    highlightItemBg='gray.300'
+                    label="🤹🏽 Skills"
+                    placeholder="Type your skill"
+                    onCreateItem={handleCreateItem}
+                    items={pickerItems}
+                    itemRenderer={customRender}
+                    selectedItems={selectedItems}
+                    onSelectedItemsChange={(changes) =>
+                        handleSelectedItemsChange(changes.selectedItems)
+                    }
+                />
             </Stack>
         </Flex>
 
