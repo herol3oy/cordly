@@ -5,7 +5,6 @@ import { FaTrash } from 'react-icons/fa';
 import { FaPlusCircle } from 'react-icons/fa';
 import {
     Button,
-    FormLabel,
     Input,
     Stack,
     useToast,
@@ -13,8 +12,11 @@ import {
     Spacer,
     Divider,
     Flex,
+    InputGroup,
+    InputLeftAddon,
     FormControl,
 } from "@chakra-ui/react"
+import { Head } from 'next/document';
 
 
 export default function Links() {
@@ -48,16 +50,20 @@ export default function Links() {
         stateSet({ title: '', link: '', })
         toast({
             title: "Link added to your public portfolio.",
-            description: "Please add more links",
             status: "success",
-            duration: 2000,
-            isClosable: true,
-          })
+            duration: 3000,
+        })
     }
 
     const deleteLink = (title, link) => {
         query.doc(auth.user.uid).update({
             urls: arrayRemove({ [title]: link })
+        })
+
+        toast({
+            title: "Link deleted.",
+            status: 'error',
+            duration: 2000,
         })
     }
 
@@ -68,28 +74,33 @@ export default function Links() {
             alignItems='center'
             margin='auto'
             flexDirection='column'
-            w={['90vw', '90vw', '60vw', '30vw']}
+            w={['90vw', '70vw', '60vw', '30vw']}
+            mt={24}
         >
-            <FormControl
-
-            >
-                <FormLabel marginRight='auto'>Link</FormLabel>
-                <Input
-                    value={state.title}
-                    onChange={(e) => stateSet({ ...state, title: e.target.value })}
-                    name='title'
-                    placeholder='Title (e.g. Youtube)'
-                    mb={2}
-                />
-                <Input
-                    value={state.link}
-                    onChange={(e) => stateSet({ ...state, link: e.target.value })}
-                    name='link'
-                    placeholder='URL (e.g. https://youtube.com/2xS2k)'
-                    mb={2}
-                />
-                <Button colorScheme='green' w='100%' onClick={addLink} leftIcon={<FaPlusCircle />}>Add</Button>
+            <FormControl>
+                <Stack spacing={2}>
+                    <InputGroup size='lg'>
+                        <InputLeftAddon children="Title" />
+                        <Input
+                            type='text'
+                            placeholder="Youtube"
+                            value={state.title}
+                            onChange={(e) => stateSet({ ...state, title: e.target.value })}
+                            name='title'
+                        />
+                    </InputGroup>
+                    <InputGroup size='lg'>
+                        <InputLeftAddon children='URL' />
+                        <Input
+                            value={state.link}
+                            onChange={(e) => stateSet({ ...state, link: e.target.value })}
+                            placeholder='https://youtube.com/cordly'
+                        />
+                    </InputGroup>
+                    <Button size='lg' colorScheme='green' w='100%' onClick={addLink} leftIcon={<FaPlusCircle />}>Add</Button>
+                </Stack>
             </FormControl>
+
             <Divider my={5} />
 
             {urls?.map((i, idx) => (
@@ -99,11 +110,12 @@ export default function Links() {
                     alignItems='center'
                     margin='auto'
                     flexDirection='row'
-                    w={['90vw', '90vw', '60vw', '30vw']}
+                    w={['90vw', '70vw', '60vw', '30vw']}
+                    key={idx}
                 >
-                    <Flex mb='2' w='100%' bg='orange.100'>
-                        <Link href={Object.values(i)[0].toString()} target='_blank'>
-                            <Button size='sm'  minWidth='100%'  >
+                    <Flex mb='2' width='100%'>
+                        <Link width='90%' href={Object.values(i)[0].toString()} isExternal>
+                            <Button size='sm' minWidth='100%'  >
                                 {Object.keys(i)[0]}
                             </Button>
                         </Link>
