@@ -28,10 +28,15 @@ export default function Navigation() {
 		direction={{ base: 'row', sm: 'row' }}
 		justify="center"
 		px={{ base: '3', md: '6', lg: '8' }}
+		borderBottomColor={useColorModeValue("gray.100", "gray.700")}
+		borderBottomWidth="2px"
 		py="3"
-		bg={useColorModeValue('gray.900', 'green.600')}
-		color="white"
-		boxShadow="lg"
+		color='white'
+		// bg={useColorModeValue("white", "gray.800")}
+		bg='gray.800'
+		shadow="0 0 10px 0 rgba(0,0,0, 0.035);"
+		// boxShadow="lg"
+		
 		>
 			<Link href='/'>
 				<a>

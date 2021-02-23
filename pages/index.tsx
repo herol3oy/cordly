@@ -1,9 +1,11 @@
 import { firestore } from '../lib/firebase'
 import Musician from '../components/Musician'
+import FeatureMusician from '../components/FeatureMusician'
 
 export default function Home({ musicians }) {
 	return (
 		<>
+			<FeatureMusician />
 			<Musician data={musicians} />
 		</>
 	)

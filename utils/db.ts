@@ -12,8 +12,6 @@ export function createUser(uid, data) {
 }
 
 export function updateProfilePicture(uid, image) {
-	console.log(uid, image);
-	
 	return firestore
 	.collection('users')
 	.doc(uid)
