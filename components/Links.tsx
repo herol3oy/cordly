@@ -47,6 +47,7 @@ export default function Links() {
         })
 
         stateSet({ title: '', link: '' })
+
         toast({
             title: 'Link added to your public portfolio.',
             status: 'success',
@@ -92,6 +93,7 @@ export default function Links() {
                     <InputGroup size="lg">
                         <InputLeftAddon children="URL" />
                         <Input
+                            type='url'
                             value={state.link}
                             onChange={(e) =>
                                 stateSet({ ...state, link: e.target.value })

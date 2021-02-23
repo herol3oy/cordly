@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { updateProfilePicture } from '../utils/db'
 import { useAuth } from '../utils/auth'
-import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
+import { firestore, storage, STATE_CHANGED, arrayUnion } from '../lib/firebase'
+import _ from 'lodash'
 import { CUIAutoComplete } from 'chakra-ui-autocomplete'
 import { useForm } from 'react-hook-form'
 import {
@@ -17,6 +18,7 @@ import {
     FormHelperText,
     Input,
     Code,
+    Button,
 } from '@chakra-ui/react'
 
 export interface Item {
@@ -41,6 +43,8 @@ export default function Bio() {
     const [pickerItems, setPickerItems] = useState(countries)
     const [selectedItems, setSelectedItems] = useState([])
 
+    const { register, handleSubmit, watch, errors } = useForm()
+
     const handleCreateItem = (item) => {
         setPickerItems((curr) => [...curr, item])
         setSelectedItems((curr) => [...curr, item])
@@ -62,6 +66,7 @@ export default function Bio() {
     }
 
     const auth = useAuth()
+
     const query = firestore
         .collection('users')
         .where('uid', '==', auth.user.uid)
@@ -80,10 +85,24 @@ export default function Bio() {
         getAllDashData()
     }, [auth.user.uid])
 
+    const onSubmit = (data) => {
+        const skills = _.map(selectedItems, i => i)
+
+        firestore
+            .collection('users')
+            .doc(auth.user.uid)
+            .update({
+                ...data,
+                skills: arrayUnion({ skills })
+            })
+    }
+
     const uploadFile = async (e) => {
         const file = e.target.files[0]
         const extension = file['type'].split('/')[1]
+
         avatarNameSet(file['name'])
+
         const ref = storage.ref(
             `uploads/${auth.user.uid}/${Date.now()}.${extension}`
         )
@@ -153,59 +172,49 @@ export default function Bio() {
 
             <Divider my={8} />
 
-            <Stack width="100%" spacing={8}>
-                <FormControl>
-                    <InputGroup>
-                        <InputLeftAddon children="🔑 Username" />
-                        <Input placeholder="Update your username" />
-                    </InputGroup>
-                    <FormHelperText textAlign="left">
-                        Current username: https://cord.ly/{` `}
-                        <Code colorScheme="green">{auth.user.uid}</Code>
-                    </FormHelperText>
-                </FormControl>
-
-                <FormControl>
-                    <InputGroup>
-                        <InputLeftAddon children="👩‍🎤 Stage Name" />
-                        <Input placeholder="Lexi Rose" />
-                    </InputGroup>
-                    <FormHelperText textAlign="left">
-                        Displays on your card in front page.
-                    </FormHelperText>
-                </FormControl>
-
-                <FormControl>
-                    <InputGroup>
-                        <InputLeftAddon children="📍Location" />
-                        <Input placeholder="Barcelona, Spain" />
-                    </InputGroup>
-                    <FormHelperText textAlign="left">
-                        Where are you based in. Change when you move to a new
-                        city.
-                    </FormHelperText>
-                </FormControl>
-
-                <CUIAutoComplete
-                    tagStyleProps={{
-                        rounded: 'full',
-                    }}
-                    listStyleProps={{
-                        bg: 'gray.900',
-                        textAlign: 'left',
-                    }}
-                    highlightItemBg="gray.300"
-                    label="🤹🏽 Skills"
-                    placeholder="Type your skill"
-                    onCreateItem={handleCreateItem}
-                    items={pickerItems}
-                    itemRenderer={customRender}
-                    selectedItems={selectedItems}
-                    onSelectedItemsChange={(changes) =>
-                        handleSelectedItemsChange(changes.selectedItems)
-                    }
-                />
-            </Stack>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <Stack width="100%" spacing={8}>
+                    <FormControl>
+                        <InputGroup>
+                            <InputLeftAddon children="👩‍🎤 Stage Name" />
+                            <Input name='stagename' placeholder="Lexi Rose" ref={register} />
+                        </InputGroup>
+                        <FormHelperText textAlign="left">
+                            Displays on your card in front page.
+                        </FormHelperText>
+                    </FormControl>
+                    <FormControl>
+                        <InputGroup>
+                            <InputLeftAddon children="📍Location" />
+                            <Input name='location' placeholder="Barcelona, Spain" ref={register} />
+                        </InputGroup>
+                        <FormHelperText textAlign="left">
+                            Where are you based in. Change when you move to a new
+                            city.
+                        </FormHelperText>
+                    </FormControl>
+                    <CUIAutoComplete
+                        tagStyleProps={{
+                            rounded: 'full',
+                        }}
+                        listStyleProps={{
+                            bg: 'gray.900',
+                            textAlign: 'left',
+                        }}
+                        highlightItemBg="gray.300"
+                        label="🤹🏽 Skills"
+                        placeholder="Type your skill"
+                        onCreateItem={handleCreateItem}
+                        items={pickerItems}
+                        itemRenderer={customRender}
+                        selectedItems={selectedItems}
+                        onSelectedItemsChange={(changes) =>
+                            handleSelectedItemsChange(changes.selectedItems)
+                        }
+                    />
+                    <Button type='submit' colorScheme='green'>Submit</Button>
+                </Stack>
+            </form>
         </Flex>
     )
 }

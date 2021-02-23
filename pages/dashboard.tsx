@@ -1,7 +1,8 @@
 import AuthCheck from '../components/AuthCheck'
 import Bio from '../components/Bio'
 import Links from '../components/Links'
-import { FaLink } from 'react-icons/fa'
+import Username from '../components/Username'
+
 import {
     Box,
     Flex,
@@ -40,6 +41,10 @@ function DashboardPanel() {
                         <Box>✍️</Box>
                         <Text ml={3}>Bio</Text>
                     </Tab>
+                    <Tab>
+                        <Box>👑</Box>
+                        <Text ml={3}>Username</Text>
+                    </Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel>
@@ -47,6 +52,9 @@ function DashboardPanel() {
                     </TabPanel>
                     <TabPanel>
                         <Bio />
+                    </TabPanel>
+                    <TabPanel>
+                        <Username />
                     </TabPanel>
                 </TabPanels>
             </Tabs>
