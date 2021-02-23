@@ -22,18 +22,12 @@ export default function Dashboard(props) {
 }
 
 function DashboardPanel() {
-
     return (
-        <Flex
-            as='section'
-            minH='100vh'
-            direction='column'
-            alignItems='center'
-        >
+        <Flex as="section" minH="100vh" direction="column" alignItems="center">
             <Tabs
-                paddingTop='12'
+                paddingTop="12"
                 isFitted
-                align='center'
+                align="center"
                 variant="line"
                 colorScheme="green"
             >
@@ -56,7 +50,9 @@ function DashboardPanel() {
                     </TabPanel>
                 </TabPanels>
             </Tabs>
-            <Text mt='auto' textAlign='center'>CORDLY</Text>
+            <Text mt="auto" textAlign="center">
+                CORDLY
+            </Text>
         </Flex>
     )
 }

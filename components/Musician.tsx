@@ -12,14 +12,13 @@ import {
     Button,
     Flex,
     useColorModeValue,
-} from '@chakra-ui/react';
+} from '@chakra-ui/react'
 
 export default function Musician({ data }) {
-
     return (
-
         <>
-            {data.map(i => console.log(i))}
+            <p>salam</p>
+            {/* { data.map((i) => i)} */}
         </>
     )
 }

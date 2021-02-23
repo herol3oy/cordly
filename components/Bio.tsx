@@ -3,6 +3,7 @@ import { updateProfilePicture } from '../utils/db'
 import { useAuth } from '../utils/auth'
 import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
 import { CUIAutoComplete } from 'chakra-ui-autocomplete'
+import { useForm } from 'react-hook-form'
 import {
     Divider,
     Flex,
@@ -19,17 +20,17 @@ import {
 } from '@chakra-ui/react'
 
 export interface Item {
-    label: string;
-    value: string;
+    label: string
+    value: string
 }
 
 const countries = [
-    { value: "guitaris", label: "Guitaris" },
-    { value: "drummer", label: "Drummer" },
-    { value: "vocalist", label: "Vocalist" },
-    { value: "bassist", label: "Bassist" },
-    { value: "keyboardist", label: "Keyboardist" },
-];
+    { value: 'guitaris', label: 'Guitaris' },
+    { value: 'drummer', label: 'Drummer' },
+    { value: 'vocalist', label: 'Vocalist' },
+    { value: 'bassist', label: 'Bassist' },
+    { value: 'keyboardist', label: 'Keyboardist' },
+]
 
 export default function Bio() {
     const [uploading, setUploading] = useState(false)
@@ -37,19 +38,19 @@ export default function Bio() {
     const [downloadURL, downloadURLSet] = useState(null)
     const [data, dataSet] = useState('/avatar.png')
     const [avatarName, avatarNameSet] = useState('No file choosen')
-    const [pickerItems, setPickerItems] = useState(countries);
-    const [selectedItems, setSelectedItems] = useState([]);
+    const [pickerItems, setPickerItems] = useState(countries)
+    const [selectedItems, setSelectedItems] = useState([])
 
     const handleCreateItem = (item) => {
-        setPickerItems((curr) => [...curr, item]);
-        setSelectedItems((curr) => [...curr, item]);
-    };
+        setPickerItems((curr) => [...curr, item])
+        setSelectedItems((curr) => [...curr, item])
+    }
 
     const handleSelectedItemsChange = (selectedItems) => {
         if (selectedItems) {
-            setSelectedItems(selectedItems);
+            setSelectedItems(selectedItems)
         }
-    };
+    }
 
     const customRender = (selected) => {
         return (
@@ -61,14 +62,17 @@ export default function Bio() {
     }
 
     const auth = useAuth()
-    const query = firestore.collection('users').where("uid", "==", auth.user.uid)
+    const query = firestore
+        .collection('users')
+        .where('uid', '==', auth.user.uid)
 
     useEffect(() => {
         const getAllDashData = async () => {
-            await query.where('uid', '==', auth.user.uid)
-                .onSnapshot(snapshot => {
+            await query
+                .where('uid', '==', auth.user.uid)
+                .onSnapshot((snapshot) => {
                     let changes = snapshot.docChanges()
-                    changes.forEach(i => {
+                    changes.forEach((i) => {
                         dataSet(i.doc.data().profileImg)
                     })
                 })
@@ -77,44 +81,46 @@ export default function Bio() {
     }, [auth.user.uid])
 
     const uploadFile = async (e) => {
-
         const file = e.target.files[0]
         const extension = file['type'].split('/')[1]
         avatarNameSet(file['name'])
-        const ref = storage.ref(`uploads/${auth.user.uid}/${Date.now()}.${extension}`)
+        const ref = storage.ref(
+            `uploads/${auth.user.uid}/${Date.now()}.${extension}`
+        )
         setUploading(true)
 
         const task = ref.put(file)
 
         task.on(STATE_CHANGED, (snapshot) => {
-            const pct = ((snapshot.bytesTransferred / snapshot.totalBytes) * 100).toFixed(0)
+            const pct = (
+                (snapshot.bytesTransferred / snapshot.totalBytes) *
+                100
+            ).toFixed(0)
             setProgress(+pct)
         })
 
-        task
-            .then((d) => ref.getDownloadURL())
-            .then((url) => {
-                downloadURLSet(url)
-                updateProfilePicture(auth.user.uid, url)
-                setUploading(false)
-            })
+        task.then((d) => ref.getDownloadURL()).then((url) => {
+            downloadURLSet(url)
+            updateProfilePicture(auth.user.uid, url)
+            setUploading(false)
+        })
     }
 
     return (
         <Flex
-            display='flex'
-            justify='center'
-            alignItems='center'
-            margin='auto'
-            flexDirection='column'
+            display="flex"
+            justify="center"
+            alignItems="center"
+            margin="auto"
+            flexDirection="column"
             w={['90vw', '70vw', '60vw', '30vw']}
         >
             <Stack>
                 <Avatar
                     src={data || auth.user.photoUrl || '/avatar.png'}
                     alt="Profile picture"
-                    size='xl'
-                    margin='auto'
+                    size="xl"
+                    margin="auto"
                     mb={4}
                 />
                 <InputGroup>
@@ -125,29 +131,35 @@ export default function Bio() {
                         px={4}
                         align="center"
                         borderWidth={1}
-                        borderRightRadius="md">
+                        borderRightRadius="md"
+                    >
                         {avatarName}
                         <chakra.input
                             type="file"
                             onChange={(e) => uploadFile(e)}
-                            w="100%" opacity={0} pos="absolute" inset="0"
+                            w="100%"
+                            opacity={0}
+                            pos="absolute"
+                            inset="0"
                         />
                     </Flex>
                 </InputGroup>
                 <FormControl>
-                    <FormHelperText textAlign='left'>Update your avatar by choosing a new image.</FormHelperText>
+                    <FormHelperText textAlign="left">
+                        Update your avatar by choosing a new image.
+                    </FormHelperText>
                 </FormControl>
             </Stack>
 
             <Divider my={8} />
 
-            <Stack width='100%' spacing={8}>
+            <Stack width="100%" spacing={8}>
                 <FormControl>
                     <InputGroup>
                         <InputLeftAddon children="🔑 Username" />
                         <Input placeholder="Update your username" />
                     </InputGroup>
-                    <FormHelperText textAlign='left'>
+                    <FormHelperText textAlign="left">
                         Current username: https://cord.ly/{` `}
                         <Code colorScheme="green">{auth.user.uid}</Code>
                     </FormHelperText>
@@ -158,7 +170,7 @@ export default function Bio() {
                         <InputLeftAddon children="👩‍🎤 Stage Name" />
                         <Input placeholder="Lexi Rose" />
                     </InputGroup>
-                    <FormHelperText textAlign='left'>
+                    <FormHelperText textAlign="left">
                         Displays on your card in front page.
                     </FormHelperText>
                 </FormControl>
@@ -168,8 +180,9 @@ export default function Bio() {
                         <InputLeftAddon children="📍Location" />
                         <Input placeholder="Barcelona, Spain" />
                     </InputGroup>
-                    <FormHelperText textAlign='left'>
-                        Where are you based in. Change when you move to a new city.
+                    <FormHelperText textAlign="left">
+                        Where are you based in. Change when you move to a new
+                        city.
                     </FormHelperText>
                 </FormControl>
 
@@ -178,11 +191,10 @@ export default function Bio() {
                         rounded: 'full',
                     }}
                     listStyleProps={{
-                        bg:'gray.900',
-                        textAlign: 'left'
-                        
+                        bg: 'gray.900',
+                        textAlign: 'left',
                     }}
-                    highlightItemBg='gray.300'
+                    highlightItemBg="gray.300"
                     label="🤹🏽 Skills"
                     placeholder="Type your skill"
                     onCreateItem={handleCreateItem}
@@ -195,6 +207,5 @@ export default function Bio() {
                 />
             </Stack>
         </Flex>
-
     )
 }

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../utils/auth'
 import { firestore, arrayUnion, arrayRemove } from '../lib/firebase'
-import { FaTrash } from 'react-icons/fa';
-import { FaPlusCircle } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa'
+import { FaPlusCircle } from 'react-icons/fa'
 import {
     Button,
     Input,
@@ -15,10 +15,10 @@ import {
     InputGroup,
     InputLeftAddon,
     FormControl,
-} from "@chakra-ui/react"
+} from '@chakra-ui/react'
 
 export default function Links() {
-    const [state, stateSet] = useState({ title: '', link: '', })
+    const [state, stateSet] = useState({ title: '', link: '' })
     const [urls, urlsSet] = useState([])
 
     const auth = useAuth()
@@ -29,10 +29,11 @@ export default function Links() {
 
     useEffect(() => {
         const getAllUrls = async () => {
-            const userData = await query.where('uid', '==', auth.user.uid)
-                .onSnapshot(snapshot => {
+            const userData = await query
+                .where('uid', '==', auth.user.uid)
+                .onSnapshot((snapshot) => {
                     let changes = snapshot.docChanges()
-                    changes.forEach(i => {
+                    changes.forEach((i) => {
                         urlsSet(i.doc.data().urls)
                     })
                 })
@@ -42,24 +43,24 @@ export default function Links() {
 
     const addLink = () => {
         query.doc(auth.user.uid).update({
-            urls: arrayUnion({ [state.title]: state.link })
+            urls: arrayUnion({ [state.title]: state.link }),
         })
 
-        stateSet({ title: '', link: '', })
+        stateSet({ title: '', link: '' })
         toast({
-            title: "Link added to your public portfolio.",
-            status: "success",
+            title: 'Link added to your public portfolio.',
+            status: 'success',
             duration: 3000,
         })
     }
 
     const deleteLink = (title, link) => {
         query.doc(auth.user.uid).update({
-            urls: arrayRemove({ [title]: link })
+            urls: arrayRemove({ [title]: link }),
         })
 
         toast({
-            title: "Link deleted.",
+            title: 'Link deleted.',
             status: 'error',
             duration: 2000,
         })
@@ -67,34 +68,46 @@ export default function Links() {
 
     return (
         <Flex
-            display='flex'
-            justify='center'
-            alignItems='center'
-            margin='auto'
-            flexDirection='column'
+            display="flex"
+            justify="center"
+            alignItems="center"
+            margin="auto"
+            flexDirection="column"
             w={['90vw', '70vw', '60vw', '30vw']}
         >
             <FormControl>
                 <Stack spacing={2}>
-                    <InputGroup size='lg'>
+                    <InputGroup size="lg">
                         <InputLeftAddon children="Title" />
                         <Input
-                            type='text'
+                            type="text"
                             placeholder="Youtube"
                             value={state.title}
-                            onChange={(e) => stateSet({ ...state, title: e.target.value })}
-                            name='title'
+                            onChange={(e) =>
+                                stateSet({ ...state, title: e.target.value })
+                            }
+                            name="title"
                         />
                     </InputGroup>
-                    <InputGroup size='lg'>
-                        <InputLeftAddon children='URL' />
+                    <InputGroup size="lg">
+                        <InputLeftAddon children="URL" />
                         <Input
                             value={state.link}
-                            onChange={(e) => stateSet({ ...state, link: e.target.value })}
-                            placeholder='https://youtube.com/cordly'
+                            onChange={(e) =>
+                                stateSet({ ...state, link: e.target.value })
+                            }
+                            placeholder="https://youtube.com/cordly"
                         />
                     </InputGroup>
-                    <Button size='lg' colorScheme='green' w='100%' onClick={addLink} leftIcon={<FaPlusCircle />}>Add</Button>
+                    <Button
+                        size="lg"
+                        colorScheme="green"
+                        w="100%"
+                        onClick={addLink}
+                        leftIcon={<FaPlusCircle />}
+                    >
+                        Add
+                    </Button>
                 </Stack>
             </FormControl>
 
@@ -102,31 +115,40 @@ export default function Links() {
 
             {urls?.map((i, idx) => (
                 <Flex
-                    display='flex'
-                    justify='center'
-                    alignItems='center'
-                    margin='auto'
-                    flexDirection='row'
+                    display="flex"
+                    justify="center"
+                    alignItems="center"
+                    margin="auto"
+                    flexDirection="row"
                     w={['90vw', '70vw', '60vw', '30vw']}
                     key={idx}
                 >
-                    <Flex mb='2' width='100%' textAlign='left'>
-                        <Link width='100%' href={Object.values(i)[0].toString()} isExternal>
-                            <Button size='sm' minWidth='95%'  >
+                    <Flex mb="2" width="100%" textAlign="left">
+                        <Link
+                            width="100%"
+                            href={Object.values(i)[0].toString()}
+                            isExternal
+                        >
+                            <Button size="sm" minWidth="95%">
                                 {Object.keys(i)[0]}
                             </Button>
                         </Link>
                         <Spacer />
                         <Button
-                            size='sm'
-                            colorScheme='red'
-                            onClick={() => deleteLink(Object.keys(i)[0], Object.values(i)[0])}>
+                            size="sm"
+                            colorScheme="red"
+                            onClick={() =>
+                                deleteLink(
+                                    Object.keys(i)[0],
+                                    Object.values(i)[0]
+                                )
+                            }
+                        >
                             <FaTrash />
                         </Button>
                     </Flex>
                 </Flex>
             ))}
-
         </Flex>
     )
 }

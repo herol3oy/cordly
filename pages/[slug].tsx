@@ -11,22 +11,16 @@ import {
     Text,
     Box,
     Flex,
-    Heading
-} from "@chakra-ui/react"
+    Heading,
+} from '@chakra-ui/react'
 
 export default function User({ data }) {
-
     return (
-        <Flex
-            as='section'
-            minH='100vh'
-            direction='column'
-            alignItems='center'
-        >
+        <Flex as="section" minH="100vh" direction="column" alignItems="center">
             <Tabs
-                paddingTop='12'
+                paddingTop="12"
                 isFitted
-                align='center'
+                align="center"
                 variant="line"
                 colorScheme="green"
             >
@@ -43,23 +37,20 @@ export default function User({ data }) {
                     </TabPanel>
                 </TabPanels>
             </Tabs>
-            <Text mt='auto' textAlign='center'>CORDLY</Text>
+            <Text mt="auto" textAlign="center">
+                CORDLY
+            </Text>
         </Flex>
     )
 }
 
 const ProfileLinks = ({ data }) => {
-    const {
-        photoUrl,
-        email,
-        urls,
-    } = data[0]
+    const { photoUrl, email, urls } = data[0]
 
     const links = urls?.map((i, idx) => (
-
         <Box
             key={idx}
-            display={{ base: "flex", md: "flex" }}
+            display={{ base: 'flex', md: 'flex' }}
             alignItems="center"
             as="a"
             aria-label={`Corldly ${email} social links`}
@@ -73,34 +64,35 @@ const ProfileLinks = ({ data }) => {
             borderColor="gray.200"
             px="1em"
             minH="36px"
-            minW='sm'
+            minW="sm"
             borderRadius="md"
             fontSize="sm"
             outline="0"
             transition="all 0.3s"
             _hover={{
-                bg: "green.100",
-                borderColor: "green.100",
+                bg: 'green.100',
+                borderColor: 'green.100',
             }}
             _active={{
-                borderColor: "gray.200",
+                borderColor: 'gray.200',
             }}
             _focus={{
-                boxShadow: "outline",
+                boxShadow: 'outline',
             }}
         >
-            <Box m={'auto'} as="strong" lineHeight="inherit" fontWeight="semibold">
+            <Box
+                m={'auto'}
+                as="strong"
+                lineHeight="inherit"
+                fontWeight="semibold"
+            >
                 {Object.keys(i)[0]}
             </Box>
         </Box>
     ))
 
     return (
-        <Flex
-            align='center'
-            alignItems='stretch'
-            direction='column'
-        >
+        <Flex align="center" alignItems="stretch" direction="column">
             <Box mb={6}>
                 <Image
                     src={photoUrl}
@@ -110,10 +102,12 @@ const ProfileLinks = ({ data }) => {
                     alt="Profile picture"
                     my={3}
                 />
-                <Heading as="h6" size="sm">@{email.split('@')?.[0]}</Heading>
+                <Heading as="h6" size="sm">
+                    @{email.split('@')?.[0]}
+                </Heading>
             </Box>
             <VStack
-                direction={["column", "row"]}
+                direction={['column', 'row']}
                 spacing={4}
                 align="stretch"
                 mt={3}
@@ -125,9 +119,9 @@ const ProfileLinks = ({ data }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-    const ref = firestore.collection('users').where("uid", "==", params.slug)
+    const ref = firestore.collection('users').where('uid', '==', params.slug)
     const data = (await ref.get()).docs.map((doc) => doc.data())
     return {
-        props: { data }
+        props: { data },
     }
 }

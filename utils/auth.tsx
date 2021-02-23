@@ -42,9 +42,7 @@ const useProvideAuth = () => {
     }
 
     const signout = () => {
-        return auth
-            .signOut()
-            .then(() => handleUser(false))
+        return auth.signOut().then(() => handleUser(false))
     }
 
     useEffect(() => {
