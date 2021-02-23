@@ -23,35 +23,37 @@ export default function Username() {
 
     const auth = useAuth()
 
+    const query = firestore.collection('users').doc(auth.user.uid)
+
     const { register, handleSubmit, watch, reset, errors } = useForm()
 
     useEffect(() => {
 
-        const checkUserName = async () => {
-            firestore.collection('usernames').get().then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    if (doc.data().uid && doc.data().uid === auth.user.uid) {
-                        setUsername(doc.id)
-                    }
-                })
-            })
-        }
-
-        checkUserName()
+        query.get().then((doc) => {
+            if (doc.data().username === undefined) {
+                setUsername(auth.user.uid)
+            }
+            setUsername(doc.data().username)
+        })
 
         checkUsername(formValue)
     }, [formValue])
 
-
-
     const checkUsername = useCallback(
         debounce(async (username) => {
             if (username.length >= 3) {
-                const ref = firestore.doc(`usernames/${username}`)
-                const { exists } = await ref.get()
-                console.log('Firestore read executed!')
-                setIsValid(!exists)
-                setLoading(false)
+
+                await query.get().then((doc) => {
+
+                    if (doc.data().username === username) {
+                        setIsValid(false)
+                        setLoading(false)
+
+                    } else {
+                        setIsValid(true)
+                        setLoading(false)
+                    }
+                })
             }
         }, 500),
         []
@@ -76,9 +78,8 @@ export default function Username() {
     }
 
     const onSubmit = () => {
-        const usernameDoc = firestore.doc(`usernames/${formValue}`)
 
-        usernameDoc.set({ uid: auth.user.uid })
+        query.update({ username: formValue })
 
         setUsername(formValue)
         setFormValue('')
@@ -118,7 +119,6 @@ export default function Username() {
         </form>
     )
 }
-
 
 function UsernameMessage({ username, isValid, loading }) {
     if (loading) {
