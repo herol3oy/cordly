@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react'
 
 export default function User({ data }) {
+
     return (
         <Flex as="section" minH="100vh" direction="column" alignItems="center">
             <Tabs
@@ -45,7 +46,8 @@ export default function User({ data }) {
 }
 
 const ProfileLinks = ({ data }) => {
-    const { photoUrl, email, urls } = data[0]
+
+    const { photoUrl, email, urls } = data
 
     const links = urls?.map((i, idx) => (
         <Box
@@ -119,8 +121,15 @@ const ProfileLinks = ({ data }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-    const ref = firestore.collection('users').where('uid', '==', params.slug)
-    const data = (await ref.get()).docs.map((doc) => doc.data())
+
+    let data
+
+    await (await firestore.collection('users').get()).docs.map(doc => {
+        if ((doc.data().username || doc.data().uid) === params.slug) {
+            data = doc.data()
+        }
+    })
+
     return {
         props: { data },
     }

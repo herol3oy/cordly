@@ -17,11 +17,10 @@ import {
 } from '@chakra-ui/react'
 
 export default function Musician({ data }) {
-    
     return (
         <Stack
-        spacing={2}
-        flexDir='row'
+            spacing={2}
+            flexDir='row'
         >
 
             {_.map(data, (i) => (
@@ -32,7 +31,7 @@ export default function Musician({ data }) {
                     minH={['150px', '170px', '200px', '100px']}
                     bg='gray.900'
                 >
-                    <Nextlink href={`/${i.uid}`} passHref>
+                    <Nextlink href={`/${i.username ? i.username : i.uid}`} passHref>
                         <Link>
                             <Stack >
                                 <Avatar
