@@ -1,8 +1,9 @@
+import NextLink from 'next/link'
 import { useState, useEffect } from 'react'
 import { useAuth } from '../utils/auth'
 import { firestore, arrayUnion, arrayRemove } from '../lib/firebase'
-import { FaTrash } from 'react-icons/fa'
 import { FaPlusCircle } from 'react-icons/fa'
+import { LinkIcon, DeleteIcon } from '@chakra-ui/icons'
 import {
     Button,
     Input,
@@ -15,6 +16,9 @@ import {
     InputGroup,
     InputLeftAddon,
     FormControl,
+    Text,
+    IconButton,
+    useColorModeValue,
 } from '@chakra-ui/react'
 
 export default function Links() {
@@ -51,7 +55,7 @@ export default function Links() {
         toast({
             title: 'Link added to your public portfolio.',
             status: 'success',
-            duration: 3000,
+            duration: 2000,
         })
     }
 
@@ -69,31 +73,31 @@ export default function Links() {
 
     return (
         <Flex
-            display="flex"
-            justify="center"
-            alignItems="center"
-            margin="auto"
-            flexDirection="column"
+            display={'flex'}
+            justify={'center'}
+            alignItems={'center'}
+            margin={'auto'}
+            flexDirection={'column'}
             w={['90vw', '70vw', '60vw', '30vw']}
         >
             <FormControl>
                 <Stack spacing={2}>
-                    <InputGroup size="lg">
-                        <InputLeftAddon children="Title" />
+                    <InputGroup size={'lg'}>
+                        <InputLeftAddon children={'Title'} />
                         <Input
-                            type="text"
-                            placeholder="Youtube"
+                            type={'text'}
+                            placeholder={'Youtube'}
                             value={state.title}
                             onChange={(e) =>
                                 stateSet({ ...state, title: e.target.value })
                             }
-                            name="title"
+                            name={'title'}
                         />
                     </InputGroup>
-                    <InputGroup size="lg">
-                        <InputLeftAddon children="URL" />
+                    <InputGroup size={'lg'}>
+                        <InputLeftAddon children={'URL'} />
                         <Input
-                            type='url'
+                            type={'url'}
                             value={state.link}
                             onChange={(e) =>
                                 stateSet({ ...state, link: e.target.value })
@@ -102,9 +106,9 @@ export default function Links() {
                         />
                     </InputGroup>
                     <Button
-                        size="lg"
-                        colorScheme="green"
-                        w="100%"
+                        size={'lg'}
+                        colorScheme={'green'}
+                        w={'100%'}
                         onClick={addLink}
                         leftIcon={<FaPlusCircle />}
                     >
@@ -117,38 +121,54 @@ export default function Links() {
 
             {urls?.map((i, idx) => (
                 <Flex
-                    display="flex"
-                    justify="center"
-                    alignItems="center"
-                    margin="auto"
-                    flexDirection="row"
-                    w={['90vw', '70vw', '60vw', '30vw']}
                     key={idx}
+                    display={'flex'}
+                    justify={'center'}
+                    alignItems={'center'}
+                    margin={'auto'}
+                    flexDirection={'column'}
+                    w={['90vw', '70vw', '60vw', '30vw']}
                 >
-                    <Flex mb="2" width="100%" textAlign="left">
-                        <Link
-                            width="100%"
-                            href={Object.values(i)[0].toString()}
-                            isExternal
+                    <Stack
+                        bg={useColorModeValue('gray.100', 'gray.900')}
+                        rounded={'xl'}
+                        px={4}
+                        py={3}
+                        direction={'row'}
+                        align={'center'}
+                        w={'100%'}
+                        mb={2}
+                    >
+                        <Stack
+                            color={'green.400'}
+                            direction={'row'}
+                            align={'center'}
                         >
-                            <Button size="sm" minWidth="95%">
-                                {Object.keys(i)[0]}
-                            </Button>
-                        </Link>
+                            <LinkIcon />
+                            <NextLink href={Object.values(i)[0]} passHref>
+                                <Link isExternal>
+                                    <Text align={'left'} fontWeight={700}>
+                                        {/* youtube */}
+                                        {Object.keys(i)[0]}
+                                    </Text>
+                                    <Text fontSize="xs">
+                                        {Object.values(i)[0]}
+                                    </Text>
+                                </Link>
+                            </NextLink>
+                        </Stack>
                         <Spacer />
-                        <Button
-                            size="sm"
-                            colorScheme="red"
+                        <IconButton
                             onClick={() =>
                                 deleteLink(
                                     Object.keys(i)[0],
                                     Object.values(i)[0]
                                 )
                             }
-                        >
-                            <FaTrash />
-                        </Button>
-                    </Flex>
+                            aria-label={'Delete url'}
+                            icon={<DeleteIcon color={'red.500'} />}
+                        />
+                    </Stack>
                 </Flex>
             ))}
         </Flex>

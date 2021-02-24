@@ -5,7 +5,7 @@ import { FaFacebook } from 'react-icons/fa'
 import { FaGoogle } from 'react-icons/fa'
 import { FaSun } from 'react-icons/fa'
 import { FaMoon } from 'react-icons/fa'
-import { useToast } from "@chakra-ui/react"
+import { useToast } from '@chakra-ui/react'
 import {
     Button,
     Stack,
@@ -28,17 +28,15 @@ export default function Navigation() {
     const uid = auth.user?.uid
 
     useEffect(() => {
-
         if (userSignin && uid !== undefined) {
             toast({
-                title: "Welcome.",
+                title: 'Welcome.',
                 description: "We've created your account for you.",
-                status: "success",
+                status: 'success',
                 duration: 3000,
                 isClosable: true,
             })
         }
-
     }, [uid, userSignin])
 
     const { colorMode, toggleColorMode } = useColorMode()
@@ -47,7 +45,7 @@ export default function Navigation() {
 
     const googleSignin = () => {
         auth.signinWithGoogle()
-        
+
         userSigninSet(true)
     }
 
@@ -63,9 +61,9 @@ export default function Navigation() {
         userSigninSet(false)
 
         toast({
-            title: "See ya!.",
-            description: "We've created your account for you.",
-            status: "error",
+            title: 'See ya!.',
+            description: 'Good news for you!',
+            status: 'error',
             duration: 2000,
             isClosable: false,
         })
@@ -75,29 +73,27 @@ export default function Navigation() {
         <Flex
             align={{ base: 'flex-start', sm: 'center' }}
             direction={{ base: 'row', sm: 'row' }}
-            justify="center"
+            justify={'center'}
             px={{ base: '3', md: '6', lg: '8' }}
             borderBottomColor={useColorModeValue('gray.100', 'gray.700')}
-            borderBottomWidth="2px"
-            py="3"
-            color="white"
-            bg="gray.800"
+            borderBottomWidth={'2px'}
+            py={'3'}
+            color={'white'}
+            bg={'gray.800'}
             shadow="0 0 10px 0 rgba(0,0,0, 0.035);"
-        // bg={useColorModeValue("white", "gray.800")}
-        // boxShadow="lg"
         >
-            <Link href="/">
+            <Link href={'/'}>
                 <a>
                     <Heading>Cordly</Heading>
                 </a>
             </Link>
             <Spacer />
             <IconButton
-                size="md"
-                fontSize="lg"
+                size={'md'}
+                fontSize={'lg'}
                 aria-label={`Switch to ${text} mode`}
-                variant="ghost"
-                color="current"
+                variant={'ghost'}
+                color={'current'}
                 ml={{ base: '0', md: '3' }}
                 icon={<SwitchIcon />}
                 onClick={toggleColorMode}
@@ -106,14 +102,14 @@ export default function Navigation() {
             {!auth.user && (
                 <Stack direction={{ base: 'column', sm: 'row' }}>
                     <Button
-                        colorScheme="twitter"
+                        colorScheme={'twitter'}
                         leftIcon={<FaGoogle />}
                         onClick={googleSignin}
                     >
                         Google
                     </Button>
                     <Button
-                        colorScheme="facebook"
+                        colorScheme={'facebook'}
                         leftIcon={<FaFacebook />}
                         onClick={facebookSignin}
                     >
@@ -124,14 +120,14 @@ export default function Navigation() {
             {auth.user && (
                 <Stack
                     direction={{ base: 'column', sm: 'row' }}
-                    alignItems="center"
+                    alignItems={'center'}
                 >
                     <Text>Welcome {auth.user.email.split('@')[0]}!</Text>
-                    <Button colorScheme="red" onClick={signOut}>
+                    <Button colorScheme={'red'} onClick={signOut}>
                         Sign out
                     </Button>
-                    <Link href="/dashboard">
-                        <Button colorScheme="pink">Dashboard</Button>
+                    <Link href={'/dashboard'}>
+                        <Button colorScheme={'pink'}>Dashboard</Button>
                     </Link>
                 </Stack>
             )}

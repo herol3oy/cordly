@@ -29,7 +29,6 @@ export default function Username() {
     const { register, handleSubmit, watch, reset, errors } = useForm()
 
     useEffect(() => {
-
         query.get().then((doc) => {
             if (doc.data().username === undefined) {
                 setUsername(auth.user.uid)
@@ -43,13 +42,10 @@ export default function Username() {
     const checkUsername = useCallback(
         debounce(async (username) => {
             if (username.length >= 3) {
-
                 await query.get().then((doc) => {
-
                     if (doc.data().username === username) {
                         setIsValid(false)
                         setLoading(false)
-
                     } else {
                         setIsValid(true)
                         setLoading(false)
@@ -61,8 +57,7 @@ export default function Username() {
     )
 
     const onChange = (e) => {
-
-        const val = e.target.value.toLowerCase();
+        const val = e.target.value.toLowerCase()
         const re = /^(?=[a-zA-Z0-9._]{3,15}$)(?!.*[_.]{2})[^_.].*[^_.]$/
 
         if (val.length < 3) {
@@ -79,14 +74,12 @@ export default function Username() {
     }
 
     const onSubmit = () => {
-
         query.update({ username: formValue })
 
         setUsername(formValue)
         setFormValue('')
         setIsValid(false)
     }
-
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -97,25 +90,30 @@ export default function Username() {
                         <Input
                             value={formValue}
                             onChange={onChange}
-                            name='username'
+                            name="username"
                             placeholder="Update your username"
                             ref={register}
                         />
                     </InputGroup>
                     <FormHelperText textAlign="left">
                         Current username: https://cord.ly/{` `}
-                        <Code colorScheme="green">{username || auth.user.uid}</Code>
+                        <Code colorScheme="green">
+                            {username || auth.user.uid}
+                        </Code>
                     </FormHelperText>
                     <Button
-                        type='submit'
-                        colorScheme='green'
+                        type="submit"
+                        colorScheme="green"
                         disabled={!isValid}
                     >
                         Submit
-                </Button>
+                    </Button>
                 </FormControl>
-                <UsernameMessage username={formValue} isValid={isValid} loading={loading} />
-
+                <UsernameMessage
+                    username={formValue}
+                    isValid={isValid}
+                    loading={loading}
+                />
             </Stack>
         </form>
     )
@@ -123,11 +121,26 @@ export default function Username() {
 
 const UsernameMessage = ({ username, isValid, loading }) => {
     if (loading) {
-        return <Alert status="info"><AlertIcon />Checking...</Alert>
+        return (
+            <Alert status="info">
+                <AlertIcon />
+                Checking...
+            </Alert>
+        )
     } else if (isValid) {
-        return <Alert status="success" variant="solid"><AlertIcon />{username} is available!</Alert>
+        return (
+            <Alert status="success" variant="solid">
+                <AlertIcon />
+                {username} is available!
+            </Alert>
+        )
     } else if (username && !isValid) {
-        return <Alert status="error"><AlertIcon />That username is taken!</Alert>
+        return (
+            <Alert status="error">
+                <AlertIcon />
+                That username is taken!
+            </Alert>
+        )
     } else {
         return <p></p>
     }

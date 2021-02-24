@@ -43,7 +43,27 @@ export default function Bio() {
     const [pickerItems, setPickerItems] = useState(countries)
     const [selectedItems, setSelectedItems] = useState([])
 
+    const auth = useAuth()
+
     const { register, handleSubmit, watch, errors } = useForm()
+
+    const query = firestore
+        .collection('users')
+        .where('uid', '==', auth.user.uid)
+
+    useEffect(() => {
+        const getAllDashData = async () => {
+            await query
+                .where('uid', '==', auth.user.uid)
+                .onSnapshot((snapshot) => {
+                    let changes = snapshot.docChanges()
+                    changes.forEach((i) => {
+                        dataSet(i.doc.data().profileImg)
+                    })
+                })
+        }
+        getAllDashData()
+    }, [auth.user.uid])
 
     const handleCreateItem = (item) => {
         setPickerItems((curr) => [...curr, item])
@@ -65,29 +85,8 @@ export default function Bio() {
         )
     }
 
-    const auth = useAuth()
-
-    const query = firestore
-        .collection('users')
-        .where('uid', '==', auth.user.uid)
-
-    useEffect(() => {
-        const getAllDashData = async () => {
-            await query
-                .where('uid', '==', auth.user.uid)
-                .onSnapshot((snapshot) => {
-                    let changes = snapshot.docChanges()
-                    changes.forEach((i) => {
-                        dataSet(i.doc.data().profileImg)
-                    })
-                })
-        }
-        getAllDashData()
-    }, [auth.user.uid])
-
     const onSubmit = (data) => {
-
-        const skills = selectedItems.map(i => {
+        const skills = selectedItems.map((i) => {
             const label = Object.values(i)[1]
             return label
         })
@@ -97,10 +96,9 @@ export default function Bio() {
             .doc(auth.user.uid)
             .update({
                 ...data,
-                skills
+                skills,
             })
     }
-
 
     const uploadFile = async (e) => {
         const file = e.target.files[0]
@@ -182,7 +180,11 @@ export default function Bio() {
                     <FormControl>
                         <InputGroup>
                             <InputLeftAddon children="👩‍🎤 Stage Name" />
-                            <Input name='stagename' placeholder="Lexi Rose" ref={register} />
+                            <Input
+                                name="stagename"
+                                placeholder="Lexi Rose"
+                                ref={register}
+                            />
                         </InputGroup>
                         <FormHelperText textAlign="left">
                             Displays on your card in front page.
@@ -191,11 +193,15 @@ export default function Bio() {
                     <FormControl>
                         <InputGroup>
                             <InputLeftAddon children="📍Location" />
-                            <Input name='location' placeholder="Barcelona, Spain" ref={register} />
+                            <Input
+                                name="location"
+                                placeholder="Barcelona, Spain"
+                                ref={register}
+                            />
                         </InputGroup>
                         <FormHelperText textAlign="left">
-                            Where are you based in. Change when you move to a new
-                            city.
+                            Where are you based in. Change when you move to a
+                            new city.
                         </FormHelperText>
                     </FormControl>
                     <CUIAutoComplete
@@ -217,7 +223,9 @@ export default function Bio() {
                             handleSelectedItemsChange(changes.selectedItems)
                         }
                     />
-                    <Button type='submit' colorScheme='green'>Submit</Button>
+                    <Button type="submit" colorScheme="green">
+                        Submit
+                    </Button>
                 </Stack>
             </form>
         </Flex>
