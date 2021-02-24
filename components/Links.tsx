@@ -29,7 +29,7 @@ export default function Links() {
 
     useEffect(() => {
         const getAllUrls = async () => {
-            const userData = await query
+            await query
                 .where('uid', '==', auth.user.uid)
                 .onSnapshot((snapshot) => {
                     let changes = snapshot.docChanges()

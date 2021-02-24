@@ -86,16 +86,21 @@ export default function Bio() {
     }, [auth.user.uid])
 
     const onSubmit = (data) => {
-        const skills = _.map(selectedItems, i => i)
+
+        const skills = selectedItems.map(i => {
+            const label = Object.values(i)[1]
+            return label
+        })
 
         firestore
             .collection('users')
             .doc(auth.user.uid)
             .update({
                 ...data,
-                skills: arrayUnion({ skills })
+                skills
             })
     }
+
 
     const uploadFile = async (e) => {
         const file = e.target.files[0]
