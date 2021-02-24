@@ -1,3 +1,11 @@
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { useAuth } from '../utils/auth'
+import { FaFacebook } from 'react-icons/fa'
+import { FaGoogle } from 'react-icons/fa'
+import { FaSun } from 'react-icons/fa'
+import { FaMoon } from 'react-icons/fa'
+import { useToast } from "@chakra-ui/react"
 import {
     Button,
     Stack,
@@ -9,18 +17,59 @@ import {
     Flex,
     useColorMode,
 } from '@chakra-ui/react'
-import { useAuth } from '../utils/auth'
-import Link from 'next/link'
-import { FaFacebook } from 'react-icons/fa'
-import { FaGoogle } from 'react-icons/fa'
-import { FaSun } from 'react-icons/fa'
-import { FaMoon } from 'react-icons/fa'
 
 export default function Navigation() {
+    const [userSignin, userSigninSet] = useState(false)
+
     const auth = useAuth()
+
+    const toast = useToast()
+
+    const uid = auth.user?.uid
+
+    useEffect(() => {
+
+        if (userSignin && uid !== undefined) {
+            toast({
+                title: "Welcome.",
+                description: "We've created your account for you.",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+            })
+        }
+
+    }, [uid, userSignin])
+
     const { colorMode, toggleColorMode } = useColorMode()
     const SwitchIcon = useColorModeValue(FaMoon, FaSun)
     const text = useColorModeValue('dark', 'light')
+
+    const googleSignin = () => {
+        auth.signinWithGoogle()
+        
+        userSigninSet(true)
+    }
+
+    const facebookSignin = () => {
+        auth.signinWithFacebook()
+
+        userSigninSet(true)
+    }
+
+    const signOut = () => {
+        auth.signout()
+
+        userSigninSet(false)
+
+        toast({
+            title: "See ya!.",
+            description: "We've created your account for you.",
+            status: "error",
+            duration: 2000,
+            isClosable: false,
+        })
+    }
 
     return (
         <Flex
@@ -32,10 +81,10 @@ export default function Navigation() {
             borderBottomWidth="2px"
             py="3"
             color="white"
-            // bg={useColorModeValue("white", "gray.800")}
             bg="gray.800"
             shadow="0 0 10px 0 rgba(0,0,0, 0.035);"
-            // boxShadow="lg"
+        // bg={useColorModeValue("white", "gray.800")}
+        // boxShadow="lg"
         >
             <Link href="/">
                 <a>
@@ -59,14 +108,14 @@ export default function Navigation() {
                     <Button
                         colorScheme="twitter"
                         leftIcon={<FaGoogle />}
-                        onClick={() => auth.signinWithGoogle()}
+                        onClick={googleSignin}
                     >
                         Google
                     </Button>
                     <Button
                         colorScheme="facebook"
                         leftIcon={<FaFacebook />}
-                        onClick={() => auth.signinWithFacebook()}
+                        onClick={facebookSignin}
                     >
                         Facebook
                     </Button>
@@ -78,7 +127,7 @@ export default function Navigation() {
                     alignItems="center"
                 >
                     <Text>Welcome {auth.user.email.split('@')[0]}!</Text>
-                    <Button colorScheme="red" onClick={() => auth.signout()}>
+                    <Button colorScheme="red" onClick={signOut}>
                         Sign out
                     </Button>
                     <Link href="/dashboard">

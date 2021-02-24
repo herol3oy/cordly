@@ -4,7 +4,7 @@ import { createUser } from './db'
 
 export const authContext = createContext(null)
 
-export function AuthProvider({ children }) {
+export const AuthProvider = ({ children }) => {
     const auth = useProvideAuth()
     return <authContext.Provider value={auth}>{children}</authContext.Provider>
 }

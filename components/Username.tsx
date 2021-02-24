@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { firestore } from '../lib/firebase'
-import debounce from 'lodash.debounce';
+import { useForm } from 'react-hook-form'
+import { useAuth } from '../utils/auth'
+import debounce from 'lodash.debounce'
 import {
     Stack,
     InputLeftAddon,
@@ -9,11 +11,10 @@ import {
     FormHelperText,
     Input,
     Code,
-    Text,
     Button,
+    Alert,
+    AlertIcon,
 } from '@chakra-ui/react'
-import { useForm } from 'react-hook-form'
-import { useAuth } from '../utils/auth'
 
 export default function Username() {
     const [formValue, setFormValue] = useState('')
@@ -120,14 +121,14 @@ export default function Username() {
     )
 }
 
-function UsernameMessage({ username, isValid, loading }) {
+const UsernameMessage = ({ username, isValid, loading }) => {
     if (loading) {
-        return <p>Checking...</p>;
+        return <Alert status="info"><AlertIcon />Checking...</Alert>
     } else if (isValid) {
-        return <Text bg='green'>{username} is available!</Text>;
+        return <Alert status="success" variant="solid"><AlertIcon />{username} is available!</Alert>
     } else if (username && !isValid) {
-        return <Text bg='red'>That username is taken!</Text>;
+        return <Alert status="error"><AlertIcon />That username is taken!</Alert>
     } else {
-        return <p></p>;
+        return <p></p>
     }
 }
