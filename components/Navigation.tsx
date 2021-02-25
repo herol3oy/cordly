@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import NextLink from 'next/link'
+import {firestore} from '../lib/firebase'
 import { useAuth } from '../utils/auth'
 import { FaFacebook } from 'react-icons/fa'
 import { FaGoogle } from 'react-icons/fa'
@@ -16,6 +17,13 @@ import {
     Spacer,
     Flex,
     useColorMode,
+    Avatar,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
+    MenuDivider,
+    Link,
 } from '@chakra-ui/react'
 
 export default function Navigation() {
@@ -28,6 +36,7 @@ export default function Navigation() {
     const uid = auth.user?.uid
 
     useEffect(() => {
+        console.log(auth)
         if (userSignin && uid !== undefined) {
             toast({
                 title: 'Welcome.',
@@ -82,12 +91,14 @@ export default function Navigation() {
             bg={'gray.800'}
             shadow="0 0 10px 0 rgba(0,0,0, 0.035);"
         >
-            <Link href={'/'}>
-                <a>
+            <NextLink href={'/'} passHref>
+                <Link>
                     <Heading>Cordly</Heading>
-                </a>
-            </Link>
+                </Link>
+            </NextLink>
+
             <Spacer />
+
             <IconButton
                 size={'md'}
                 fontSize={'lg'}
@@ -122,13 +133,34 @@ export default function Navigation() {
                     direction={{ base: 'column', sm: 'row' }}
                     alignItems={'center'}
                 >
-                    <Text>Welcome {auth.user.email.split('@')[0]}!</Text>
-                    <Button colorScheme={'red'} onClick={signOut}>
-                        Sign out
-                    </Button>
-                    <Link href={'/dashboard'}>
-                        <Button colorScheme={'pink'}>Dashboard</Button>
-                    </Link>
+                    <Text>
+                        
+                    {auth.user.email.toString()}
+                    </Text>
+                    <Menu>
+                        <MenuButton
+                            as={IconButton}
+                            aria-label="Menu button"
+                            icon={<Avatar showBorder={true} borderColor='green.200' name={auth.user.displayName} src={auth.user.photoUrl} />}
+                            size="xs"
+                            variant="outline"
+                        />
+                        <MenuList>
+                            <MenuItem>
+                                <NextLink href={'/dashboard'} passHref>
+                                    <Link>
+                                        Dashboard
+                                    </Link>
+                                </NextLink>
+                            </MenuItem>
+
+                            <MenuDivider />
+
+                            <MenuItem onClick={signOut}>
+                                Sign out
+                             </MenuItem>
+                        </MenuList>
+                    </Menu>
                 </Stack>
             )}
         </Flex>

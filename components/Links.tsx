@@ -151,7 +151,7 @@ export default function Links() {
                                         {/* youtube */}
                                         {Object.keys(i)[0]}
                                     </Text>
-                                    <Text fontSize="xs">
+                                    <Text fontSize="xs" color={'gray.400'}>
                                         {Object.values(i)[0]}
                                     </Text>
                                 </Link>

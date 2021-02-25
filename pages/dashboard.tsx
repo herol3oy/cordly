@@ -37,30 +37,42 @@ function DashboardPanel() {
                         <Box>🔗</Box>
                         <Text ml={3}>Links</Text>
                     </Tab>
+
                     <Tab>
                         <Box>✍️</Box>
                         <Text ml={3}>Bio</Text>
                     </Tab>
+
                     <Tab>
                         <Box>👑</Box>
                         <Text ml={3}>Username</Text>
                     </Tab>
                 </TabList>
+
+
                 <TabPanels>
+
                     <TabPanel>
                         <Links />
                     </TabPanel>
+
                     <TabPanel>
                         <Bio />
                     </TabPanel>
+
                     <TabPanel>
                         <Username />
                     </TabPanel>
+
                 </TabPanels>
             </Tabs>
+
+
             <Text mt="auto" textAlign="center">
                 CORDLY
             </Text>
+            
         </Flex>
     )
 }
+
