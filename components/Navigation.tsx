@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useContext } from 'react'
 import NextLink from 'next/link'
-import {firestore} from '../lib/firebase'
-import { useAuth } from '../utils/auth'
+import { useRouter } from 'next/router'
+import { auth, googleAuthProvider, facebookAuthProvider } from '../lib/firebase';
+import { UserContext } from '../lib/context'
 import { FaFacebook } from 'react-icons/fa'
 import { FaGoogle } from 'react-icons/fa'
 import { FaSun } from 'react-icons/fa'
@@ -27,17 +28,15 @@ import {
 } from '@chakra-ui/react'
 
 export default function Navigation() {
-    const [userSignin, userSigninSet] = useState(false)
 
-    const auth = useAuth()
+    const { user, username } = useContext(UserContext)
+
+    const router = useRouter();
 
     const toast = useToast()
 
-    const uid = auth.user?.uid
-
     useEffect(() => {
-        console.log(auth)
-        if (userSignin && uid !== undefined) {
+        if (user) {
             toast({
                 title: 'Welcome.',
                 description: "We've created your account for you.",
@@ -46,28 +45,23 @@ export default function Navigation() {
                 isClosable: true,
             })
         }
-    }, [uid, userSignin])
+    }, [user])
 
     const { colorMode, toggleColorMode } = useColorMode()
     const SwitchIcon = useColorModeValue(FaMoon, FaSun)
     const text = useColorModeValue('dark', 'light')
 
-    const googleSignin = () => {
-        auth.signinWithGoogle()
-
-        userSigninSet(true)
+    const signInWithGoogle = async () => {
+        await auth.signInWithPopup(googleAuthProvider);
     }
 
-    const facebookSignin = () => {
-        auth.signinWithFacebook()
-
-        userSigninSet(true)
+    const signInWithFacebook = async () => {
+        await auth.signInWithPopup(facebookAuthProvider);
     }
 
     const signOut = () => {
-        auth.signout()
-
-        userSigninSet(false)
+        auth.signOut()
+        router.reload()
 
         toast({
             title: 'See ya!.',
@@ -77,6 +71,7 @@ export default function Navigation() {
             isClosable: false,
         })
     }
+
 
     return (
         <Flex
@@ -110,38 +105,38 @@ export default function Navigation() {
                 onClick={toggleColorMode}
                 mr={2}
             />
-            {!auth.user && (
+            {!user && (
                 <Stack direction={{ base: 'column', sm: 'row' }}>
                     <Button
                         colorScheme={'twitter'}
                         leftIcon={<FaGoogle />}
-                        onClick={googleSignin}
+                        onClick={signInWithGoogle}
                     >
                         Google
                     </Button>
                     <Button
                         colorScheme={'facebook'}
                         leftIcon={<FaFacebook />}
-                        onClick={facebookSignin}
+                        onClick={signInWithFacebook}
                     >
                         Facebook
                     </Button>
                 </Stack>
             )}
-            {auth.user && (
+            {user && (
                 <Stack
                     direction={{ base: 'column', sm: 'row' }}
                     alignItems={'center'}
                 >
                     <Text>
-                        
-                    {auth.user.email.toString()}
+
+                        Welcome {username || user.email}!
                     </Text>
                     <Menu>
                         <MenuButton
                             as={IconButton}
                             aria-label="Menu button"
-                            icon={<Avatar showBorder={true} borderColor='green.200' name={auth.user.displayName} src={auth.user.photoUrl} />}
+                            icon={<Avatar showBorder={true} borderColor='green.200' name={user.displayName} src={user.photoUrl} />}
                             size="xs"
                             variant="outline"
                         />
