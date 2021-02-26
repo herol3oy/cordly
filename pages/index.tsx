@@ -41,7 +41,7 @@ export default function Home({ musicians }) {
 
             </Text>
                 {/* <FeatureMusician /> */}
-                {/* <Musician data={musicians} /> */}
+                <Musician data={musicians} />
             </Container>
         </Flex>
     )

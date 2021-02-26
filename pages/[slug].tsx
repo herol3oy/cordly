@@ -81,7 +81,7 @@ const ProfileBio = ({ data }) => {
             <HStack spacing={4}>
 
                 {
-                    skills.map((i, idx) => (
+                    skills?.map((i, idx) => (
                         <Tag
                             key={idx}
                             size={'lg'}

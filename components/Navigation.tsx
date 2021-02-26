@@ -131,6 +131,7 @@ export default function Navigation() {
                     <Button
                         colorScheme={'twitter'}
                         leftIcon={<FaGoogle />}
+                        size={'xs'}
                         onClick={signInWithGoogle}
                     >
                         Google
@@ -138,6 +139,7 @@ export default function Navigation() {
                     <Button
                         colorScheme={'facebook'}
                         leftIcon={<FaFacebook />}
+                        size={'xs'}
                         onClick={signInWithFacebook}
                     >
                         Facebook
@@ -149,7 +151,9 @@ export default function Navigation() {
                     direction={{ base: 'column', sm: 'row' }}
                     alignItems={'center'}
                 >
-                    <Text>
+                    <Text
+                        display={['none', 'block']}
+                    >
                         Hi {username || user.displayName}!
                     </Text>
                     <Menu>
