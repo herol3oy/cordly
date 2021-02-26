@@ -24,7 +24,7 @@ export default function Dashboard(props) {
 
 function DashboardPanel() {
     return (
-        <Flex as="section" minH="100vh" direction="column" alignItems="center">
+        <Flex as="section" minH="90vh" direction="column" alignItems="center">
             <Tabs
                 paddingTop="12"
                 isFitted

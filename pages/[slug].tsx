@@ -12,6 +12,14 @@ import {
     Box,
     Flex,
     Heading,
+    Avatar,
+    Badge,
+    Stack,
+    HStack,
+    TagLabel,
+    Tag,
+    TagCloseButton,
+    useColorModeValue,
 } from '@chakra-ui/react'
 
 export default function User({ data }) {
@@ -34,7 +42,7 @@ export default function User({ data }) {
                         <ProfileLinks data={data} />
                     </TabPanel>
                     <TabPanel>
-                        <p>two!</p>
+                        <ProfileBio data={data} />
                     </TabPanel>
                 </TabPanels>
             </Tabs>
@@ -42,6 +50,52 @@ export default function User({ data }) {
                 CORDLY
             </Text>
         </Flex>
+    )
+}
+
+const ProfileBio = ({ data }) => {
+    const {
+        profileImg,
+        photoUrl,
+        email,
+        skills,
+        location,
+        stagename } = data
+
+    return (
+        <>
+            <ProfileAvatar email={email} profileImg={profileImg} photoURL={photoUrl} />
+            <Text
+                textTransform={'uppercase'}
+                color={'blue.400'}
+                fontWeight={600}
+                fontSize={'sm'}
+                bg={useColorModeValue('blue.50', 'blue.900')}
+                p={2}
+                alignSelf={'flex-start'}
+                rounded={'md'}
+            >
+                📍{location}
+            </Text>
+            {stagename}
+            <HStack spacing={4}>
+
+                {
+                    skills.map((i, idx) => (
+                        <Tag
+                            key={idx}
+                            size={'lg'}
+                            borderRadius="full"
+                            variant="solid"
+                            colorScheme="purple"
+                        >
+                            <TagLabel>{i}</TagLabel>
+                        </Tag>
+                    ))
+                }
+            </HStack>
+
+        </>
     )
 }
 
@@ -95,19 +149,7 @@ const ProfileLinks = ({ data }) => {
 
     return (
         <Flex align="center" alignItems="stretch" direction="column">
-            <Box mb={6}>
-                <Image
-                    src={profileImg || photoUrl}
-                    borderRadius="full"
-                    boxSize="100px"
-                    objectFit="cover"
-                    alt="Profile picture"
-                    my={3}
-                />
-                <Heading as="h6" size="sm">
-                    @{email.split('@')?.[0]}
-                </Heading>
-            </Box>
+            <ProfileAvatar email={email} profileImg={profileImg} photoURL={photoUrl} />
             <VStack
                 direction={['column', 'row']}
                 spacing={4}
@@ -117,6 +159,24 @@ const ProfileLinks = ({ data }) => {
                 {links}
             </VStack>
         </Flex>
+    )
+}
+
+const ProfileAvatar = ({ profileImg, photoURL, email }) => {
+
+    return (
+        <Box mb={6}>
+            <Avatar
+                src={profileImg || photoURL}
+                alt="Profile picture"
+                size="xl"
+                margin="auto"
+                mb={4}
+            />
+            <Heading as="h6" size="sm">
+                @{email.split('@')?.[0]}
+            </Heading>
+        </Box>
     )
 }
 
