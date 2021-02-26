@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
 import NextLink from 'next/link'
-import { useRouter } from 'next/router'
 import { auth, googleAuthProvider, facebookAuthProvider } from '../lib/firebase';
 import { firestore } from '../lib/firebase'
 import { UserContext } from '../lib/context'
@@ -35,8 +34,6 @@ export default function Navigation() {
 
     const { user, username } = useContext(UserContext)
 
-    const router = useRouter()
-
     const toast = useToast()
 
     const { colorMode, toggleColorMode } = useColorMode()
@@ -64,7 +61,6 @@ export default function Navigation() {
 
     const signOut = () => {
         auth.signOut()
-        router.reload()
 
         toast({
             title: 'See ya!.',
@@ -113,7 +109,7 @@ export default function Navigation() {
         >
             <NextLink href={'/'} passHref>
                 <Link>
-                    <Heading>Cordly</Heading>
+                    <Heading textStyle={'logo'}>Cordly</Heading>
                 </Link>
             </NextLink>
 

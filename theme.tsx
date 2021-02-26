@@ -2,6 +2,17 @@ import { extendTheme } from '@chakra-ui/react'
 import { mode } from '@chakra-ui/theme-tools'
 
 const theme = extendTheme({
+    textStyles: {
+        logo: {
+            fontFamily: '"Shrikhand", cursive'
+        },
+        intro: {
+            fontFamily: '"Bungee Shade", cursive'
+        },
+        textsub: {
+            fontFamily: '"Playfair Display", serif'
+        },
+    },
     config: {
         initialColorMode: 'dark',
         useSystemColorMode: false,
