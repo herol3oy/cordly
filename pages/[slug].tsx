@@ -47,7 +47,7 @@ export default function User({ data }) {
 
 const ProfileLinks = ({ data }) => {
 
-    const { photoUrl, email, urls } = data
+    const { profileImg, photoUrl, email, urls } = data
 
     const links = urls?.map((i, idx) => (
         <Box
@@ -97,7 +97,7 @@ const ProfileLinks = ({ data }) => {
         <Flex align="center" alignItems="stretch" direction="column">
             <Box mb={6}>
                 <Image
-                    src={photoUrl}
+                    src={profileImg || photoUrl}
                     borderRadius="full"
                     boxSize="100px"
                     objectFit="cover"
@@ -132,9 +132,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         }
     })
 
-
-
     return {
-        props: { data },
+        props: { data }
     }
 }

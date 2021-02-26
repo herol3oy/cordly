@@ -1,13 +1,15 @@
-import { useEffect, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { auth, googleAuthProvider, facebookAuthProvider } from '../lib/firebase';
+import { firestore } from '../lib/firebase'
 import { UserContext } from '../lib/context'
 import { FaFacebook } from 'react-icons/fa'
 import { FaGoogle } from 'react-icons/fa'
 import { FaSun } from 'react-icons/fa'
 import { FaMoon } from 'react-icons/fa'
 import { useToast } from '@chakra-ui/react'
+import { createUser } from '../utils/db'
 import {
     Button,
     Stack,
@@ -28,35 +30,36 @@ import {
 } from '@chakra-ui/react'
 
 export default function Navigation() {
+    const [singleUser, singleUserSet] = useState(null)
+    const [newProfileImg, newProfileImgSet] = useState('')
 
     const { user, username } = useContext(UserContext)
 
-    const router = useRouter();
+    const router = useRouter()
 
     const toast = useToast()
-
-    useEffect(() => {
-        if (user) {
-            toast({
-                title: 'Welcome.',
-                description: "We've created your account for you.",
-                status: 'success',
-                duration: 3000,
-                isClosable: true,
-            })
-        }
-    }, [user])
 
     const { colorMode, toggleColorMode } = useColorMode()
     const SwitchIcon = useColorModeValue(FaMoon, FaSun)
     const text = useColorModeValue('dark', 'light')
 
-    const signInWithGoogle = async () => {
-        await auth.signInWithPopup(googleAuthProvider);
+    const query = firestore.collection('users').doc(user?.uid)
+
+    useEffect(() => {
+        query.get().then((doc) => {
+            doc.data()?.profileImg &&
+                newProfileImgSet(doc.data().profileImg)
+        })
+    }, [user])
+
+    const signInWithGoogle = () => {
+        auth.signInWithPopup(googleAuthProvider)
+            .then((response) => handleUser(response.user))
     }
 
-    const signInWithFacebook = async () => {
-        await auth.signInWithPopup(facebookAuthProvider);
+    const signInWithFacebook = () => {
+        auth.signInWithPopup(facebookAuthProvider)
+            .then((response) => handleUser(response.user))
     }
 
     const signOut = () => {
@@ -72,6 +75,28 @@ export default function Navigation() {
         })
     }
 
+    const handleUser = (rawUser) => {
+        if (rawUser) {
+            const user = formatUser(rawUser)
+
+            createUser(user.uid, user)
+            singleUserSet(user)
+            return user
+        } else {
+            singleUserSet(false)
+            return false
+        }
+    }
+
+    const formatUser = (user) => {
+        return {
+            uid: user.uid,
+            email: user.email,
+            name: user.displayName,
+            provider: user.providerData[0].providerId,
+            photoUrl: user.photoURL,
+        }
+    }
 
     return (
         <Flex
@@ -129,14 +154,13 @@ export default function Navigation() {
                     alignItems={'center'}
                 >
                     <Text>
-
-                        Welcome {username || user.email}!
+                        Hi {username || user.displayName}!
                     </Text>
                     <Menu>
                         <MenuButton
                             as={IconButton}
                             aria-label="Menu button"
-                            icon={<Avatar showBorder={true} borderColor='green.200' name={user.displayName} src={user.photoUrl} />}
+                            icon={<Avatar showBorder={true} borderColor='green.200' name={user.displayName} src={newProfileImg || user.photoURL} />}
                             size="xs"
                             variant="outline"
                         />

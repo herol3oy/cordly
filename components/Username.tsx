@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useContext } from 'react'
 import { firestore } from '../lib/firebase'
 import { useForm } from 'react-hook-form'
+import { UserContext } from '../lib/context'
 import { useAuth } from '../utils/auth'
 import debounce from 'lodash.debounce'
 import {
@@ -20,20 +21,23 @@ export default function Username() {
     const [formValue, setFormValue] = useState('')
     const [isValid, setIsValid] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [username, setUsername] = useState('')
+    const [userNameValue, userNameValueSet] = useState('')
 
-    const auth = useAuth()
+    // const auth = useAuth()
 
-    const query = firestore.collection('users').doc(auth.user.uid)
+    const {user, username} = useContext(UserContext)
+
+
+    const query = firestore.collection('users').doc(user.uid)
 
     const { register, handleSubmit, watch, reset, errors } = useForm()
 
     useEffect(() => {
         query.get().then((doc) => {
-            if (doc.data().username === undefined) {
-                setUsername(auth.user.uid)
+            if (doc.data()?.username === undefined) {
+                userNameValueSet(user.uid)
             }
-            setUsername(doc.data().username)
+            userNameValueSet(doc.data()?.username)
         })
 
         checkUsername(formValue)
@@ -76,7 +80,7 @@ export default function Username() {
     const onSubmit = () => {
         query.update({ username: formValue })
 
-        setUsername(formValue)
+        userNameValueSet(formValue)
         setFormValue('')
         setIsValid(false)
     }
@@ -98,7 +102,7 @@ export default function Username() {
                     <FormHelperText textAlign="left">
                         Current username: https://cord.ly/{` `}
                         <Code colorScheme="green">
-                            {username || auth.user.uid}
+                            {userNameValue || user.uid}
                         </Code>
                     </FormHelperText>
                     <Button

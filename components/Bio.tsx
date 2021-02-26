@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { updateProfilePicture } from '../utils/db'
 import { useAuth } from '../utils/auth'
-import { firestore, storage, STATE_CHANGED, arrayUnion } from '../lib/firebase'
+import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
 import _ from 'lodash'
 import { CUIAutoComplete } from 'chakra-ui-autocomplete'
 import { useForm } from 'react-hook-form'
+import { UserContext } from '../lib/context'
 import {
     Divider,
     Flex,
@@ -44,17 +45,18 @@ export default function Bio() {
     const [selectedItems, setSelectedItems] = useState([])
 
     const auth = useAuth()
+    const { user, username } = useContext(UserContext)
 
     const { register, handleSubmit, watch, errors } = useForm()
 
     const query = firestore
         .collection('users')
-        .where('uid', '==', auth.user.uid)
-
+        .where('uid', '==', user.uid)
+//s
     useEffect(() => {
         const getAllDashData = async () => {
             await query
-                .where('uid', '==', auth.user.uid)
+                .where('uid', '==', user.uid)
                 .onSnapshot((snapshot) => {
                     let changes = snapshot.docChanges()
                     changes.forEach((i) => {
@@ -63,7 +65,7 @@ export default function Bio() {
                 })
         }
         getAllDashData()
-    }, [auth.user.uid])
+    }, [user.uid])
 
     const handleCreateItem = (item) => {
         setPickerItems((curr) => [...curr, item])
@@ -93,7 +95,7 @@ export default function Bio() {
 
         firestore
             .collection('users')
-            .doc(auth.user.uid)
+            .doc(user.uid)
             .update({
                 ...data,
                 skills,
@@ -107,7 +109,7 @@ export default function Bio() {
         avatarNameSet(file['name'])
 
         const ref = storage.ref(
-            `uploads/${auth.user.uid}/${Date.now()}.${extension}`
+            `uploads/${user.uid}/${Date.now()}.${extension}`
         )
         setUploading(true)
 
@@ -123,7 +125,7 @@ export default function Bio() {
 
         task.then((d) => ref.getDownloadURL()).then((url) => {
             downloadURLSet(url)
-            updateProfilePicture(auth.user.uid, url)
+            updateProfilePicture(user.uid, url)
             setUploading(false)
         })
     }
@@ -139,7 +141,7 @@ export default function Bio() {
         >
             <Stack>
                 <Avatar
-                    src={data || auth.user.photoUrl || '/avatar.png'}
+                    src={data || user.photoURL }
                     alt="Profile picture"
                     size="xl"
                     margin="auto"
