@@ -161,7 +161,7 @@ export default function Links() {
                     maxW="lg"
                     textAlign="center"
                 >
-                    Add your social media links 
+                    Add your social media links
             </Text>
             </VStack>
             <FormControl>
@@ -199,7 +199,7 @@ export default function Links() {
 
             <Divider my={5} />
 
-            { userUrls}
+            {userUrls}
         </Flex >
 
     )

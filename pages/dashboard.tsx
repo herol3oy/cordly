@@ -2,7 +2,7 @@ import AuthCheck from '../components/AuthCheck'
 import Bio from '../components/Bio'
 import Links from '../components/Links'
 import Username from '../components/Username'
-
+import PhonePreview from '../components/PhonePreview'
 import {
     Box,
     Flex,
@@ -12,6 +12,7 @@ import {
     TabPanel,
     TabPanels,
     Text,
+    SimpleGrid,
 } from '@chakra-ui/react'
 
 export default function Dashboard(props) {
@@ -24,55 +25,52 @@ export default function Dashboard(props) {
 
 function DashboardPanel() {
     return (
-        <Flex as="section" minH="90vh" direction="column" alignItems="center">
-            <Tabs
-                paddingTop="12"
-                isFitted
-                align="center"
-                variant="line"
-                colorScheme="green"
-            >
-                <TabList>
-                    <Tab>
-                        <Box>🔗</Box>
-                        <Text ml={3}>Links</Text>
-                    </Tab>
+        <SimpleGrid columns={[1, 1, 2, 2]} spacing={5}>
+            <Flex as="section" direction="column" alignItems="center">
+                <Tabs
+                    paddingTop="12"
+                    isFitted
+                    align="center"
+                    variant="line"
+                    colorScheme="green"
+                >
+                    <TabList>
+                        <Tab>
+                            <Box>🔗</Box>
+                            <Text ml={3}>Links</Text>
+                        </Tab>
 
-                    <Tab>
-                        <Box>✍️</Box>
-                        <Text ml={3}>Bio</Text>
-                    </Tab>
+                        <Tab>
+                            <Box>✍️</Box>
+                            <Text ml={3}>Bio</Text>
+                        </Tab>
 
-                    <Tab>
-                        <Box>👑</Box>
-                        <Text ml={3}>Username</Text>
-                    </Tab>
-                </TabList>
+                        <Tab>
+                            <Box>👑</Box>
+                            <Text ml={3}>Username</Text>
+                        </Tab>
+                    </TabList>
+                    <TabPanels>
 
+                        <TabPanel>
+                            <Links />
+                        </TabPanel>
 
-                <TabPanels>
+                        <TabPanel>
+                            <Bio />
+                        </TabPanel>
 
-                    <TabPanel>
-                        <Links />
-                    </TabPanel>
+                        <TabPanel>
+                            <Username />
+                        </TabPanel>
 
-                    <TabPanel>
-                        <Bio />
-                    </TabPanel>
+                    </TabPanels>
+                </Tabs>
+            </Flex>
 
-                    <TabPanel>
-                        <Username />
-                    </TabPanel>
+            <PhonePreview />
 
-                </TabPanels>
-            </Tabs>
-
-
-            <Text mt="auto" textAlign="center">
-                CORDLY
-            </Text>
-            
-        </Flex>
+        </SimpleGrid>
     )
 }
 

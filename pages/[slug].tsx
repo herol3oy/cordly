@@ -25,7 +25,11 @@ import {
 export default function User({ data }) {
 
     return (
-        <Flex as="section" minH="100vh" direction="column" alignItems="center">
+        <Flex
+            as="section"
+            minH="100vh"
+            direction="column"
+            alignItems="center">
             <Tabs
                 paddingTop="12"
                 isFitted
@@ -106,21 +110,20 @@ const ProfileLinks = ({ data }) => {
     const links = urls?.map((i, idx) => (
         <Box
             key={idx}
-            display={{ base: 'flex', md: 'flex' }}
             alignItems="center"
             as="a"
             aria-label={`Corldly ${email} social links`}
             href={Object.values(i)[0].toString()}
             target="_blank"
             rel="noopener noreferrer"
-            bg="green.300"
+            bg="green.700"
             color="white"
             p={3}
             borderWidth="1px"
             borderColor="gray.200"
             px="1em"
             minH="36px"
-            minW="sm"
+            minW={['90vw','md','md', 'lg']}
             borderRadius="md"
             fontSize="sm"
             outline="0"
