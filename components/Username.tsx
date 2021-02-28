@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form'
 import { UserContext } from '../lib/context'
 import { useAuth } from '../utils/auth'
 import debounce from 'lodash.debounce'
+import { FaCheck, FaTimes } from 'react-icons/fa'
+
 import {
     Stack,
     InputLeftAddon,
@@ -15,6 +17,8 @@ import {
     Button,
     Alert,
     AlertIcon,
+    InputRightElement,
+    Spinner,
 } from '@chakra-ui/react'
 
 export default function Username() {
@@ -25,7 +29,7 @@ export default function Username() {
 
     // const auth = useAuth()
 
-    const {user, username} = useContext(UserContext)
+    const { user, username } = useContext(UserContext)
 
 
     const query = firestore.collection('users').doc(user.uid)
@@ -85,6 +89,18 @@ export default function Username() {
         setIsValid(false)
     }
 
+    const inputStatus = () => {
+        if (loading) {
+            return <Spinner color={'gray.100'} bg={'transparent'} />
+        }
+        if (isValid) {
+            return <FaCheck color={'green.100'} />
+        }
+        if (formValue && !isValid) {
+            return <FaTimes color={'red'} />
+        }
+    }
+
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <Stack width="100%" spacing={8}>
@@ -98,14 +114,20 @@ export default function Username() {
                             placeholder="Update your username"
                             ref={register}
                         />
+
+                        {
+                            <InputRightElement color="green.500" children={inputStatus()} />
+                        }
+
                     </InputGroup>
-                    <FormHelperText textAlign="left">
-                        Current username: https://cord.ly/{` `}
-                        <Code colorScheme="green">
-                            {userNameValue || user.uid}
+                    <FormHelperText color={'gray.200'} mt={'3'} textAlign="left">
+                        Current username:
+                        <Code fontSize='lg' colorScheme="green">
+                            https://cord.ly/{formValue || userNameValue || user.uid}
                         </Code>
                     </FormHelperText>
                     <Button
+                        mt={'10'}
                         type="submit"
                         colorScheme="green"
                         disabled={!isValid}

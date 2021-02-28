@@ -22,6 +22,8 @@ import {
     Text,
     IconButton,
     useColorModeValue,
+    VStack,
+    Heading,
 } from '@chakra-ui/react'
 
 export default function Links() {
@@ -144,6 +146,24 @@ export default function Links() {
             flexDirection={'column'}
             w={['90vw', '70vw', '60vw', '30vw']}
         >
+            <VStack my={'6'}>
+                <Heading
+                    borderBottom={'1px'}
+                    pb={2}
+                    fontWeight="500"
+                    as="h1"
+                >
+                    Social Links
+                </Heading>
+                <Text
+                    fontSize={["xl", "2xl"]}
+                    color={useColorModeValue("gray.500", "gray.200")}
+                    maxW="lg"
+                    textAlign="center"
+                >
+                    Add your social media links 
+            </Text>
+            </VStack>
             <FormControl>
                 <Stack spacing={2}>
                     <InputGroup size={'lg'}>
@@ -179,8 +199,8 @@ export default function Links() {
 
             <Divider my={5} />
 
-            {userUrls}
-        </Flex>
+            { userUrls}
+        </Flex >
 
     )
 }
