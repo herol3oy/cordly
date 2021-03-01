@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Username from '../components/Username'
 import PhonePreview from '../components/PhonePreview'
 import Links from '../components/Links'
@@ -23,9 +24,17 @@ export default function Dashboard(props) {
     )
 }
 
-function DashboardPanel() {
+const DashboardPanel = () => {
+
+    const [urls, urlsSet] = useState([])
+    const [formValue, formValueSet] = useState('')
+    const [userNameValue, userNameValueSet] = useState('')
+    const [profileImg, profileImgSet] = useState('')
+
     return (
-        <SimpleGrid columns={[1, 1, 2, 2]} spacing={5}>
+        <SimpleGrid 
+        bg='green.600'
+        columns={[1, 1, 2, 2]} spacing={5}>
             <Flex as="section" direction="column" alignItems="center">
                 <Tabs
                     paddingTop="12"
@@ -52,21 +61,33 @@ function DashboardPanel() {
                     </TabList>
                     <TabPanels>
                         <TabPanel>
-                            <Links />
+                            <Links urls={urls} urlsSet={urlsSet} />
                         </TabPanel>
 
                         <TabPanel>
-                            <Bio />
+                            <Bio
+                                profileImg={profileImg}
+                                profileImgSet={profileImgSet}
+                            />
                         </TabPanel>
 
                         <TabPanel>
-                            <Username />
+                            <Username
+                                formValue={formValue}
+                                formValueSet={formValueSet}
+                                userNameValue={userNameValue}
+                                userNameValueSet={userNameValueSet}
+                            />
                         </TabPanel>
                     </TabPanels>
                 </Tabs>
             </Flex>
 
-            <PhonePreview />
+            <PhonePreview
+                urls={urls}
+                userNameValue={userNameValue}
+                profileImg={profileImg}
+            />
         </SimpleGrid>
     )
 }

@@ -1,3 +1,4 @@
+import NextLink from 'next/link'
 import { GetServerSideProps } from 'next'
 import { firestore } from '../lib/firebase'
 import {
@@ -16,13 +17,17 @@ import {
     TagLabel,
     Tag,
     useColorModeValue,
+    Button,
+    Link,
 } from '@chakra-ui/react'
 
 export default function User({ data }) {
     return (
         <Flex as="section" minH="100vh" direction="column" alignItems="center">
+
+            <ProfileAvatar data={data} />
+
             <Tabs
-                paddingTop="12"
                 isFitted
                 align="center"
                 variant="line"
@@ -49,15 +54,10 @@ export default function User({ data }) {
 }
 
 const ProfileBio = ({ data }) => {
-    const { profileImg, stagename, photoUrl, location, skills, email } = data
+    const { stagename, location, skills } = data
 
     return (
         <>
-            <ProfileAvatar
-                email={email}
-                profileImg={profileImg}
-                photoURL={photoUrl}
-            />
             <Text
                 textTransform={'uppercase'}
                 color={'blue.400'}
@@ -92,55 +92,20 @@ const ProfileLinks = ({ data }) => {
     const { profileImg, photoUrl, email, urls } = data
 
     const links = urls?.map((i, idx) => (
-        <Box
-            key={idx}
-            alignItems="center"
-            as="a"
-            aria-label={`Corldly ${email} social links`}
-            href={Object.values(i)[0].toString()}
-            target="_blank"
-            rel="noopener noreferrer"
-            bg="green.700"
-            color="white"
-            p={3}
-            borderWidth="1px"
-            borderColor="gray.200"
-            px="1em"
-            minH="36px"
-            minW={['90vw', 'md', 'md', 'lg']}
-            borderRadius="md"
-            fontSize="sm"
-            outline="0"
-            transition="all 0.3s"
-            _hover={{
-                bg: 'green.100',
-                borderColor: 'green.100',
-            }}
-            _active={{
-                borderColor: 'gray.200',
-            }}
-            _focus={{
-                boxShadow: 'outline',
-            }}
-        >
-            <Box
-                m={'auto'}
-                as="strong"
-                lineHeight="inherit"
-                fontWeight="semibold"
-            >
-                {Object.keys(i)[0]}
-            </Box>
-        </Box>
+
+        <Button key={idx} minW={['90vw', 'md', 'md', 'lg']}>
+            <NextLink href={Object.values(i)[0].toString()} passHref>
+                <Link isExternal>
+                    {Object.keys(i)[0].toString()}
+                </Link>
+            </NextLink>
+        </Button>
+
+
     ))
 
     return (
         <Flex align="center" alignItems="stretch" direction="column">
-            <ProfileAvatar
-                email={email}
-                profileImg={profileImg}
-                photoURL={photoUrl}
-            />
             <VStack
                 direction={['column', 'row']}
                 spacing={4}
@@ -153,18 +118,20 @@ const ProfileLinks = ({ data }) => {
     )
 }
 
-const ProfileAvatar = ({ profileImg, photoURL, email }) => {
+const ProfileAvatar = ({ data }) => {
+    const { profileImg, email, photoUrl, username } = data
+
     return (
-        <Box mb={6}>
+        <Box mt={10} mb={5}>
             <Avatar
-                src={profileImg || photoURL}
+                src={profileImg || photoUrl}
                 alt="Profile picture"
                 size="xl"
                 margin="auto"
                 mb={4}
             />
             <Heading as="h6" size="sm">
-                @{email.split('@')?.[0]}
+                @{username || email.split('@')?.[0]}
             </Heading>
         </Box>
     )

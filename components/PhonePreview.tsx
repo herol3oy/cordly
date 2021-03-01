@@ -1,3 +1,4 @@
+import NextLink from 'next/link'
 import { LinkIcon } from '@chakra-ui/icons'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import {
@@ -15,27 +16,39 @@ import {
     Link,
 } from '@chakra-ui/react'
 
-export default function PhonePreview() {
+export default function PhonePreview({ urls, userNameValue, profileImg, }) {
     return (
         <Flex
             as="section"
             flexDirection="column"
             alignItems="center"
             justifyContent="center"
+            bg='darkslategray'
         >
+
             <Box
-                borderColor={'gray'}
+                borderColor={'gray.300'}
                 width={['90vw', 'sm']}
-                p={5}
-                borderWidth={[12, 25]}
-                borderRadius={50}
-                h={600}
+                borderWidth={[12, 20]}
+                borderRadius={65}
+                h={724}
                 overflow="hidden"
                 textAlign="center"
-                mb={10}
+                my={10}
+                bg='dimgray'
             >
+                <Avatar
+                    mt={5}
+                    size="lg"
+                    name="profile picture"
+                    src={profileImg}
+                />
+
+                <Text mb={5} mt={2} textAlign="center">
+                    @{userNameValue}
+                </Text>
                 <Tabs
-                    isFitted
+                    // isFitted
                     align="center"
                     variant="line"
                     colorScheme="green"
@@ -54,10 +67,16 @@ export default function PhonePreview() {
 
                     <TabPanels>
                         <TabPanel>
-                            <LinksPreviewPanel />
+                            <LinksPreviewPanel
+                                urls={urls}
+                                userNameValue={userNameValue}
+                                profileImg={profileImg}
+                            />
                         </TabPanel>
 
-                        <TabPanel>{/* <Bio /> */}</TabPanel>
+                        <TabPanel>
+                            <BioPreviewPanel profileImg={profileImg} />
+                        </TabPanel>
                     </TabPanels>
                 </Tabs>
             </Box>
@@ -76,9 +95,9 @@ export default function PhonePreview() {
             >
                 <LinkIcon />
 
-                <Link textAlign="left" href={'/'} isExternal>
+                <Link textAlign="left" href={`/${userNameValue}`} isExternal>
                     <Text fontSize={'xl'} fontWeight={'bold'}>
-                        https://cord.ly/herol3oy
+                        https://cord.ly/{userNameValue}
                     </Text>
                 </Link>
                 <ExternalLinkIcon />
@@ -87,25 +106,32 @@ export default function PhonePreview() {
     )
 }
 
-const LinksPreviewPanel = () => {
+const LinksPreviewPanel = ({ urls, userNameValue, profileImg }) => {
+    return (
+        <Stack>
+            {
+                urls.map((i, idx) => (
+                    <Button key={idx} w={'100%'}>
+                        <NextLink href={Object.values(i)[0].toString()} passHref>
+                            <Link isExternal>
+                                {Object.keys(i)[0].toString()}
+                            </Link>
+                        </NextLink>
+                    </Button>
+                ))
+            }
+        </Stack>
+    )
+}
+
+const BioPreviewPanel = () => {
     return (
         <>
-            <Avatar
+            {/* <Avatar
                 size="lg"
                 name="profile picture"
-                // src="https://bit.ly/prosper-baba"
-            />
-
-            <Text mb={5} mt={2} textAlign="center">
-                @herol3oy
-            </Text>
-            <Stack>
-                <Button w={'100%'}>Youtube</Button>
-                <Button w={'100%'}>Instagram</Button>
-                <Button w={'100%'}>Spotify</Button>
-                <Button w={'100%'}>Soundcloud</Button>
-                <Button w={'100%'}>Dizzer</Button>
-            </Stack>
+                src={profileImg}
+            /> */}
         </>
     )
 }

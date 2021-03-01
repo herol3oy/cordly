@@ -33,11 +33,10 @@ const countries = [
     { value: 'keyboardist', label: 'Keyboardist' },
 ]
 
-export default function Bio() {
+export default function Bio({ profileImg, profileImgSet }) {
     const [uploading, setUploading] = useState(false)
     const [progress, setProgress] = useState(0)
     const [downloadURL, downloadURLSet] = useState(null)
-    const [data, dataSet] = useState('/avatar.png')
     const [avatarName, avatarNameSet] = useState('No file choosen')
     const [pickerItems, setPickerItems] = useState(countries)
     const [selectedItems, setSelectedItems] = useState([])
@@ -53,7 +52,7 @@ export default function Bio() {
             await query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
                 let changes = snapshot.docChanges()
                 changes.forEach((i) => {
-                    dataSet(i.doc.data().profileImg)
+                    profileImgSet(i.doc.data().profileImg)
                 })
             })
         }
@@ -135,7 +134,7 @@ export default function Bio() {
         >
             <Stack>
                 <Avatar
-                    src={data || user.photoURL}
+                    src={profileImg || user.photoURL}
                     alt="Profile picture"
                     size="xl"
                     margin="auto"

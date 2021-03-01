@@ -19,11 +19,9 @@ import {
     Spinner,
 } from '@chakra-ui/react'
 
-export default function Username() {
-    const [formValue, setFormValue] = useState('')
+export default function Username({ formValue, formValueSet, userNameValue, userNameValueSet }) {
     const [isValid, setIsValid] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [userNameValue, userNameValueSet] = useState('')
 
     const { user } = useContext(UserContext)
 
@@ -64,13 +62,13 @@ export default function Username() {
         const re = /^(?=[a-zA-Z0-9._]{3,15}$)(?!.*[_.]{2})[^_.].*[^_.]$/
 
         if (val.length < 3) {
-            setFormValue(val)
+            formValueSet(val)
             setLoading(false)
             setIsValid(false)
         }
 
         if (re.test(val)) {
-            setFormValue(val)
+            formValueSet(val)
             setLoading(true)
             setIsValid(false)
         }
@@ -80,7 +78,7 @@ export default function Username() {
         query.update({ username: formValue })
 
         userNameValueSet(formValue)
-        setFormValue('')
+        formValueSet('')
         setIsValid(false)
     }
 

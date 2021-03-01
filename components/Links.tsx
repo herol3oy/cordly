@@ -23,10 +23,10 @@ import {
     Heading,
 } from '@chakra-ui/react'
 
-export default function Links() {
-    const [state, stateSet] = useState({ title: '', link: '' })
-    const [urls, urlsSet] = useState([])
+export default function Links({ urls, urlsSet }) {
 
+    const [state, stateSet] = useState({ title: '', link: '' })
+    
     const { user } = useContext(UserContext)
 
     const toast = useToast()
@@ -106,7 +106,7 @@ export default function Links() {
                         <Text fontSize={'xl'} fontWeight={'bold'}>
                             {Object.keys(i)[0]}
                         </Text>
-                        <Text fontSize={'sm'}>{Object.values(i)[0]}</Text>
+                        <Text color='gray.300' fontSize={'sm'}>{Object.values(i)[0]}</Text>
                     </Link>
                     <Spacer />
 
