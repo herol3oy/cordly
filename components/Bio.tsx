@@ -1,11 +1,10 @@
 import { useState, useEffect, useContext } from 'react'
-import { updateProfilePicture } from '../utils/db'
-import { useAuth } from '../utils/auth'
-import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
-import _ from 'lodash'
-import { CUIAutoComplete } from 'chakra-ui-autocomplete'
-import { useForm } from 'react-hook-form'
 import { UserContext } from '../lib/context'
+import { useForm } from 'react-hook-form'
+import { updateProfilePicture } from '../utils/db'
+import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
+import { CUIAutoComplete } from 'chakra-ui-autocomplete'
+import _ from 'lodash'
 import {
     Divider,
     Flex,
@@ -18,7 +17,6 @@ import {
     Text,
     FormHelperText,
     Input,
-    Code,
     Button,
 } from '@chakra-ui/react'
 
@@ -44,25 +42,20 @@ export default function Bio() {
     const [pickerItems, setPickerItems] = useState(countries)
     const [selectedItems, setSelectedItems] = useState([])
 
-    const auth = useAuth()
-    const { user, username } = useContext(UserContext)
+    const { user } = useContext(UserContext)
 
-    const { register, handleSubmit, watch, errors } = useForm()
+    const { register, handleSubmit } = useForm()
 
-    const query = firestore
-        .collection('users')
-        .where('uid', '==', user.uid)
-//s
+    const query = firestore.collection('users').where('uid', '==', user.uid)
+
     useEffect(() => {
         const getAllDashData = async () => {
-            await query
-                .where('uid', '==', user.uid)
-                .onSnapshot((snapshot) => {
-                    let changes = snapshot.docChanges()
-                    changes.forEach((i) => {
-                        dataSet(i.doc.data().profileImg)
-                    })
+            await query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
+                let changes = snapshot.docChanges()
+                changes.forEach((i) => {
+                    dataSet(i.doc.data().profileImg)
                 })
+            })
         }
         getAllDashData()
     }, [user.uid])
@@ -111,6 +104,7 @@ export default function Bio() {
         const ref = storage.ref(
             `uploads/${user.uid}/${Date.now()}.${extension}`
         )
+
         setUploading(true)
 
         const task = ref.put(file)
@@ -141,7 +135,7 @@ export default function Bio() {
         >
             <Stack>
                 <Avatar
-                    src={data || user.photoURL }
+                    src={data || user.photoURL}
                     alt="Profile picture"
                     size="xl"
                     margin="auto"

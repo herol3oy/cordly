@@ -1,14 +1,13 @@
 import type { AppProps } from 'next/app'
-import Navigation from '../components/Navigation'
-import { AuthProvider } from '../utils/auth'
-import { ChakraProvider } from '@chakra-ui/react'
 import theme from '../theme'
-import { UserContext } from '../lib/context';
-import { useUserData } from '../lib/hooks';
-
+import Navigation from '../components/Navigation'
+import { useUserData } from '../lib/hooks'
+import { UserContext } from '../lib/context'
+import { ChakraProvider } from '@chakra-ui/react'
+import { AuthProvider } from '../utils/auth'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  const userData = useUserData();
+    const userData = useUserData()
 
     return (
         <UserContext.Provider value={userData}>
@@ -16,6 +15,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
                 <Navigation />
                 <Component {...pageProps} />
             </ChakraProvider>
-        </UserContext.Provider >
+        </UserContext.Provider>
     )
 }

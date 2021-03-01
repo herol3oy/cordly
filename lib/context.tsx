@@ -1,12 +1,12 @@
 import { createContext } from 'react'
 
-export const UserContext = createContext(
-    {
-        user: {
-            uid: '',
-            photoURL: '',
-            displayName: '',
-        },
-        username: ''
-    }
-)
+const userData = {
+    user: {
+        uid: '',
+        photoURL: '',
+        displayName: '',
+    },
+    username: '',
+}
+
+export const UserContext = createContext(userData)

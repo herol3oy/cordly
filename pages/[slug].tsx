@@ -6,30 +6,21 @@ import {
     TabPanel,
     TabPanels,
     TabList,
-    Image,
     VStack,
     Text,
     Box,
     Flex,
     Heading,
     Avatar,
-    Badge,
-    Stack,
     HStack,
     TagLabel,
     Tag,
-    TagCloseButton,
     useColorModeValue,
 } from '@chakra-ui/react'
 
 export default function User({ data }) {
-
     return (
-        <Flex
-            as="section"
-            minH="100vh"
-            direction="column"
-            alignItems="center">
+        <Flex as="section" minH="100vh" direction="column" alignItems="center">
             <Tabs
                 paddingTop="12"
                 isFitted
@@ -58,17 +49,15 @@ export default function User({ data }) {
 }
 
 const ProfileBio = ({ data }) => {
-    const {
-        profileImg,
-        photoUrl,
-        email,
-        skills,
-        location,
-        stagename } = data
+    const { profileImg, stagename, photoUrl, location, skills, email } = data
 
     return (
         <>
-            <ProfileAvatar email={email} profileImg={profileImg} photoURL={photoUrl} />
+            <ProfileAvatar
+                email={email}
+                profileImg={profileImg}
+                photoURL={photoUrl}
+            />
             <Text
                 textTransform={'uppercase'}
                 color={'blue.400'}
@@ -83,28 +72,23 @@ const ProfileBio = ({ data }) => {
             </Text>
             {stagename}
             <HStack spacing={4}>
-
-                {
-                    skills?.map((i, idx) => (
-                        <Tag
-                            key={idx}
-                            size={'lg'}
-                            borderRadius="full"
-                            variant="solid"
-                            colorScheme="purple"
-                        >
-                            <TagLabel>{i}</TagLabel>
-                        </Tag>
-                    ))
-                }
+                {skills?.map((i, idx) => (
+                    <Tag
+                        key={idx}
+                        size={'lg'}
+                        borderRadius="full"
+                        variant="solid"
+                        colorScheme="purple"
+                    >
+                        <TagLabel>{i}</TagLabel>
+                    </Tag>
+                ))}
             </HStack>
-
         </>
     )
 }
 
 const ProfileLinks = ({ data }) => {
-
     const { profileImg, photoUrl, email, urls } = data
 
     const links = urls?.map((i, idx) => (
@@ -123,7 +107,7 @@ const ProfileLinks = ({ data }) => {
             borderColor="gray.200"
             px="1em"
             minH="36px"
-            minW={['90vw','md','md', 'lg']}
+            minW={['90vw', 'md', 'md', 'lg']}
             borderRadius="md"
             fontSize="sm"
             outline="0"
@@ -152,7 +136,11 @@ const ProfileLinks = ({ data }) => {
 
     return (
         <Flex align="center" alignItems="stretch" direction="column">
-            <ProfileAvatar email={email} profileImg={profileImg} photoURL={photoUrl} />
+            <ProfileAvatar
+                email={email}
+                profileImg={profileImg}
+                photoURL={photoUrl}
+            />
             <VStack
                 direction={['column', 'row']}
                 spacing={4}
@@ -166,7 +154,6 @@ const ProfileLinks = ({ data }) => {
 }
 
 const ProfileAvatar = ({ profileImg, photoURL, email }) => {
-
     return (
         <Box mb={6}>
             <Avatar
@@ -184,18 +171,17 @@ const ProfileAvatar = ({ profileImg, photoURL, email }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-
     let data
 
     const query = await firestore.collection('users').get()
 
-    query.docs.map(doc => {
+    query.docs.map((doc) => {
         if ((doc.data().username || doc.data().uid) === params.slug) {
             data = doc.data()
         }
     })
 
     return {
-        props: { data }
+        props: { data },
     }
 }

@@ -25,34 +25,31 @@ import {
 
 export default function Musician({ data }) {
     return (
-
         <Flex mt={'28'}>
             <Wrap>
-                {
-                    Array.from(Array(100).keys()).map(i => {
-                        return (
-                            <WrapItem key={i} p={2} >
-                                <Tooltip label={'lll'}>
-                                    <Box
-                                        as={'a'}
-                                        href={'/'}
-                                        rounded={20}
-                                        width={'60px'}
-                                        height={'60px'}
-                                        overflow={'hidden'}
-                                    >
-                                        <NextImage
-                                            alt={'as'}
-                                            src={'/avatar.jpg'}
-                                            width={60}
-                                            height={80}
-                                        />
-                                    </Box>
-                                </Tooltip>
-                            </WrapItem>
-                        )
-
-                    })}
+                {Array.from(Array(100).keys()).map((i) => {
+                    return (
+                        <WrapItem key={i} p={2}>
+                            <Tooltip label={'lll'}>
+                                <Box
+                                    as={'a'}
+                                    href={'/'}
+                                    rounded={20}
+                                    width={'60px'}
+                                    height={'60px'}
+                                    overflow={'hidden'}
+                                >
+                                    <NextImage
+                                        alt={'as'}
+                                        src={'/avatar.jpg'}
+                                        width={60}
+                                        height={80}
+                                    />
+                                </Box>
+                            </Tooltip>
+                        </WrapItem>
+                    )
+                })}
             </Wrap>
             {/* {_.map(data, (i, idx) => (
                 <Flex key={idx}>

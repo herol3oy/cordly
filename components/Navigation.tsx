@@ -1,14 +1,14 @@
-import { useState, useEffect, useContext } from 'react'
 import NextLink from 'next/link'
-import { auth, googleAuthProvider, facebookAuthProvider } from '../lib/firebase';
-import { firestore } from '../lib/firebase'
+import { useToast } from '@chakra-ui/react'
+import { useState, useEffect, useContext } from 'react'
 import { UserContext } from '../lib/context'
-import { FaFacebook } from 'react-icons/fa'
-import { FaGoogle } from 'react-icons/fa'
+import { firestore } from '../lib/firebase'
 import { FaSun } from 'react-icons/fa'
 import { FaMoon } from 'react-icons/fa'
-import { useToast } from '@chakra-ui/react'
+import { FaGoogle } from 'react-icons/fa'
+import { FaFacebook } from 'react-icons/fa'
 import { createUser } from '../utils/db'
+import { auth, googleAuthProvider, facebookAuthProvider } from '../lib/firebase'
 import {
     Button,
     Stack,
@@ -29,7 +29,6 @@ import {
 } from '@chakra-ui/react'
 
 export default function Navigation() {
-    const [singleUser, singleUserSet] = useState(null)
     const [newProfileImg, newProfileImgSet] = useState('')
 
     const { user, username } = useContext(UserContext)
@@ -44,19 +43,20 @@ export default function Navigation() {
 
     useEffect(() => {
         query.get().then((doc) => {
-            doc.data()?.profileImg &&
-                newProfileImgSet(doc.data().profileImg)
+            doc.data()?.profileImg && newProfileImgSet(doc.data().profileImg)
         })
     }, [user])
 
     const signInWithGoogle = () => {
-        auth.signInWithPopup(googleAuthProvider)
-            .then((response) => handleUser(response.user))
+        auth.signInWithPopup(googleAuthProvider).then((response) =>
+            handleUser(response.user)
+        )
     }
 
     const signInWithFacebook = () => {
-        auth.signInWithPopup(facebookAuthProvider)
-            .then((response) => handleUser(response.user))
+        auth.signInWithPopup(facebookAuthProvider).then((response) =>
+            handleUser(response.user)
+        )
     }
 
     const signOut = () => {
@@ -76,10 +76,8 @@ export default function Navigation() {
             const user = formatUser(rawUser)
 
             createUser(user.uid, user)
-            singleUserSet(user)
             return user
         } else {
-            singleUserSet(false)
             return false
         }
     }
@@ -151,33 +149,34 @@ export default function Navigation() {
                     direction={{ base: 'column', sm: 'row' }}
                     alignItems={'center'}
                 >
-                    <Text
-                        display={['none', 'block']}
-                    >
+                    <Text display={['none', 'block']}>
                         Hi {username || user.displayName}!
                     </Text>
                     <Menu>
                         <MenuButton
                             as={IconButton}
                             aria-label="Menu button"
-                            icon={<Avatar showBorder={true} borderColor='green.200' name={user.displayName} src={newProfileImg || user.photoURL} />}
+                            icon={
+                                <Avatar
+                                    showBorder={true}
+                                    borderColor="green.200"
+                                    name={user.displayName}
+                                    src={newProfileImg || user.photoURL}
+                                />
+                            }
                             size="xs"
                             variant="outline"
                         />
                         <MenuList>
                             <MenuItem>
                                 <NextLink href={'/dashboard'} passHref>
-                                    <Link>
-                                        Dashboard
-                                    </Link>
+                                    <Link>Dashboard</Link>
                                 </NextLink>
                             </MenuItem>
 
                             <MenuDivider />
 
-                            <MenuItem onClick={signOut}>
-                                Sign out
-                             </MenuItem>
+                            <MenuItem onClick={signOut}>Sign out</MenuItem>
                         </MenuList>
                     </Menu>
                 </Stack>

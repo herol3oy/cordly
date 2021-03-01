@@ -1,11 +1,9 @@
-import { useState, useEffect, useCallback, useContext } from 'react'
-import { firestore } from '../lib/firebase'
-import { useForm } from 'react-hook-form'
-import { UserContext } from '../lib/context'
-import { useAuth } from '../utils/auth'
 import debounce from 'lodash.debounce'
+import { useState, useEffect, useCallback, useContext } from 'react'
+import { UserContext } from '../lib/context'
+import { useForm } from 'react-hook-form'
+import { firestore } from '../lib/firebase'
 import { FaCheck, FaTimes } from 'react-icons/fa'
-
 import {
     Stack,
     InputLeftAddon,
@@ -27,14 +25,11 @@ export default function Username() {
     const [loading, setLoading] = useState(false)
     const [userNameValue, userNameValueSet] = useState('')
 
-    // const auth = useAuth()
-
-    const { user, username } = useContext(UserContext)
-
+    const { user } = useContext(UserContext)
 
     const query = firestore.collection('users').doc(user.uid)
 
-    const { register, handleSubmit, watch, reset, errors } = useForm()
+    const { register, handleSubmit } = useForm()
 
     useEffect(() => {
         query.get().then((doc) => {
@@ -116,14 +111,21 @@ export default function Username() {
                         />
 
                         {
-                            <InputRightElement color="green.500" children={inputStatus()} />
+                            <InputRightElement
+                                color="green.500"
+                                children={inputStatus()}
+                            />
                         }
-
                     </InputGroup>
-                    <FormHelperText color={'gray.200'} mt={'3'} textAlign="left">
+                    <FormHelperText
+                        color={'gray.200'}
+                        mt={'3'}
+                        textAlign="left"
+                    >
                         Current username:
-                        <Code fontSize='lg' colorScheme="green">
-                            https://cord.ly/{formValue || userNameValue || user.uid}
+                        <Code fontSize="lg" colorScheme="green">
+                            https://cord.ly/
+                            {formValue || userNameValue || user.uid}
                         </Code>
                     </FormHelperText>
                     <Button

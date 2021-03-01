@@ -1,11 +1,9 @@
 import { useState, useEffect, useContext } from 'react'
-import NextLink from 'next/link'
-import { useAuth } from '../utils/auth'
+import { UserContext } from '../lib/context'
+import { LinkIcon, DeleteIcon } from '@chakra-ui/icons'
 import { firestore, arrayUnion, arrayRemove } from '../lib/firebase'
 import { FaPlusCircle } from 'react-icons/fa'
-import { LinkIcon, DeleteIcon } from '@chakra-ui/icons'
 import _ from 'lodash'
-import { UserContext } from '../lib/context'
 import {
     Button,
     Input,
@@ -18,7 +16,6 @@ import {
     InputGroup,
     InputLeftAddon,
     FormControl,
-    Box,
     Text,
     IconButton,
     useColorModeValue,
@@ -30,9 +27,7 @@ export default function Links() {
     const [state, stateSet] = useState({ title: '', link: '' })
     const [urls, urlsSet] = useState([])
 
-    const { user, username } = useContext(UserContext)
-
-    // const auth = useAuth()
+    const { user } = useContext(UserContext)
 
     const toast = useToast()
 
@@ -40,12 +35,10 @@ export default function Links() {
 
     useEffect(() => {
         const getAllUrls = async () => {
-            query
-                .where('uid', '==', user.uid)
-                .onSnapshot((snapshot) => {
-                    let changes = snapshot.docChanges()
-                    changes.forEach((i) => urlsSet(i.doc.data().urls))
-                })
+            query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
+                let changes = snapshot.docChanges()
+                changes.forEach((i) => urlsSet(i.doc.data().urls))
+            })
         }
         getAllUrls()
     }, [user.uid])
@@ -85,7 +78,6 @@ export default function Links() {
             margin={'auto'}
             flexDirection={'row'}
             w={['90vw', '70vw', '60vw', '30vw']}
-
         >
             <Stack
                 rounded={'xl'}
@@ -96,7 +88,7 @@ export default function Links() {
                 w={'100%'}
                 mb={2}
                 spacing={2}
-                bg='gray.700'
+                bg="gray.700"
             >
                 <Stack
                     color={'green.400'}
@@ -107,32 +99,25 @@ export default function Links() {
                     <LinkIcon />
 
                     <Link
-                        textAlign='left'
+                        textAlign="left"
                         href={Object.values(i)[0].toString()}
                         isExternal
                     >
                         <Text fontSize={'xl'} fontWeight={'bold'}>
                             {Object.keys(i)[0]}
                         </Text>
-                        <Text fontSize={'sm'}>
-                            {Object.values(i)[0]}
-                        </Text>
+                        <Text fontSize={'sm'}>{Object.values(i)[0]}</Text>
                     </Link>
                     <Spacer />
 
-
                     <IconButton
                         onClick={() =>
-                            deleteLink(
-                                Object.keys(i)[0],
-                                Object.values(i)[0]
-                            )
+                            deleteLink(Object.keys(i)[0], Object.values(i)[0])
                         }
                         aria-label={'Delete url'}
                         icon={<DeleteIcon color={'red.500'} />}
                     />
                 </Stack>
-
             </Stack>
         </Flex>
     ))
@@ -147,22 +132,17 @@ export default function Links() {
             w={['90vw', '70vw', '60vw', '30vw']}
         >
             <VStack my={'6'}>
-                <Heading
-                    borderBottom={'1px'}
-                    pb={2}
-                    fontWeight="500"
-                    as="h1"
-                >
+                <Heading borderBottom={'1px'} pb={2} fontWeight="500" as="h1">
                     Social Links
                 </Heading>
                 <Text
-                    fontSize={["xl", "2xl"]}
-                    color={useColorModeValue("gray.500", "gray.200")}
+                    fontSize={['xl', '2xl']}
+                    color={useColorModeValue('gray.500', 'gray.200')}
                     maxW="lg"
                     textAlign="center"
                 >
                     Add your social media links
-            </Text>
+                </Text>
             </VStack>
             <FormControl>
                 <Stack spacing={2}>
@@ -172,7 +152,9 @@ export default function Links() {
                             type={'text'}
                             placeholder={'Youtube'}
                             value={state.title}
-                            onChange={(e) => stateSet({ ...state, title: e.target.value })}
+                            onChange={(e) =>
+                                stateSet({ ...state, title: e.target.value })
+                            }
                             name={'title'}
                         />
                     </InputGroup>
@@ -181,7 +163,9 @@ export default function Links() {
                         <Input
                             type={'url'}
                             value={state.link}
-                            onChange={(e) => stateSet({ ...state, link: e.target.value })}
+                            onChange={(e) =>
+                                stateSet({ ...state, link: e.target.value })
+                            }
                             placeholder="https://youtube.com/cordly"
                         />
                     </InputGroup>
@@ -190,7 +174,7 @@ export default function Links() {
                         colorScheme={'green'}
                         w={'100%'}
                         onClick={addLink}
-                    // leftIcon={<FaPlusCircle />}
+                        leftIcon={<FaPlusCircle />}
                     >
                         Add
                     </Button>
@@ -200,7 +184,6 @@ export default function Links() {
             <Divider my={5} />
 
             {userUrls}
-        </Flex >
-
+        </Flex>
     )
 }

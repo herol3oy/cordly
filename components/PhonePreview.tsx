@@ -1,6 +1,5 @@
 import { LinkIcon } from '@chakra-ui/icons'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
-
 import {
     Box,
     Flex,
@@ -13,9 +12,9 @@ import {
     Tab,
     TabPanel,
     TabPanels,
-    Code,
-    Link
+    Link,
 } from '@chakra-ui/react'
+
 export default function PhonePreview() {
     return (
         <Flex
@@ -71,24 +70,19 @@ export default function PhonePreview() {
                 alignItems={'center'}
                 mb={2}
                 spacing={2}
-                bg='gray.700'
+                bg="gray.700"
                 color={'green.400'}
                 align={'center'}
             >
                 <LinkIcon />
 
-                <Link
-                    textAlign='left'
-                    href={'/'}
-                    isExternal
-                >
+                <Link textAlign="left" href={'/'} isExternal>
                     <Text fontSize={'xl'} fontWeight={'bold'}>
                         https://cord.ly/herol3oy
-                        </Text>
+                    </Text>
                 </Link>
                 <ExternalLinkIcon />
             </Stack>
-
         </Flex>
     )
 }
@@ -99,7 +93,7 @@ const LinksPreviewPanel = () => {
             <Avatar
                 size="lg"
                 name="profile picture"
-            // src="https://bit.ly/prosper-baba"
+                // src="https://bit.ly/prosper-baba"
             />
 
             <Text mb={5} mt={2} textAlign="center">

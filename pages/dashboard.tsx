@@ -1,8 +1,8 @@
-import AuthCheck from '../components/AuthCheck'
-import Bio from '../components/Bio'
-import Links from '../components/Links'
 import Username from '../components/Username'
 import PhonePreview from '../components/PhonePreview'
+import Links from '../components/Links'
+import Bio from '../components/Bio'
+import AuthCheck from '../components/AuthCheck'
 import {
     Box,
     Flex,
@@ -51,7 +51,6 @@ function DashboardPanel() {
                         </Tab>
                     </TabList>
                     <TabPanels>
-
                         <TabPanel>
                             <Links />
                         </TabPanel>
@@ -63,14 +62,11 @@ function DashboardPanel() {
                         <TabPanel>
                             <Username />
                         </TabPanel>
-
                     </TabPanels>
                 </Tabs>
             </Flex>
 
             <PhonePreview />
-
         </SimpleGrid>
     )
 }
-
