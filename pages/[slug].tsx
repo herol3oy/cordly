@@ -21,12 +21,42 @@ import {
     useColorModeValue,
     Button,
     Link,
+    background,
 } from '@chakra-ui/react'
 
 export default function User({ data }) {
     return (
-        <Flex as="section" minH="100vh" direction="column" alignItems="center">
+        <Flex
+            as={'section'}
+            maxW={'xl'}
+            minH={'100vh'}
+            direction={'column'}
+            alignItems={'center'}
+            m={'auto'}
 
+        >
+            <Flex
+                backgroundImage={'url("https://is.gd/jkE1Df")'}
+                backgroundRepeat={'no-repeat'}
+                backgroundPosition={'top'}
+                backgroundSize={'cover'}
+                height={'30vh'}
+                minW={['100vw', 'lg']}
+                pos='absolute'
+                zIndex='-1'
+                _after={{
+                    display: 'inline-block', 
+                    content: '""', 
+                    position: 'absolute',
+                     left: 0, 
+                    top: 0, 
+                    width: '100%', 
+                    height: '100%', 
+                    background: 'linear-gradient(to top, #1a202c 0%, rgba(255, 255, 255, 0) 100%)'
+                
+                }}
+            />
+            
             <ProfileAvatar data={data} />
 
             <Tabs
@@ -124,7 +154,7 @@ const ProfileAvatar = ({ data }) => {
     const { profileImg, email, photoUrl, username } = data
 
     return (
-        <Box mt={10} mb={5}>
+        <Box mt={'28'} mb={5}>
             {/* <Avatar
                 src={profileImg || photoUrl}
                 alt="Profile picture"
@@ -134,7 +164,7 @@ const ProfileAvatar = ({ data }) => {
             /> */}
             <AvatarSVG imageUrl={profileImg || photoUrl} />
             <Flex mt={3} justifyContent={'center'} alignItems='center'>
-                <Heading  textAlign='center'  as="h6" size="sm">
+                <Heading textAlign='center' as="h6" size="sm">
                     @{username || email.split('@')?.[0]}
                 </Heading>
                 <CheckCircleIcon ml={'2'} color={'green.300'} />
