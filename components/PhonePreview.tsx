@@ -1,6 +1,7 @@
 import NextLink from 'next/link'
 import { LinkIcon } from '@chakra-ui/icons'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
+import AvatarSVG from '../components/AvatarSVG'
 import {
     Box,
     Flex,
@@ -21,9 +22,8 @@ export default function PhonePreview({ urls, userNameValue, profileImg, }) {
         <Flex
             as="section"
             flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            bg='darkslategray'
+            alignItems={'center'}
+            justifyContent={'flex-start'}
         >
 
             <Box
@@ -31,24 +31,48 @@ export default function PhonePreview({ urls, userNameValue, profileImg, }) {
                 width={['90vw', 'sm']}
                 borderWidth={[12, 20]}
                 borderRadius={65}
-                minH={['600px', '580px','580px', '700px ']}
+                maxH={['600px', '580px', '580px', '700px ']}
+                minH={'700px'}
                 overflow="hidden"
                 textAlign="center"
                 my={10}
-                bg='dimgray'
+                pos={'relative'}
             >
+
+                <Flex
+                    backgroundImage={'url("https://is.gd/jkE1Df")'}
+                    backgroundRepeat={'no-repeat'}
+                    backgroundPosition={'top'}
+                    backgroundSize={'cover'}
+                    height={'150px'}
+                    w={'sm'}
+                    pos='absolute'
+                    _after={{
+                        display: 'inline-block',
+                        content: '""',
+                        position: 'absolute',
+                        left: 0,
+                        top: 0,
+                        width: '100%',
+                        height: '100%',
+                        background: 'linear-gradient(to top, #1a202c 0%, rgba(255, 255, 255, 0) 100%)'
+
+                    }}
+                />
+
+
                 <Avatar
-                    mt={5}
+                    mt={28}
                     size="lg"
                     name="profile picture"
-                    src={profileImg.profileImg}
+                    src={profileImg}
                 />
 
                 <Text mb={5} mt={2} textAlign="center">
                     @{userNameValue}
                 </Text>
                 <Tabs
-                    // isFitted
+                    isFitted
                     align="center"
                     variant="line"
                     colorScheme="green"
@@ -75,7 +99,7 @@ export default function PhonePreview({ urls, userNameValue, profileImg, }) {
                         </TabPanel>
 
                         <TabPanel>
-                            <BioPreviewPanel profileImg={profileImg} />
+                            {/* <BioPreviewPanel profileImg={profileImg} /> */}
                         </TabPanel>
                     </TabPanels>
                 </Tabs>

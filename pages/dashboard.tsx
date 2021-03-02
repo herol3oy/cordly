@@ -38,7 +38,6 @@ const DashboardPanel = () => {
             <Navigation />
 
             <SimpleGrid
-                bg='green.900'
                 columns={[1, 1, 2, 2]} spacing={5}>
                 <Flex as="section" direction="column" alignItems="center">
                     <Tabs

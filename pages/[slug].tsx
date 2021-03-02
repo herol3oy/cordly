@@ -45,18 +45,18 @@ export default function User({ data }) {
                 pos='absolute'
                 zIndex='-1'
                 _after={{
-                    display: 'inline-block', 
-                    content: '""', 
+                    display: 'inline-block',
+                    content: '""',
                     position: 'absolute',
-                     left: 0, 
-                    top: 0, 
-                    width: '100%', 
-                    height: '100%', 
+                    left: 0,
+                    top: 0,
+                    width: '100%',
+                    height: '100%',
                     background: 'linear-gradient(to top, #1a202c 0%, rgba(255, 255, 255, 0) 100%)'
-                
+
                 }}
             />
-            
+
             <ProfileAvatar data={data} />
 
             <Tabs
@@ -78,7 +78,7 @@ export default function User({ data }) {
                     </TabPanel>
                 </TabPanels>
             </Tabs>
-            <Text mt="auto" textAlign="center">
+            <Text textStyle={'logo'} mt="auto" textAlign="center">
                 CORDLY
             </Text>
         </Flex>
