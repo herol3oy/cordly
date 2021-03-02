@@ -1,6 +1,8 @@
 import NextLink from 'next/link'
 import { GetServerSideProps } from 'next'
 import { firestore } from '../lib/firebase'
+import { CheckCircleIcon } from '@chakra-ui/icons'
+import AvatarSVG from '../components/AvatarSVG'
 import {
     Tab,
     Tabs,
@@ -123,16 +125,21 @@ const ProfileAvatar = ({ data }) => {
 
     return (
         <Box mt={10} mb={5}>
-            <Avatar
+            {/* <Avatar
                 src={profileImg || photoUrl}
                 alt="Profile picture"
                 size="xl"
                 margin="auto"
                 mb={4}
-            />
-            <Heading as="h6" size="sm">
-                @{username || email.split('@')?.[0]}
-            </Heading>
+            /> */}
+            <AvatarSVG imageUrl={profileImg || photoUrl} />
+            <Flex mt={3} justifyContent={'center'} alignItems='center'>
+                <Heading  textAlign='center'  as="h6" size="sm">
+                    @{username || email.split('@')?.[0]}
+                </Heading>
+                <CheckCircleIcon ml={'2'} color={'green.300'} />
+            </Flex>
+
         </Box>
     )
 }

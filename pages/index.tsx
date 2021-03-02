@@ -1,35 +1,39 @@
 import { firestore } from '../lib/firebase'
 import Musician from '../components/Musician'
 import { Text, Flex, Container } from '@chakra-ui/react'
+import Navigation from '../components/Navigation'
 
 export default function Home({ musicians }) {
     return (
-        <Flex justify={'center'} flexDirection={'column'} alignItems={'center'}>
-            <Container maxW="container.xl">
-                <Text
-                    mt={12}
-                    mb={4}
-                    textStyle={'intro'}
-                    textAlign={'center'}
-                    fontSize={['2xl', '2xl', '4xl', '5xl']}
-                >
-                    Musician Community Minimalized
+        <>
+            <Navigation />
+            <Flex justify={'center'} flexDirection={'column'} alignItems={'center'}>
+                <Container maxW="container.xl">
+                    <Text
+                        mt={12}
+                        mb={4}
+                        textStyle={'intro'}
+                        textAlign={'center'}
+                        fontSize={['2xl', '2xl', '4xl', '5xl']}
+                    >
+                        Musician Community Minimalized
                 </Text>
-                <Text
-                    mt={6}
-                    textStyle={'textsub'}
-                    textAlign={'center'}
-                    m={'auto'}
-                    fontSize="2xl"
-                    maxW={'container.md'}
-                >
-                    Oh You Pretty Things is taking a short break while we move
-                    physical locations and get ready to launch the next
-                    evolution of our site.
+                    <Text
+                        mt={6}
+                        textStyle={'textsub'}
+                        textAlign={'center'}
+                        m={'auto'}
+                        fontSize="2xl"
+                        maxW={'container.md'}
+                    >
+                        Oh You Pretty Things is taking a short break while we move
+                        physical locations and get ready to launch the next
+                        evolution of our site.
                 </Text>
-                <Musician data={musicians} />
-            </Container>
-        </Flex>
+                    <Musician data={musicians} />
+                </Container>
+            </Flex>
+        </>
     )
 }
 

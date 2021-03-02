@@ -31,7 +31,7 @@ export default function PhonePreview({ urls, userNameValue, profileImg, }) {
                 width={['90vw', 'sm']}
                 borderWidth={[12, 20]}
                 borderRadius={65}
-                h={724}
+                minH={['600px', '580px','580px', '700px ']}
                 overflow="hidden"
                 textAlign="center"
                 my={10}
@@ -41,7 +41,7 @@ export default function PhonePreview({ urls, userNameValue, profileImg, }) {
                     mt={5}
                     size="lg"
                     name="profile picture"
-                    src={profileImg}
+                    src={profileImg.profileImg}
                 />
 
                 <Text mb={5} mt={2} textAlign="center">

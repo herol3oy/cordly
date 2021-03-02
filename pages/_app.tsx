@@ -1,6 +1,5 @@
 import type { AppProps } from 'next/app'
 import theme from '../theme'
-import Navigation from '../components/Navigation'
 import { useUserData } from '../lib/hooks'
 import { UserContext } from '../lib/context'
 import { ChakraProvider } from '@chakra-ui/react'
@@ -12,7 +11,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     return (
         <UserContext.Provider value={userData}>
             <ChakraProvider resetCSS theme={theme}>
-                <Navigation />
                 <Component {...pageProps} />
             </ChakraProvider>
         </UserContext.Provider>

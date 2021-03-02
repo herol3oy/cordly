@@ -4,6 +4,8 @@ import PhonePreview from '../components/PhonePreview'
 import Links from '../components/Links'
 import Bio from '../components/Bio'
 import AuthCheck from '../components/AuthCheck'
+import Navigation from '../components/Navigation'
+
 import {
     Box,
     Flex,
@@ -32,62 +34,66 @@ const DashboardPanel = () => {
     const [profileImg, profileImgSet] = useState('')
 
     return (
-        <SimpleGrid 
-        bg='green.600'
-        columns={[1, 1, 2, 2]} spacing={5}>
-            <Flex as="section" direction="column" alignItems="center">
-                <Tabs
-                    paddingTop="12"
-                    isFitted
-                    align="center"
-                    variant="line"
-                    colorScheme="green"
-                >
-                    <TabList>
-                        <Tab>
-                            <Box>🔗</Box>
-                            <Text ml={3}>Links</Text>
-                        </Tab>
+        <>
+            <Navigation />
 
-                        <Tab>
-                            <Box>✍️</Box>
-                            <Text ml={3}>Bio</Text>
-                        </Tab>
+            <SimpleGrid
+                bg='green.900'
+                columns={[1, 1, 2, 2]} spacing={5}>
+                <Flex as="section" direction="column" alignItems="center">
+                    <Tabs
+                        paddingTop="12"
+                        isFitted
+                        align="center"
+                        variant="line"
+                        colorScheme="green"
+                    >
+                        <TabList>
+                            <Tab>
+                                <Box>🔗</Box>
+                                <Text ml={3}>Links</Text>
+                            </Tab>
 
-                        <Tab>
-                            <Box>👑</Box>
-                            <Text ml={3}>Username</Text>
-                        </Tab>
-                    </TabList>
-                    <TabPanels>
-                        <TabPanel>
-                            <Links urls={urls} urlsSet={urlsSet} />
-                        </TabPanel>
+                            <Tab>
+                                <Box>✍️</Box>
+                                <Text ml={3}>Bio</Text>
+                            </Tab>
 
-                        <TabPanel>
-                            <Bio
-                                profileImg={profileImg}
-                                profileImgSet={profileImgSet}
-                            />
-                        </TabPanel>
+                            <Tab>
+                                <Box>👑</Box>
+                                <Text ml={3}>Username</Text>
+                            </Tab>
+                        </TabList>
+                        <TabPanels>
+                            <TabPanel>
+                                <Links urls={urls} urlsSet={urlsSet} />
+                            </TabPanel>
 
-                        <TabPanel>
-                            <Username
-                                formValue={formValue}
-                                formValueSet={formValueSet}
-                                userNameValue={userNameValue}
-                                userNameValueSet={userNameValueSet}
-                            />
-                        </TabPanel>
-                    </TabPanels>
-                </Tabs>
-            </Flex>
+                            <TabPanel>
+                                <Bio
+                                    profileImg={profileImg}
+                                    profileImgSet={profileImgSet}
+                                />
+                            </TabPanel>
 
-            <PhonePreview
-                urls={urls}
-                userNameValue={userNameValue}
-                profileImg={profileImg}
-            />
-        </SimpleGrid>
+                            <TabPanel>
+                                <Username
+                                    formValue={formValue}
+                                    formValueSet={formValueSet}
+                                    userNameValue={userNameValue}
+                                    userNameValueSet={userNameValueSet}
+                                />
+                            </TabPanel>
+                        </TabPanels>
+                    </Tabs>
+                </Flex>
+
+                <PhonePreview
+                    urls={urls}
+                    userNameValue={userNameValue}
+                    profileImg={profileImg}
+                />
+            </SimpleGrid>
+        </>
     )
 }
