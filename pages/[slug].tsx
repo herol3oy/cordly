@@ -40,10 +40,10 @@ export default function User({ data }) {
                 backgroundRepeat={'no-repeat'}
                 backgroundPosition={'top'}
                 backgroundSize={'cover'}
-                height={'30vh'}
+                height={['30vh','60vh', '50vh','25vh']}
                 minW={['100vw', 'lg']}
                 pos='absolute'
-                zIndex='-1'
+                zIndex={-1}
                 _after={{
                     display: 'inline-block',
                     content: '""',
@@ -78,7 +78,7 @@ export default function User({ data }) {
                     </TabPanel>
                 </TabPanels>
             </Tabs>
-            <Text textStyle={'logo'} mt="auto" textAlign="center">
+            <Text fontSize={'xs'} color={'green.300'} textStyle={'logo'} mt="auto" textAlign="center">
                 CORDLY
             </Text>
         </Flex>
