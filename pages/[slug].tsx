@@ -14,7 +14,10 @@ import {
     Box,
     Flex,
     Heading,
+    Stack,
     HStack,
+    Wrap,
+    WrapItem,
     TagLabel,
     Tag,
     useColorModeValue,
@@ -38,7 +41,7 @@ export default function User({ data }) {
                 backgroundRepeat={'no-repeat'}
                 backgroundPosition={'top'}
                 backgroundSize={'cover'}
-                height={['30vh','40vh', '30vh','25vh']}
+                height={['30vh', '40vh', '30vh', '25vh']}
                 minW={['100vw', 'lg']}
                 pos='absolute'
                 zIndex={-1}
@@ -62,10 +65,11 @@ export default function User({ data }) {
                 align="center"
                 variant="line"
                 colorScheme="green"
+                defaultIndex={1}
             >
                 <TabList>
-                    <Tab>Links</Tab>
-                    <Tab>Bio</Tab>
+                    <Tab>LINKS</Tab>
+                    <Tab>BIO</Tab>
                 </TabList>
                 <TabPanels>
                     <TabPanel>
@@ -87,34 +91,91 @@ const ProfileBio = ({ data }) => {
     const { stagename, location, skills } = data
 
     return (
-        <>
+        <Stack
+        // minW={['90vw', 'md', 'md', 'lg']}
+        >
             <Text
-                textTransform={'uppercase'}
                 color={'blue.400'}
                 fontWeight={600}
                 fontSize={'sm'}
                 bg={useColorModeValue('blue.50', 'blue.900')}
                 p={2}
-                alignSelf={'flex-start'}
+                alignSelf={'center'}
                 rounded={'md'}
             >
-                📍{location}
+                📍 Warsaw, Poland
             </Text>
-            {stagename}
-            <HStack spacing={4}>
-                {skills?.map((i, idx) => (
-                    <Tag
-                        key={idx}
-                        size={'lg'}
-                        borderRadius="full"
-                        variant="solid"
-                        colorScheme="purple"
+
+            <Wrap justify={'center'}>
+                <WrapItem>
+                    <Text
+                        color={'orange.400'}
+                        fontWeight={600}
+                        fontSize={'sm'}
+                        bg={useColorModeValue('orange.50', 'orange.900')}
+                        p={2}
+                        alignSelf={'center'}
+                        rounded={'md'}
                     >
-                        <TagLabel>{i}</TagLabel>
-                    </Tag>
-                ))}
-            </HStack>
-        </>
+                        🎓 Academic
+            </Text>
+                </WrapItem>
+                <WrapItem>
+                    <Text
+                        color={'purple.400'}
+                        fontWeight={600}
+                        fontSize={'sm'}
+                        bg={useColorModeValue('purple.50', 'purple.900')}
+                        p={2}
+                        alignSelf={'center'}
+                        rounded={'md'}
+                    >
+                        🟢 Collaboration
+            </Text>
+                </WrapItem>
+            </Wrap>
+
+            <Wrap justify={'center'}>
+                {
+                    ['Guitarist', 'Singer', 'Pianist', 'Bassist', 'Mastering',].map((i, idx) => (
+                        <WrapItem key={idx}>
+                            <Text
+                                key={idx}
+                                color={'green.400'}
+                                fontWeight={600}
+                                fontSize={'sm'}
+                                bg={useColorModeValue('green.50', 'green.900')}
+                                p={2}
+                                alignSelf={'flex-start'}
+                                rounded={'md'}
+                            >
+                                💯 {i}
+                            </Text>
+                        </WrapItem>
+                    ))
+                }
+            </Wrap>
+            <Wrap justify={'center'}>
+                {
+                    ['Metall', 'Alternative Rock'].map((i, idx) => (
+                        <WrapItem key={idx}>
+                            <Text
+                                key={idx}
+                                color={'cyan.400'}
+                                fontWeight={600}
+                                fontSize={'sm'}
+                                bg={useColorModeValue('cyan.50', 'cyan.900')}
+                                p={2}
+                                alignSelf={'center'}
+                                rounded={'md'}
+                            >
+                                🔥 {i}
+                            </Text>
+                        </WrapItem>
+                    ))
+                }
+            </Wrap>
+        </Stack>
     )
 }
 
@@ -184,9 +245,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
     if (!data) {
         return {
-          notFound: true,
+            notFound: true,
         }
-      }
+    }
 
     return {
         props: { data },
