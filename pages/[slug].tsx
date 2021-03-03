@@ -65,7 +65,7 @@ export default function User({ data }) {
                 align="center"
                 variant="line"
                 colorScheme="green"
-                defaultIndex={1}
+                // defaultIndex={1}
             >
                 <TabList>
                     <Tab>LINKS</Tab>
@@ -95,11 +95,11 @@ const ProfileBio = ({ data }) => {
         // minW={['90vw', 'md', 'md', 'lg']}
         >
             <Text
-                color={'blue.400'}
+                color={'purple.400'}
                 fontWeight={600}
                 fontSize={'sm'}
-                bg={useColorModeValue('blue.50', 'blue.900')}
-                p={2}
+                bg={useColorModeValue('purple.50', 'purple.900')}
+                p={3}
                 alignSelf={'center'}
                 rounded={'md'}
             >
@@ -109,11 +109,11 @@ const ProfileBio = ({ data }) => {
             <Wrap justify={'center'}>
                 <WrapItem>
                     <Text
-                        color={'orange.400'}
+                        color={'gray.400'}
                         fontWeight={600}
                         fontSize={'sm'}
-                        bg={useColorModeValue('orange.50', 'orange.900')}
-                        p={2}
+                        bg={useColorModeValue('gray.50', 'gray.900')}
+                        p={3}
                         alignSelf={'center'}
                         rounded={'md'}
                     >
@@ -122,11 +122,11 @@ const ProfileBio = ({ data }) => {
                 </WrapItem>
                 <WrapItem>
                     <Text
-                        color={'purple.400'}
+                        color={'gray.400'}
                         fontWeight={600}
                         fontSize={'sm'}
-                        bg={useColorModeValue('purple.50', 'purple.900')}
-                        p={2}
+                        bg={useColorModeValue('gray.50', 'gray.900')}
+                        p={3}
                         alignSelf={'center'}
                         rounded={'md'}
                     >
@@ -141,10 +141,10 @@ const ProfileBio = ({ data }) => {
                         <WrapItem key={idx}>
                             <Text
                                 key={idx}
-                                color={'green.400'}
+                                color={'gray.400'}
                                 fontWeight={600}
                                 fontSize={'sm'}
-                                bg={useColorModeValue('green.50', 'green.900')}
+                                bg={useColorModeValue('gray.50', 'gray.900')}
                                 p={2}
                                 alignSelf={'flex-start'}
                                 rounded={'md'}
@@ -161,10 +161,10 @@ const ProfileBio = ({ data }) => {
                         <WrapItem key={idx}>
                             <Text
                                 key={idx}
-                                color={'cyan.400'}
+                                color={'gray.400'}
                                 fontWeight={600}
                                 fontSize={'sm'}
-                                bg={useColorModeValue('cyan.50', 'cyan.900')}
+                                bg={useColorModeValue('gray.50', 'gray.900')}
                                 p={2}
                                 alignSelf={'center'}
                                 rounded={'md'}
