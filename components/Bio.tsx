@@ -3,7 +3,6 @@ import { UserContext } from '../lib/context'
 import { useForm } from 'react-hook-form'
 import { updateProfilePicture } from '../utils/db'
 import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
-import { CUIAutoComplete } from 'chakra-ui-autocomplete'
 import _ from 'lodash'
 import {
     Divider,
@@ -18,6 +17,9 @@ import {
     FormHelperText,
     Input,
     Button,
+    Select,
+    Radio,
+    RadioGroup,
 } from '@chakra-ui/react'
 
 export interface Item {
@@ -38,8 +40,21 @@ export default function Bio({ profileImg, profileImgSet }) {
     const [progress, setProgress] = useState(0)
     const [downloadURL, downloadURLSet] = useState(null)
     const [avatarName, avatarNameSet] = useState('No file choosen')
-    const [pickerItems, setPickerItems] = useState(countries)
-    const [selectedItems, setSelectedItems] = useState([])
+
+    const [edu, eduSet] = useState('')
+    const [collaboration, collaborationSet] = useState('')
+
+    const initialState = {
+        stagename: '',
+        location: '',
+        skills: '',
+        influences: '',
+        edu: '',
+        collaboration: null,
+    }
+
+    const [dashboardForm, dashboardFormSet] = useState(initialState)
+
 
     const { user } = useContext(UserContext)
 
@@ -58,41 +73,6 @@ export default function Bio({ profileImg, profileImgSet }) {
         }
         getAllDashData()
     }, [user.uid])
-
-    const handleCreateItem = (item) => {
-        setPickerItems((curr) => [...curr, item])
-        setSelectedItems((curr) => [...curr, item])
-    }
-
-    const handleSelectedItemsChange = (selectedItems) => {
-        if (selectedItems) {
-            setSelectedItems(selectedItems)
-        }
-    }
-
-    const customRender = (selected) => {
-        return (
-            <Flex flexDir="row" alignItems="center">
-                <Avatar mr={2} size="sm" name={selected.label} />
-                <Text>{selected.label}</Text>
-            </Flex>
-        )
-    }
-
-    const onSubmit = (data) => {
-        const skills = selectedItems.map((i) => {
-            const label = Object.values(i)[1]
-            return label
-        })
-
-        firestore
-            .collection('users')
-            .doc(user.uid)
-            .update({
-                ...data,
-                skills,
-            })
-    }
 
     const uploadFile = async (e) => {
         const file = e.target.files[0]
@@ -121,6 +101,19 @@ export default function Bio({ profileImg, profileImgSet }) {
             updateProfilePicture(user.uid, url)
             setUploading(false)
         })
+    }
+
+    const handleSubmitForm = (e) => {
+        e.preventDefault()
+
+        console.log(dashboardForm)
+
+        firestore
+            .collection('users')
+            .doc(user.uid)
+            .update(dashboardForm)
+
+        dashboardFormSet(initialState)
     }
 
     return (
@@ -170,15 +163,16 @@ export default function Bio({ profileImg, profileImgSet }) {
 
             <Divider my={8} />
 
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Stack width="100%" spacing={8}>
+            <form onSubmit={handleSubmitForm}>
+                <Stack width="100%" spacing={6}>
                     <FormControl>
                         <InputGroup>
                             <InputLeftAddon children="👩‍🎤 Stage Name" />
                             <Input
                                 name="stagename"
                                 placeholder="Lexi Rose"
-                                ref={register}
+                                value={dashboardForm.stagename}
+                                onChange={(e) => dashboardFormSet({ ...dashboardForm, 'stagename': e.target.value })}
                             />
                         </InputGroup>
                         <FormHelperText textAlign="left">
@@ -191,7 +185,9 @@ export default function Bio({ profileImg, profileImgSet }) {
                             <Input
                                 name="location"
                                 placeholder="Barcelona, Spain"
-                                ref={register}
+                                value={dashboardForm.location}
+                                onChange={(e) => dashboardFormSet({ ...dashboardForm, 'location': e.target.value })}
+
                             />
                         </InputGroup>
                         <FormHelperText textAlign="left">
@@ -199,30 +195,66 @@ export default function Bio({ profileImg, profileImgSet }) {
                             new city.
                         </FormHelperText>
                     </FormControl>
-                    <CUIAutoComplete
-                        tagStyleProps={{
-                            rounded: 'full',
-                        }}
-                        listStyleProps={{
-                            bg: 'gray.900',
-                            textAlign: 'left',
-                        }}
-                        highlightItemBg="gray.300"
-                        label="🤹🏽 Skills"
-                        placeholder="Type your skill"
-                        onCreateItem={handleCreateItem}
-                        items={pickerItems}
-                        itemRenderer={customRender}
-                        selectedItems={selectedItems}
-                        onSelectedItemsChange={(changes) =>
-                            handleSelectedItemsChange(changes.selectedItems)
-                        }
-                    />
+
+                    <FormControl>
+                        <InputGroup>
+                            <InputLeftAddon children="💯 Skills" />
+                            <Input
+                                name="skill"
+                                placeholder="Guitarist, Drummer, Pianist"
+                                value={dashboardForm.skills}
+                                onChange={(e) => dashboardFormSet({ ...dashboardForm, 'skills': e.target.value })}
+                            />
+                        </InputGroup>
+                        <FormHelperText textAlign="left">
+                            Please type your top 3 skills seprating with comma ','
+                        </FormHelperText>
+                    </FormControl>
+
+                    <FormControl>
+                        <InputGroup>
+                            <InputLeftAddon children="🔥 Influences" />
+                            <Input
+                                name="influence"
+                                placeholder="Metallica, Pink Floyd, Coldplay"
+                                value={dashboardForm.influences}
+                                onChange={(e) => dashboardFormSet({ ...dashboardForm, 'influences': e.target.value })}
+                            />
+                        </InputGroup>
+                        <FormHelperText textAlign="left">
+                            Please type your top 3-5 influences seprating with comma ','
+                        </FormHelperText>
+                    </FormControl>
+
+                    <Select
+                        onChange={(e) => dashboardFormSet({ ...dashboardForm, 'edu': e.target.value })}
+                        placeholder="Choose your education"
+                        size="lg"
+                        variant="filled"
+                    >
+                        <option value="self-studied">Self-Studied</option>
+                        <option value="academic">Academic</option>
+                    </Select>
+
+                    <Select
+                        onChange={(e) => dashboardFormSet({ ...dashboardForm, 'collaboration': e.target.value === 'true' ? true : false })}
+                        placeholder="Open to requests for collaboration"
+                        size="lg"
+                        variant="filled"
+                    >
+                        <option value={'true'}>Yes</option>
+                        <option value={'false'}>No</option>
+                    </Select>
+
+
+
                     <Button type="submit" colorScheme="green">
                         Submit
                     </Button>
+
                 </Stack>
             </form>
+
         </Flex>
     )
 }

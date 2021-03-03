@@ -65,7 +65,7 @@ export default function User({ data }) {
                 align="center"
                 variant="line"
                 colorScheme="green"
-                // defaultIndex={1}
+            // defaultIndex={1}
             >
                 <TabList>
                     <Tab>LINKS</Tab>
@@ -99,7 +99,7 @@ const ProfileBio = ({ data }) => {
                 fontWeight={600}
                 fontSize={'sm'}
                 bg={useColorModeValue('purple.50', 'purple.900')}
-                p={3}
+                p={2}
                 alignSelf={'center'}
                 rounded={'md'}
             >
@@ -113,7 +113,7 @@ const ProfileBio = ({ data }) => {
                         fontWeight={600}
                         fontSize={'sm'}
                         bg={useColorModeValue('gray.50', 'gray.900')}
-                        p={3}
+                        p={2}
                         alignSelf={'center'}
                         rounded={'md'}
                     >
@@ -126,7 +126,7 @@ const ProfileBio = ({ data }) => {
                         fontWeight={600}
                         fontSize={'sm'}
                         bg={useColorModeValue('gray.50', 'gray.900')}
-                        p={3}
+                        p={2}
                         alignSelf={'center'}
                         rounded={'md'}
                     >
@@ -145,7 +145,7 @@ const ProfileBio = ({ data }) => {
                                 fontWeight={600}
                                 fontSize={'sm'}
                                 bg={useColorModeValue('gray.50', 'gray.900')}
-                                p={2}
+                                p={3}
                                 alignSelf={'flex-start'}
                                 rounded={'md'}
                             >
@@ -165,7 +165,7 @@ const ProfileBio = ({ data }) => {
                                 fontWeight={600}
                                 fontSize={'sm'}
                                 bg={useColorModeValue('gray.50', 'gray.900')}
-                                p={2}
+                                p={3}
                                 alignSelf={'center'}
                                 rounded={'md'}
                             >
@@ -184,7 +184,13 @@ const ProfileLinks = ({ data }) => {
 
     const links = urls?.map((i, idx) => (
 
-        <Button key={idx} minW={['90vw', 'md', 'md', 'lg']}>
+        <Button
+            key={idx}
+            size='lg'
+            minW={['90vw', 'md', 'md', 'lg']}
+            color={'gray.400'}
+            bg={useColorModeValue('gray.50', 'gray.900')}
+        >
             <NextLink href={Object.values(i)[0].toString()} passHref>
                 <Link isExternal>
                     {Object.keys(i)[0].toString()}
@@ -213,22 +219,26 @@ const ProfileAvatar = ({ data }) => {
     const { profileImg, email, photoUrl, username } = data
 
     return (
-        <Box mt={'28'} mb={5}>
-            {/* <Avatar
+        <>
+            <Box mt={28}>
+                <AvatarSVG imageUrl={profileImg || photoUrl} />
+            </Box>
+            <Box >
+                {/* <Avatar
                 src={profileImg || photoUrl}
                 alt="Profile picture"
                 size="xl"
                 margin="auto"
                 mb={4}
             /> */}
-            <AvatarSVG imageUrl={profileImg || photoUrl} />
-            <Flex mt={3} justifyContent={'center'} alignItems='center'>
-                <Heading textAlign='center' as="h6" size="sm">
-                    @{username || email.split('@')?.[0]}
-                </Heading>
-                <CheckCircleIcon ml={'2'} color={'green.300'} />
-            </Flex>
-        </Box>
+                <Flex mt={3} mb={5} justifyContent={'center'} alignItems='center'>
+                    <Heading letterSpacing={2} textAlign='center' as="h6" size="sm">
+                        @{username || email.split('@')?.[0]}
+                    </Heading>
+                    <CheckCircleIcon ml={'2'} color={'green.300'} />
+                </Flex>
+            </Box>
+        </>
     )
 }
 

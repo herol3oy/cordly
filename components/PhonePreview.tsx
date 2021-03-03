@@ -134,7 +134,7 @@ const LinksPreviewPanel = ({ urls, userNameValue, profileImg }) => {
     return (
         <Stack>
             {
-                urls.map((i, idx) => (
+                urls?.map((i, idx) => (
                     <Button key={idx} w={'100%'}>
                         <NextLink href={Object.values(i)[0].toString()} passHref>
                             <Link isExternal>
