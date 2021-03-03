@@ -14,14 +14,12 @@ import {
     Box,
     Flex,
     Heading,
-    Avatar,
     HStack,
     TagLabel,
     Tag,
     useColorModeValue,
     Button,
     Link,
-    background,
 } from '@chakra-ui/react'
 
 export default function User({ data }) {
@@ -40,7 +38,7 @@ export default function User({ data }) {
                 backgroundRepeat={'no-repeat'}
                 backgroundPosition={'top'}
                 backgroundSize={'cover'}
-                height={['30vh','60vh', '50vh','25vh']}
+                height={['30vh','40vh', '30vh','25vh']}
                 minW={['100vw', 'lg']}
                 pos='absolute'
                 zIndex={-1}
@@ -169,7 +167,6 @@ const ProfileAvatar = ({ data }) => {
                 </Heading>
                 <CheckCircleIcon ml={'2'} color={'green.300'} />
             </Flex>
-
         </Box>
     )
 }
@@ -184,6 +181,12 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
             data = doc.data()
         }
     })
+
+    if (!data) {
+        return {
+          notFound: true,
+        }
+      }
 
     return {
         props: { data },
