@@ -5,7 +5,6 @@ import Links from '../components/Links'
 import Bio from '../components/Bio'
 import AuthCheck from '../components/AuthCheck'
 import Navigation from '../components/Navigation'
-
 import {
     Box,
     Flex,

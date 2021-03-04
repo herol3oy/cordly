@@ -1,8 +1,10 @@
 import { useState, useEffect, useContext } from 'react'
+import { useRouter } from 'next/router'
 import { UserContext } from '../lib/context'
 import { updateProfilePicture } from '../utils/db'
 import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
 import _ from 'lodash'
+import { useForm, Controller } from "react-hook-form"
 import {
     Divider,
     Flex,
@@ -16,25 +18,42 @@ import {
     Input,
     Button,
     Select,
+    Text,
+    Box,
+    Switch,
+    FormLabel,
 } from '@chakra-ui/react'
 
-const initialState = {
+const defaultValues = {
     stagename: '',
     location: '',
     skills: '',
     influences: '',
-    edu: '',
-    collaboration: null,
+    education: '',
+    collaboration: false,
 }
 
 export default function Bio({ profileImg, profileImgSet }) {
+
     const [uploading, setUploading] = useState(false)
     const [progress, setProgress] = useState(0)
     const [downloadURL, downloadURLSet] = useState(null)
     const [avatarName, avatarNameSet] = useState('No file choosen')
-    const [dashboardForm, dashboardFormSet] = useState(initialState)
+    const [dashboardForm, dashboardFormSet] = useState(defaultValues)
+
+    const { register, handleSubmit, errors, control, reset, setValue } = useForm({
+        defaultValues: {
+            stagename: '',
+            location: '',
+            skills: '',
+            influences: '',
+            education: '',
+            collaboration: false,
+        }
+    })
 
     const { user } = useContext(UserContext)
+    const router = useRouter()
 
     const query = firestore.collection('users').where('uid', '==', user.uid)
 
@@ -44,10 +63,19 @@ export default function Bio({ profileImg, profileImgSet }) {
                 let changes = snapshot.docChanges()
                 changes.forEach((i) => {
                     profileImgSet(i.doc.data().profileImg)
+
+                    setValue('stagename', i.doc.data().bio?.stagename)
+                    setValue('location', i.doc.data().bio?.location)
+                    setValue('skills', i.doc.data().bio?.skills)
+                    setValue('influences', i.doc.data().bio?.influences)
+                    setValue('education', i.doc.data().bio?.education)
+                    setValue('collaboration', i.doc.data().bio?.collaboration)
                 })
             })
         }
+
         getAllDashData()
+
     }, [user.uid])
 
     const uploadFile = async (e) => {
@@ -79,15 +107,15 @@ export default function Bio({ profileImg, profileImgSet }) {
         })
     }
 
-    const handleSubmitForm = (e) => {
-        e.preventDefault()
+    const onSubmit = (data) => {
 
         firestore
             .collection('users')
             .doc(user.uid)
-            .update(dashboardForm)
+            .update({ bio: data })
 
-        dashboardFormSet(initialState)
+        reset()
+        // router.reload()
     }
 
     return (
@@ -137,18 +165,16 @@ export default function Bio({ profileImg, profileImgSet }) {
 
             <Divider my={8} />
 
-            <form onSubmit={handleSubmitForm}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <Stack width="100%" spacing={6}>
                     <FormControl>
                         <InputGroup>
                             <InputLeftAddon children="👩‍🎤 Stage Name" />
                             <Input
-                                required
                                 type='text'
                                 name="stagename"
                                 placeholder="Lexi Rose"
-                                value={dashboardForm.stagename}
-                                onChange={(e) => dashboardFormSet({ ...dashboardForm, 'stagename': e.target.value })}
+                                ref={register({required: true})}
                             />
                         </InputGroup>
                         <FormHelperText textAlign="left">
@@ -159,13 +185,10 @@ export default function Bio({ profileImg, profileImgSet }) {
                         <InputGroup>
                             <InputLeftAddon children="📍Location" />
                             <Input
-                                required
                                 type='text'
                                 name="location"
                                 placeholder="Barcelona, Spain"
-                                value={dashboardForm.location}
-                                onChange={(e) => dashboardFormSet({ ...dashboardForm, 'location': e.target.value })}
-
+                                ref={register({required: true})}
                             />
                         </InputGroup>
                         <FormHelperText textAlign="left">
@@ -178,12 +201,10 @@ export default function Bio({ profileImg, profileImgSet }) {
                         <InputGroup>
                             <InputLeftAddon children="💯 Skills" />
                             <Input
-                                required
                                 type='text'
-                                name="skill"
+                                name="skills"
                                 placeholder="Guitarist, Drummer, Pianist"
-                                value={dashboardForm.skills}
-                                onChange={(e) => dashboardFormSet({ ...dashboardForm, 'skills': e.target.value })}
+                                ref={register({required: true})}
                             />
                         </InputGroup>
                         <FormHelperText textAlign="left">
@@ -195,12 +216,10 @@ export default function Bio({ profileImg, profileImgSet }) {
                         <InputGroup>
                             <InputLeftAddon children="🔥 Influences" />
                             <Input
-                                required
                                 type='text'
-                                name="influence"
+                                name="influences"
                                 placeholder="Metallica, Pink Floyd, Coldplay"
-                                value={dashboardForm.influences}
-                                onChange={(e) => dashboardFormSet({ ...dashboardForm, 'influences': e.target.value })}
+                                ref={register({required: true})}
                             />
                         </InputGroup>
                         <FormHelperText textAlign="left">
@@ -208,35 +227,35 @@ export default function Bio({ profileImg, profileImgSet }) {
                         </FormHelperText>
                     </FormControl>
 
-                    <Select
-                        onChange={(e) => dashboardFormSet({ ...dashboardForm, 'edu': e.target.value })}
-                        placeholder="Choose your education"
-                        size="lg"
-                        variant="filled"
-                    >
-                        <option value="self-studied">Self-Studied</option>
-                        <option value="academic">Academic</option>
-                    </Select>
+                    <Controller
+                        as={<Select
+                            ref={register}
+                            placeholder="Choose your music education"
+                            size="lg"
+                            variant="filled"
+                        >
+                            <option value="self-studied">Self-Studied</option>
+                            <option value="academic">Academic</option>
+                        </Select>}
+                        name="education"
+                        control={control}
+                    />
 
-                    <Select
-                        onChange={(e) => dashboardFormSet({ ...dashboardForm, 'collaboration': e.target.value === 'true' ? true : false })}
-                        placeholder="Open to requests for collaboration"
-                        size="lg"
-                        variant="filled"
-                    >
-                        <option value={'true'}>Yes</option>
-                        <option value={'false'}>No</option>
-                    </Select>
+                    <FormControl display="flex" alignItems="center">
+                        <FormLabel htmlFor="collaboration" mb="0" >
+                            Open to request for collaboration?
+                        </FormLabel>
+                        <Switch name={'collaboration'} size={'lg'} colorScheme={'green'} ref={register} />
+                    </FormControl>
 
-
-
-                    <Button type="submit" colorScheme="green">
+                    <Button
+                        // onClick={() => setValue("firstName", "Bill")}
+                        type="submit" colorScheme="green">
                         Submit
                     </Button>
 
                 </Stack>
             </form>
-
         </Flex>
     )
 }
