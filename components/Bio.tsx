@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
 import { UserContext } from '../lib/context'
-import { useForm } from 'react-hook-form'
 import { updateProfilePicture } from '../utils/db'
 import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
 import _ from 'lodash'
@@ -13,52 +12,29 @@ import {
     InputLeftAddon,
     InputGroup,
     FormControl,
-    Text,
     FormHelperText,
     Input,
     Button,
     Select,
-    Radio,
-    RadioGroup,
 } from '@chakra-ui/react'
 
-export interface Item {
-    label: string
-    value: string
+const initialState = {
+    stagename: '',
+    location: '',
+    skills: '',
+    influences: '',
+    edu: '',
+    collaboration: null,
 }
-
-const countries = [
-    { value: 'guitaris', label: 'Guitaris' },
-    { value: 'drummer', label: 'Drummer' },
-    { value: 'vocalist', label: 'Vocalist' },
-    { value: 'bassist', label: 'Bassist' },
-    { value: 'keyboardist', label: 'Keyboardist' },
-]
 
 export default function Bio({ profileImg, profileImgSet }) {
     const [uploading, setUploading] = useState(false)
     const [progress, setProgress] = useState(0)
     const [downloadURL, downloadURLSet] = useState(null)
     const [avatarName, avatarNameSet] = useState('No file choosen')
-
-    const [edu, eduSet] = useState('')
-    const [collaboration, collaborationSet] = useState('')
-
-    const initialState = {
-        stagename: '',
-        location: '',
-        skills: '',
-        influences: '',
-        edu: '',
-        collaboration: null,
-    }
-
     const [dashboardForm, dashboardFormSet] = useState(initialState)
 
-
     const { user } = useContext(UserContext)
-
-    const { register, handleSubmit } = useForm()
 
     const query = firestore.collection('users').where('uid', '==', user.uid)
 
@@ -105,8 +81,6 @@ export default function Bio({ profileImg, profileImgSet }) {
 
     const handleSubmitForm = (e) => {
         e.preventDefault()
-
-        console.log(dashboardForm)
 
         firestore
             .collection('users')
@@ -169,6 +143,8 @@ export default function Bio({ profileImg, profileImgSet }) {
                         <InputGroup>
                             <InputLeftAddon children="👩‍🎤 Stage Name" />
                             <Input
+                                required
+                                type='text'
                                 name="stagename"
                                 placeholder="Lexi Rose"
                                 value={dashboardForm.stagename}
@@ -183,6 +159,8 @@ export default function Bio({ profileImg, profileImgSet }) {
                         <InputGroup>
                             <InputLeftAddon children="📍Location" />
                             <Input
+                                required
+                                type='text'
                                 name="location"
                                 placeholder="Barcelona, Spain"
                                 value={dashboardForm.location}
@@ -200,6 +178,8 @@ export default function Bio({ profileImg, profileImgSet }) {
                         <InputGroup>
                             <InputLeftAddon children="💯 Skills" />
                             <Input
+                                required
+                                type='text'
                                 name="skill"
                                 placeholder="Guitarist, Drummer, Pianist"
                                 value={dashboardForm.skills}
@@ -215,6 +195,8 @@ export default function Bio({ profileImg, profileImgSet }) {
                         <InputGroup>
                             <InputLeftAddon children="🔥 Influences" />
                             <Input
+                                required
+                                type='text'
                                 name="influence"
                                 placeholder="Metallica, Pink Floyd, Coldplay"
                                 value={dashboardForm.influences}

@@ -34,7 +34,6 @@ export default function User({ data }) {
             direction={'column'}
             alignItems={'center'}
             m={'auto'}
-
         >
             <Flex
                 backgroundImage={'url("https://is.gd/jkE1Df")'}
@@ -88,7 +87,13 @@ export default function User({ data }) {
 }
 
 const ProfileBio = ({ data }) => {
-    const { stagename, location, skills } = data
+
+    const {
+        location,
+        skills,
+        influences,
+        edu,
+        collaboration } = data
 
     return (
         <Stack
@@ -103,7 +108,7 @@ const ProfileBio = ({ data }) => {
                 alignSelf={'center'}
                 rounded={'md'}
             >
-                📍 Warsaw, Poland
+                📍 {location}
             </Text>
 
             <Wrap justify={'center'}>
@@ -117,27 +122,31 @@ const ProfileBio = ({ data }) => {
                         alignSelf={'center'}
                         rounded={'md'}
                     >
-                        🎓 Academic
-            </Text>
+                        🎓 {edu === 'academic' ? 'Academic' : 'Self-studied'}
+                    </Text>
                 </WrapItem>
-                <WrapItem>
-                    <Text
-                        color={'gray.400'}
-                        fontWeight={600}
-                        fontSize={'sm'}
-                        bg={useColorModeValue('gray.50', 'gray.900')}
-                        p={2}
-                        alignSelf={'center'}
-                        rounded={'md'}
-                    >
-                        🟢 Collaboration
-            </Text>
-                </WrapItem>
+
+                {collaboration && (
+                    <WrapItem>
+                        <Text
+                            color={'gray.400'}
+                            fontWeight={600}
+                            fontSize={'sm'}
+                            bg={useColorModeValue('gray.50', 'gray.900')}
+                            p={2}
+                            alignSelf={'center'}
+                            rounded={'md'}
+                        >
+                            🟢 Collaboration
+                        </Text>
+                    </WrapItem>
+                )}
+
             </Wrap>
 
             <Wrap justify={'center'}>
                 {
-                    ['Guitarist', 'Singer', 'Pianist', 'Bassist', 'Mastering',].map((i, idx) => (
+                    skills?.split(',').map((i, idx) => (
                         <WrapItem key={idx}>
                             <Text
                                 key={idx}
@@ -157,7 +166,7 @@ const ProfileBio = ({ data }) => {
             </Wrap>
             <Wrap justify={'center'}>
                 {
-                    ['Metall', 'Alternative Rock'].map((i, idx) => (
+                    influences?.split(',').map((i, idx) => (
                         <WrapItem key={idx}>
                             <Text
                                 key={idx}
@@ -180,7 +189,8 @@ const ProfileBio = ({ data }) => {
 }
 
 const ProfileLinks = ({ data }) => {
-    const { profileImg, photoUrl, email, urls } = data
+
+    const { urls } = data
 
     const links = urls?.map((i, idx) => (
 
@@ -224,13 +234,6 @@ const ProfileAvatar = ({ data }) => {
                 <AvatarSVG imageUrl={profileImg || photoUrl} />
             </Box>
             <Box >
-                {/* <Avatar
-                src={profileImg || photoUrl}
-                alt="Profile picture"
-                size="xl"
-                margin="auto"
-                mb={4}
-            /> */}
                 <Flex mt={3} mb={5} justifyContent={'center'} alignItems='center'>
                     <Heading letterSpacing={2} textAlign='center' as="h6" size="sm">
                         @{username || email.split('@')?.[0]}
