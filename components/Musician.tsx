@@ -26,7 +26,7 @@ import {
 export default function Musician({ data }) {
     return (
         <Flex mt={'28'}>
-            <Wrap>
+            {/* <Wrap>
                 {Array.from(Array(100).keys()).map((i) => {
                     return (
                         <WrapItem key={i} p={2}>
@@ -50,47 +50,26 @@ export default function Musician({ data }) {
                         </WrapItem>
                     )
                 })}
-            </Wrap>
-            {/* {_.map(data, (i, idx) => (
+            </Wrap> */}
+
+            {_.map(data, (i, idx) => (
                 <Flex key={idx}>
                     <Nextlink
-                        href={`/${i.username ? i.username : i.uid}`}
+                        href={`/${i.username ? i.username : i.uid.slice(0, 5)}`}
                         passHref
                     >
                         <Link>
-
-                            <Wrap>
-
-                                <WrapItem p={2} >
-                                    <Tooltip label={i.username || i.email.split('@')[0]}>
-                                        <Box
-                                            as={'a'}
-                                            href={'/'}
-                                            rounded={'full'}
-                                            width={'60px'}
-                                            height={'60px'}
-                                            overflow={'hidden'}>
-                                            <NextImage
-                                                alt={i.name}
-                                                src={i.photoUrl}
-                                                width={60}
-                                                height={60}
-                                            />
-                                        </Box>
-                                    </Tooltip>
-                                </WrapItem>
-                            </Wrap>
-
-
-
-
-
-
+                            <NextImage
+                                alt={i.name}
+                                src={i.photoUrl}
+                                width={60}
+                                height={60}
+                            />
 
                         </Link>
                     </Nextlink>
                 </Flex>
-            ))} */}
+            ))}
         </Flex>
     )
 }

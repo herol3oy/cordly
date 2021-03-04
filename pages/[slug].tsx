@@ -87,13 +87,25 @@ export default function User({ data }) {
 }
 
 const ProfileBio = ({ data }) => {
+    let location = ''
+    let skills = ''
+    let influences = ''
+    let education = ''
+    let collaboration = ''
 
-    const {
-        location,
-        skills,
-        influences,
-        edu,
-        collaboration } = data
+    location = data?.bio?.location
+    skills = data?.bio?.skills
+    influences = data?.bio?.influences
+    education = data?.bio?.education
+    collaboration = data?.bio?.collaboration
+
+    // {
+    //     location,
+    //         skills,
+    //         influences,
+    //         education,
+    //         collaboration
+    // } = data?.bio
 
     return (
         <Stack
@@ -122,7 +134,7 @@ const ProfileBio = ({ data }) => {
                         alignSelf={'center'}
                         rounded={'md'}
                     >
-                        🎓 {edu === 'academic' ? 'Academic' : 'Self-studied'}
+                        🎓 {education === 'academic' ? 'Academic' : 'Self-studied'}
                     </Text>
                 </WrapItem>
 
@@ -251,7 +263,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const query = await firestore.collection('users').get()
 
     query.docs.map((doc) => {
-        if ((doc.data().username || doc.data().uid) === params.slug) {
+        if ((doc.data().username || doc.data().uid.slice(0, 5)) === params.slug) {
             data = doc.data()
         }
     })

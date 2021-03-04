@@ -6,7 +6,7 @@ export default function AvatarSVG({ imageUrl }) {
                 <pattern id="pattern0" patternContentUnits="objectBoundingBox" width={1} height={1}>
                     <use xlinkHref="#image0" transform="translate(0 -0.0448114) scale(0.00389105)" />
                 </pattern>
-                <image id="image0" width="257" height="400" xlinkHref={imageUrl} />
+                <image id="image0" width="257" height="257" href={imageUrl} />
             </defs>
         </svg>
     )

@@ -123,7 +123,7 @@ export default function Username({ formValue, formValueSet, userNameValue, userN
                         Current username:
                         <Code fontSize="lg" colorScheme="green">
                             https://cord.ly/
-                            {formValue || userNameValue || user.uid}
+                            {formValue || userNameValue || user.uid.slice(0, 5)}
                         </Code>
                     </FormHelperText>
                     <Button
