@@ -1,7 +1,9 @@
+import { useState, useEffect, useContext } from 'react'
+import { firestore } from '../lib/firebase'
+import { UserContext } from '../lib/context'
 import NextLink from 'next/link'
 import { LinkIcon } from '@chakra-ui/icons'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
-import AvatarSVG from '../components/AvatarSVG'
 import {
     Box,
     Flex,
@@ -15,9 +17,15 @@ import {
     TabPanel,
     TabPanels,
     Link,
+    Wrap,
+    WrapItem,
+    useColorModeValue
 } from '@chakra-ui/react'
 
-export default function PhonePreview({ urls, userNameValue, profileImg, }) {
+export default function PhonePreview({ urls, userNameValue, profileImg }) {
+
+    const { user } = useContext(UserContext)
+
     return (
         <Flex
             as="section"
@@ -60,16 +68,15 @@ export default function PhonePreview({ urls, userNameValue, profileImg, }) {
                     }}
                 />
 
-
                 <Avatar
                     mt={28}
                     size="lg"
                     name="profile picture"
-                    src={profileImg}
+                    src={profileImg || user.photoURL}
                 />
 
                 <Text mb={5} mt={2} textAlign="center">
-                    @{userNameValue}
+                    @{userNameValue || user.uid.slice(0, 5)}
                 </Text>
                 <Tabs
                     isFitted
@@ -93,13 +100,11 @@ export default function PhonePreview({ urls, userNameValue, profileImg, }) {
                         <TabPanel>
                             <LinksPreviewPanel
                                 urls={urls}
-                                userNameValue={userNameValue}
-                                profileImg={profileImg}
                             />
                         </TabPanel>
 
                         <TabPanel>
-                            {/* <BioPreviewPanel profileImg={profileImg} /> */}
+                            <BioPreviewPanel user={user} />
                         </TabPanel>
                     </TabPanels>
                 </Tabs>
@@ -121,7 +126,7 @@ export default function PhonePreview({ urls, userNameValue, profileImg, }) {
 
                 <Link textAlign="left" href={`/${userNameValue}`} isExternal>
                     <Text fontSize={'xl'} fontWeight={'bold'}>
-                        https://cord.ly/{userNameValue}
+                        https://cord.ly/{userNameValue || user.uid.slice(0, 5)}
                     </Text>
                 </Link>
                 <ExternalLinkIcon />
@@ -130,7 +135,7 @@ export default function PhonePreview({ urls, userNameValue, profileImg, }) {
     )
 }
 
-const LinksPreviewPanel = ({ urls, userNameValue, profileImg }) => {
+const LinksPreviewPanel = ({ urls }) => {
     return (
         <Stack>
             {
@@ -148,14 +153,121 @@ const LinksPreviewPanel = ({ urls, userNameValue, profileImg }) => {
     )
 }
 
-const BioPreviewPanel = () => {
+const BioPreviewPanel = ({ user }) => {
+
+    const [bio, bioSet] = useState({
+        stagename: '',
+        location: '',
+        skills: '',
+        influences: '',
+        education: '',
+        collaboration: false,
+    })
+
+    useEffect(() => {
+        const query = firestore.collection('users')
+        const getAllUrls = async () => {
+            query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
+                let changes = snapshot.docChanges()
+                changes.forEach((i) => bioSet(i.doc.data().bio))
+            })
+        }
+        getAllUrls()
+    }, [bio, user.uid])
+
     return (
-        <>
-            {/* <Avatar
-                size="lg"
-                name="profile picture"
-                src={profileImg}
-            /> */}
-        </>
+        <Stack>
+            <Text
+                color={'purple.400'}
+                fontWeight={600}
+                fontSize={'sm'}
+                // bg={useColorModeValue('purple.50', 'purple.900')}
+                bg={'purple.900'}
+                p={2}
+                alignSelf={'center'}
+                rounded={'md'}
+            >
+                📍 {bio?.location}
+            </Text>
+
+            <Wrap justify={'center'}>
+                <WrapItem>
+                    <Text
+                        color={'gray.400'}
+                        fontWeight={600}
+                        fontSize={'sm'}
+                        bg={'gray.900'}
+                        p={2}
+                        alignSelf={'center'}
+                        rounded={'md'}
+                    >
+                        🎓 {bio?.education === 'academic' ? 'Academic' : 'Self-studied'}
+                    </Text>
+                </WrapItem>
+
+                {bio?.collaboration && (
+                    <WrapItem>
+                        <Text
+                            color={'gray.400'}
+                            fontWeight={600}
+                            fontSize={'sm'}
+                            bg={'gray.900'}
+
+                            p={2}
+                            alignSelf={'center'}
+                            rounded={'md'}
+                        >
+                            🟢 Collaboration
+                        </Text>
+                    </WrapItem>
+                )}
+
+            </Wrap>
+
+            <Wrap justify={'center'}>
+                {
+                    bio?.skills?.split(',').map((i, idx) => (
+                        <WrapItem key={idx}>
+                            <Text
+                                key={idx}
+                                color={'gray.400'}
+                                fontWeight={600}
+                                fontSize={'sm'}
+                                bg={'gray.900'}
+
+                                p={3}
+                                alignSelf={'flex-start'}
+                                rounded={'md'}
+                            >
+                                💯 {i}
+                            </Text>
+                        </WrapItem>
+                    ))
+                }
+            </Wrap>
+            <Wrap justify={'center'}>
+                {
+                    bio?.influences?.split(',').map((i, idx) => (
+                        <WrapItem key={idx}>
+                            <Text
+                                key={idx}
+                                color={'gray.400'}
+                                fontWeight={600}
+                                fontSize={'sm'}
+                                bg={'gray.900'}
+
+                                p={3}
+                                alignSelf={'center'}
+                                rounded={'md'}
+                            >
+                                🔥 {i}
+                            </Text>
+                        </WrapItem>
+                    ))
+                }
+            </Wrap>
+        </Stack>
     )
+
+
 }

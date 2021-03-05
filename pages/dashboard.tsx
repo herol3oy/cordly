@@ -17,6 +17,15 @@ import {
     SimpleGrid,
 } from '@chakra-ui/react'
 
+const defaultValues = {
+    stagename: '',
+    location: '',
+    skills: '',
+    influences: '',
+    education: '',
+    collaboration: false,
+}
+
 export default function Dashboard(props) {
     return (
         <AuthCheck>
@@ -31,6 +40,7 @@ const DashboardPanel = () => {
     const [formValue, formValueSet] = useState('')
     const [userNameValue, userNameValueSet] = useState('')
     const [profileImg, profileImgSet] = useState('')
+    const [dashboardForm, dashboardFormSet] = useState(defaultValues)
 
     return (
         <>
@@ -71,6 +81,7 @@ const DashboardPanel = () => {
                                 <Bio
                                     profileImg={profileImg}
                                     profileImgSet={profileImgSet}
+                                    dashboardFormSet={dashboardFormSet}
                                 />
                             </TabPanel>
 
@@ -90,6 +101,7 @@ const DashboardPanel = () => {
                     urls={urls}
                     userNameValue={userNameValue}
                     profileImg={profileImg}
+                    // dashboardForm={dashboardForm}
                 />
             </SimpleGrid>
         </>

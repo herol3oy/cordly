@@ -24,9 +24,10 @@ import {
 } from '@chakra-ui/react'
 
 export default function Musician({ data }) {
+    
     return (
         <Flex mt={'28'}>
-            {/* {_.map(data, (i, idx) => (
+            {_.map(data, (i, idx) => (
                 <Flex key={idx}>
                     <Nextlink
                         href={`/${i.username ? i.username : i.uid.slice(0, 5)}`}
@@ -35,16 +36,17 @@ export default function Musician({ data }) {
                         <Link>
                             <NextImage
                                 alt={i.name}
-                                src={i.photoUrl}
+                                src={i.profileImg || i.photoUrl}
                                 width={80}
                                 height={80}
+                                objectFit='cover'
                             />
 
                         </Link>
                     </Nextlink>
                 </Flex>
-            ))} */}
-            <SimpleGrid columns={[4,10]} spacingX={3} spacingY={2}>
+            ))}
+            {/* <SimpleGrid columns={[4,10]} spacingX={3} spacingY={2}>
                 {
                     Array.from(Array(45).keys()).map((i, idx) => {
                         return (
@@ -68,7 +70,7 @@ export default function Musician({ data }) {
                         )
                     })
                 }
-            </SimpleGrid>
+            </SimpleGrid> */}
         </Flex>
     )
 }

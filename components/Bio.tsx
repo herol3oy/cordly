@@ -24,22 +24,12 @@ import {
     FormLabel,
 } from '@chakra-ui/react'
 
-const defaultValues = {
-    stagename: '',
-    location: '',
-    skills: '',
-    influences: '',
-    education: '',
-    collaboration: false,
-}
-
-export default function Bio({ profileImg, profileImgSet }) {
+export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
 
     const [uploading, setUploading] = useState(false)
     const [progress, setProgress] = useState(0)
     const [downloadURL, downloadURLSet] = useState(null)
     const [avatarName, avatarNameSet] = useState('No file choosen')
-    const [dashboardForm, dashboardFormSet] = useState(defaultValues)
 
     const { register, handleSubmit, errors, control, reset, setValue } = useForm({
         defaultValues: {
@@ -109,13 +99,14 @@ export default function Bio({ profileImg, profileImgSet }) {
 
     const onSubmit = (data) => {
 
+        dashboardFormSet(data)
+
         firestore
             .collection('users')
             .doc(user.uid)
             .update({ bio: data })
 
         reset()
-        // router.reload()
     }
 
     return (
@@ -174,7 +165,7 @@ export default function Bio({ profileImg, profileImgSet }) {
                                 type='text'
                                 name="stagename"
                                 placeholder="Lexi Rose"
-                                ref={register({required: true})}
+                                ref={register({ required: true })}
                             />
                         </InputGroup>
                         <FormHelperText textAlign="left">
@@ -188,7 +179,7 @@ export default function Bio({ profileImg, profileImgSet }) {
                                 type='text'
                                 name="location"
                                 placeholder="Barcelona, Spain"
-                                ref={register({required: true})}
+                                ref={register({ required: true })}
                             />
                         </InputGroup>
                         <FormHelperText textAlign="left">
@@ -204,7 +195,7 @@ export default function Bio({ profileImg, profileImgSet }) {
                                 type='text'
                                 name="skills"
                                 placeholder="Guitarist, Drummer, Pianist"
-                                ref={register({required: true})}
+                                ref={register({ required: true })}
                             />
                         </InputGroup>
                         <FormHelperText textAlign="left">
@@ -219,7 +210,7 @@ export default function Bio({ profileImg, profileImgSet }) {
                                 type='text'
                                 name="influences"
                                 placeholder="Metallica, Pink Floyd, Coldplay"
-                                ref={register({required: true})}
+                                ref={register({ required: true })}
                             />
                         </InputGroup>
                         <FormHelperText textAlign="left">

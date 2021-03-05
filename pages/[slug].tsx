@@ -99,14 +99,6 @@ const ProfileBio = ({ data }) => {
     education = data?.bio?.education
     collaboration = data?.bio?.collaboration
 
-    // {
-    //     location,
-    //         skills,
-    //         influences,
-    //         education,
-    //         collaboration
-    // } = data?.bio
-
     return (
         <Stack
         // minW={['90vw', 'md', 'md', 'lg']}

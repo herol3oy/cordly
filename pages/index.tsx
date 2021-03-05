@@ -42,7 +42,9 @@ export default function Home({ musicians }) {
                     </Flex>
                     <Text>Rightside</Text>
                 </SimpleGrid>
-            <Musician data={musicians} />
+
+                <Musician data={musicians} />
+                
             </Container>
 
             <Blur
