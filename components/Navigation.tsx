@@ -1,4 +1,5 @@
 import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 import { useToast } from '@chakra-ui/react'
 import { useState, useEffect, useContext } from 'react'
 import { UserContext } from '../lib/context'
@@ -34,6 +35,7 @@ export default function Navigation() {
     const { user, username } = useContext(UserContext)
 
     const toast = useToast()
+    const router = useRouter()
 
     const { colorMode, toggleColorMode } = useColorMode()
     const SwitchIcon = useColorModeValue(FaMoon, FaSun)
@@ -69,6 +71,8 @@ export default function Navigation() {
             duration: 2000,
             isClosable: false,
         })
+
+        router.push('/')
     }
 
     const handleUser = (rawUser) => {
@@ -150,7 +154,7 @@ export default function Navigation() {
                     alignItems={'center'}
                 >
                     <Text display={['none', 'block']}>
-                        Hi {username || user.displayName}!
+                        Hi {username || user.displayName.split(' ')[0]}!
                     </Text>
                     <Menu>
                         <MenuButton
@@ -159,7 +163,7 @@ export default function Navigation() {
                             icon={
                                 <Avatar
                                     showBorder={true}
-                                    borderColor="green.200"
+                                    borderColor={'white'}
                                     name={user.displayName}
                                     src={newProfileImg || user.photoURL}
                                 />

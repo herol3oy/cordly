@@ -4,6 +4,7 @@ import { useUserData } from '../lib/hooks'
 import { UserContext } from '../lib/context'
 import { ChakraProvider } from '@chakra-ui/react'
 import { AuthProvider } from '../utils/auth'
+import Footer from '../components/Footer'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
     const userData = useUserData()
@@ -12,6 +13,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <UserContext.Provider value={userData}>
             <ChakraProvider resetCSS theme={theme}>
                 <Component {...pageProps} />
+                <Footer />
             </ChakraProvider>
         </UserContext.Provider>
     )
