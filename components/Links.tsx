@@ -3,6 +3,7 @@ import { UserContext } from '../lib/context'
 import { LinkIcon, DeleteIcon } from '@chakra-ui/icons'
 import { firestore, arrayUnion, arrayRemove } from '../lib/firebase'
 import { FaPlusCircle } from 'react-icons/fa'
+import { useForm } from "react-hook-form"
 import _ from 'lodash'
 import {
     Button,
@@ -25,13 +26,13 @@ import {
 
 export default function Links({ urls, urlsSet }) {
 
-    const [state, stateSet] = useState({ title: '', link: '' })
-    
     const { user } = useContext(UserContext)
 
     const toast = useToast()
 
     const query = firestore.collection('users')
+
+    const { register, handleSubmit, watch, errors, reset } = useForm()
 
     useEffect(() => {
         const getAllUrls = async () => {
@@ -43,17 +44,19 @@ export default function Links({ urls, urlsSet }) {
         getAllUrls()
     }, [user.uid])
 
-    const addLink = () => {
+    const addLink = (data) => {
+        const { title, url } = data
+
         query.doc(user.uid).update({
-            urls: arrayUnion({ [state.title]: state.link }),
+            urls: arrayUnion({ [title]: url }),
         })
 
-        stateSet({ title: '', link: '' })
+        reset()
 
         toast({
             title: 'Link added to your public portfolio.',
             status: 'success',
-            duration: 2000,
+            duration: 1000,
         })
     }
 
@@ -65,7 +68,7 @@ export default function Links({ urls, urlsSet }) {
         toast({
             title: 'Link deleted.',
             status: 'error',
-            duration: 2000,
+            duration: 1000,
         })
     }
 
@@ -145,35 +148,30 @@ export default function Links({ urls, urlsSet }) {
                 </Text>
             </VStack>
             <FormControl>
-                <Stack spacing={2}>
+                <Stack as={'form'} onSubmit={handleSubmit(addLink)} spacing={2}>
                     <InputGroup size={'lg'}>
                         <InputLeftAddon children={'Title'} />
                         <Input
+                            name={'title'}
                             type={'text'}
                             placeholder={'Youtube'}
-                            value={state.title}
-                            onChange={(e) =>
-                                stateSet({ ...state, title: e.target.value })
-                            }
-                            name={'title'}
+                            ref={register}
                         />
                     </InputGroup>
                     <InputGroup size={'lg'}>
                         <InputLeftAddon children={'URL'} />
                         <Input
+                            name={'url'}
                             type={'url'}
-                            value={state.link}
-                            onChange={(e) =>
-                                stateSet({ ...state, link: e.target.value })
-                            }
                             placeholder="https://youtube.com/cordly"
+                            ref={register}
                         />
                     </InputGroup>
                     <Button
                         size={'lg'}
                         colorScheme={'green'}
                         w={'100%'}
-                        onClick={addLink}
+                        type={'submit'}
                         leftIcon={<FaPlusCircle />}
                     >
                         Add
