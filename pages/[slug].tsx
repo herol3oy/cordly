@@ -29,11 +29,10 @@ export default function User({ data }) {
     return (
         <Flex
             as={'section'}
-            maxW={'xl'}
             minH={'100vh'}
             direction={'column'}
             alignItems={'center'}
-            m={'auto'}
+            alignSelf='center'
         >
             <Flex
                 backgroundImage={'url("https://is.gd/jkE1Df")'}
@@ -41,7 +40,7 @@ export default function User({ data }) {
                 backgroundPosition={'top'}
                 backgroundSize={'cover'}
                 height={['30vh', '40vh', '30vh', '25vh']}
-                minW={['100vw', 'lg']}
+                w={['100vw', '100vw', '40vw', '30vw']}
                 pos='absolute'
                 zIndex={-1}
                 _after={{
@@ -60,11 +59,11 @@ export default function User({ data }) {
             <ProfileAvatar data={data} />
 
             <Tabs
+                // defaultIndex={1}
                 isFitted
                 align="center"
                 variant="line"
                 colorScheme="green"
-            // defaultIndex={1}
             >
                 <TabList>
                     <Tab>LINKS</Tab>
@@ -100,9 +99,7 @@ const ProfileBio = ({ data }) => {
     collaboration = data?.bio?.collaboration
 
     return (
-        <Stack
-        // minW={['90vw', 'md', 'md', 'lg']}
-        >
+        <Stack>
             <Text
                 color={'purple.400'}
                 fontWeight={600}
@@ -201,7 +198,6 @@ const ProfileLinks = ({ data }) => {
         <Button
             key={idx}
             size='lg'
-            minW={['90vw', 'md', 'md', 'lg']}
             color={'gray.400'}
             bg={useColorModeValue('gray.50', 'gray.900')}
         >
@@ -218,10 +214,8 @@ const ProfileLinks = ({ data }) => {
     return (
         <Flex align="center" alignItems="stretch" direction="column">
             <VStack
-                direction={['column', 'row']}
                 spacing={4}
                 align="stretch"
-                mt={3}
             >
                 {links}
             </VStack>
@@ -233,19 +227,19 @@ const ProfileAvatar = ({ data }) => {
     const { profileImg, email, photoUrl, username } = data
 
     return (
-        <>
+        <Flex direction={'column'} justify={'center'} alignItems='center'>
             <Box mt={28}>
                 <AvatarSVG imageUrl={profileImg || photoUrl} />
             </Box>
             <Box >
-                <Flex mt={3} mb={5} justifyContent={'center'} alignItems='center'>
+                <Flex mt={3} mb={5} alignItems='center'>
                     <Heading letterSpacing={2} textAlign='center' as="h6" size="sm">
                         @{username || email.split('@')?.[0]}
                     </Heading>
                     <CheckCircleIcon ml={'2'} color={'green.300'} />
                 </Flex>
             </Box>
-        </>
+        </Flex>
     )
 }
 
