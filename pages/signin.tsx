@@ -86,6 +86,21 @@ export default function SignIn() {
         }
     }
 
+    const handleSignUp = (e) => {
+        e.preventDefault()
+
+        // try {
+        //     setError("")
+        //     setLoading(true)
+        //     await login(emailRef.current.value, passwordRef.current.value)
+        //     history.push("/")
+        // } catch {
+        //     setError("Failed to log in")
+        // }
+
+        // setLoading(false)
+    }
+
     return (
         <Box position={'relative'}>
             <Navigation />
@@ -164,30 +179,71 @@ export default function SignIn() {
                     </Stack>
                 </Stack>
                 <Stack
-                alignSelf='center'
+                    alignSelf='center'
                     bg={'gray.700'}
                     rounded={'xl'}
                     p={{ base: 4, sm: 6, md: 8 }}
                     spacing={{ base: 8 }}
                     maxW={{ lg: 'lg' }}>
-                    {/* <Stack spacing={4}>
+
+
+                    <Stack spacing={4}>
                         <Heading
-                            color={'gray.800'}
+                            color={'gray.50'}
                             lineHeight={1.1}
                             fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}>
-                            Join our team
-                <Text
-                                as={'span'}
-                                bgGradient="linear(to-r, red.400,pink.400)"
-                                bgClip="text">
-                                !
-                </Text>
+                            Sign Up with Email
                         </Heading>
-                        <Text color={'gray.500'} fontSize={{ base: 'sm', sm: 'md' }}>
-                            We’re looking for amazing engineers just like you! Become a part
-                            of our rockstar engineering team and skyrocket your career!
-              </Text>
-                    </Stack> */}
+                    </Stack>
+
+                    <Box as={'form'} mt={10} onSubmit={handleSignUp}>
+                        <Stack spacing={4}>
+                            <Input
+                                placeholder="Email"
+                                bg={'gray.100'}
+                                border={0}
+                                color={'gray.500'}
+                                _placeholder={{
+                                    color: 'gray.500',
+                                }}
+                            />
+                            <Input
+                                placeholder="Password"
+                                type='password'
+                                bg={'gray.100'}
+                                border={0}
+                                color={'gray.500'}
+                                _placeholder={{
+                                    color: 'gray.500',
+                                }}
+                            />
+                            <Input
+                                type='password'
+                                placeholder="Confirm password"
+                                bg={'gray.100'}
+                                border={0}
+                                color={'gray.500'}
+                                _placeholder={{
+                                    color: 'gray.500',
+                                }}
+                            />
+                        </Stack>
+                        <Button
+                            type={'submit'}
+                            fontFamily={'heading'}
+                            mt={8}
+                            w={'full'}
+                            bgGradient="linear(to-r, red.400,pink.400)"
+                            color={'white'}
+                            _hover={{
+                                bgGradient: 'linear(to-r, red.400,pink.400)',
+                                boxShadow: 'xl',
+                            }}>
+                            Submit
+            </Button>
+                    </Box>
+
+
                     <Center p={8}>
                         <Stack spacing={2} align={'center'} maxW={'md'} w={'full'}>
 

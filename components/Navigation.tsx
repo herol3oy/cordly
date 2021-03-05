@@ -136,7 +136,7 @@ export default function Navigation() {
                                 colorScheme={'blue'}
                                 variant='solid'
                             >
-                                Login
+                                Sign Up
                     </Button>
                         </Link>
                     </NextLink>
