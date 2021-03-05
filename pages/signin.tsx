@@ -25,23 +25,23 @@ import {
 const avatars = [
     {
         name: 'Ryan Florence',
-        url: 'https://bit.ly/ryan-florence',
+        url: '/avatar.jpg',
     },
     {
         name: 'Segun Adebayo',
-        url: 'https://bit.ly/sage-adebayo',
+        url: '',
     },
     {
         name: 'Kent Dodds',
-        url: 'https://bit.ly/kent-c-dodds',
+        url: '',
     },
     {
         name: 'Prosper Otemuyiwa',
-        url: 'https://bit.ly/prosper-baba',
+        url: '',
     },
     {
         name: 'Christian Nwamba',
-        url: 'https://bit.ly/code-beast',
+        url: '',
     },
 ]
 
@@ -99,14 +99,14 @@ export default function SignIn() {
                     <Heading
                         lineHeight={1.1}
                         fontSize={{ base: '3xl', sm: '4xl', md: '5xl', lg: '6xl' }}>
-                        Senior web designers{' '}
+                        Cordly brought pro musicians together{' '}
                         <Text
                             as={'span'}
                             bgGradient="linear(to-r, red.400,pink.400)"
                             bgClip="text">
-                            &
+                            /
               </Text>{' '}
-              Full-Stack Developers
+              That's why, you are here!
             </Heading>
                     <Stack direction={'row'} spacing={4} align={'center'}>
                         <AvatarGroup>
@@ -164,7 +164,8 @@ export default function SignIn() {
                     </Stack>
                 </Stack>
                 <Stack
-                    bg={'gray.50'}
+                alignSelf='center'
+                    bg={'gray.700'}
                     rounded={'xl'}
                     p={{ base: 4, sm: 6, md: 8 }}
                     spacing={{ base: 8 }}

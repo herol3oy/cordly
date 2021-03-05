@@ -130,22 +130,16 @@ export default function Navigation() {
             />
             {!user && (
                 <Stack direction={{ base: 'column', sm: 'row' }}>
-                    <Button
-                        colorScheme={'twitter'}
-                        leftIcon={<FaGoogle />}
-                        size={'xs'}
-                        onClick={signInWithGoogle}
-                    >
-                        Google
+                    <NextLink href={'/signin'} passHref>
+                        <Link>
+                            <Button
+                                colorScheme={'blue'}
+                                variant='solid'
+                            >
+                                Login
                     </Button>
-                    <Button
-                        colorScheme={'facebook'}
-                        leftIcon={<FaFacebook />}
-                        size={'xs'}
-                        onClick={signInWithFacebook}
-                    >
-                        Facebook
-                    </Button>
+                        </Link>
+                    </NextLink>
                 </Stack>
             )}
             {user && (

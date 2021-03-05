@@ -59,11 +59,12 @@ export default function User({ data }) {
             <ProfileAvatar data={data} />
 
             <Tabs
-                // defaultIndex={1}
+                defaultIndex={1}
                 isFitted
                 align="center"
                 variant="line"
                 colorScheme="green"
+                w='sm'
             >
                 <TabList>
                     <Tab>LINKS</Tab>
