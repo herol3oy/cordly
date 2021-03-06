@@ -148,7 +148,7 @@ export default function Navigation() {
                     alignItems={'center'}
                 >
                     <Text display={['none', 'block']}>
-                        Hi {username || user.displayName.split(' ')[0]}!
+                        Hi {username || user.displayName?.split(' ')[0] || 'Sneeky'}!
                     </Text>
                     <Menu>
                         <MenuButton

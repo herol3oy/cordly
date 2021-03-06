@@ -24,7 +24,7 @@ import {
 } from '@chakra-ui/react'
 
 export default function Musician({ data }) {
-    
+
     return (
         <Flex mt={'28'}>
             {_.map(data, (i, idx) => (
@@ -34,14 +34,11 @@ export default function Musician({ data }) {
                         passHref
                     >
                         <Link>
-                            <NextImage
-                                alt={i.name}
+                            <Avatar
+                                size={'lg'}
+                                name="Dan Abrahmov"
                                 src={i.profileImg || i.photoUrl}
-                                width={80}
-                                height={80}
-                                objectFit='cover'
                             />
-
                         </Link>
                     </Nextlink>
                 </Flex>

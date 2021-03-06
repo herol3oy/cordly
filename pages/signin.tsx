@@ -1,9 +1,12 @@
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Navigation from '../components/Navigation'
 import { FcGoogle } from 'react-icons/fc'
 import { FaFacebook } from 'react-icons/fa'
+import { FaEnvelope } from 'react-icons/fa'
 import { createUser } from '../utils/db'
-import { auth, googleAuthProvider, facebookAuthProvider } from '../lib/firebase'
+import { useForm } from "react-hook-form"
+import { auth, googleAuthProvider, facebookAuthProvider, emailAuthProvider } from '../lib/firebase'
 import {
     Box,
     Flex,
@@ -20,6 +23,8 @@ import {
     useBreakpointValue,
     IconProps,
     Icon,
+    Link,
+    useToast,
 } from '@chakra-ui/react'
 
 const avatars = [
@@ -47,7 +52,14 @@ const avatars = [
 
 export default function SignIn() {
 
+    const [hasAccount, hasAccountSet] = useState(false)
+    const [forgotPassword, forgotPasswordSet] = useState(false)
+    const [disabledBtn, disabledBtnSet] = useState('')
+
+    const { register, handleSubmit, watch, errors } = useForm();
+
     const router = useRouter()
+    const toast = useToast()
 
     const signInWithGoogle = () => {
         auth.signInWithPopup(googleAuthProvider).then((response) =>
@@ -86,19 +98,66 @@ export default function SignIn() {
         }
     }
 
-    const handleSignUp = (e) => {
-        e.preventDefault()
+    const handleForgotPassword = async (data) => {
+        const { email } = data
 
-        // try {
-        //     setError("")
-        //     setLoading(true)
-        //     await login(emailRef.current.value, passwordRef.current.value)
-        //     history.push("/")
-        // } catch {
-        //     setError("Failed to log in")
-        // }
+        try {
 
-        // setLoading(false)
+            await auth.sendPasswordResetEmail(email)
+
+            disabledBtnSet(true)
+
+            toast({
+                title: "Email Sent",
+                description: 'Please check your mail box for further instructions',
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+            })
+
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: error.message,
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+            })
+        }
+    }
+
+    const handleLogin = async (loginData) => {
+        const { email, password } = loginData
+
+        try {
+            await auth.signInWithEmailAndPassword(email, password)
+
+            router.push('/')
+
+        } catch (error) {
+
+            toast({
+                title: "Login Error.",
+                description: error.message,
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+            })
+        }
+    }
+
+    const handleSignUp = (signUpData) => {
+        const { email, password, confirmpassword } = signUpData
+
+        if (password !== confirmpassword) {
+            // return setError("Passwords do not match")
+            return
+        }
+
+        auth.createUserWithEmailAndPassword(email, password)
+            .then((response) => handleUser(response.user))
+
+        router.push('/dashboard')
     }
 
     return (
@@ -186,63 +245,178 @@ export default function SignIn() {
                     spacing={{ base: 8 }}
                     maxW={{ lg: 'lg' }}>
 
+                    <Box>
 
-                    <Stack spacing={4}>
-                        <Heading
-                            color={'gray.50'}
-                            lineHeight={1.1}
-                            fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}>
-                            Sign Up with Email
-                        </Heading>
-                    </Stack>
 
-                    <Box as={'form'} mt={10} onSubmit={handleSignUp}>
-                        <Stack spacing={4}>
-                            <Input
-                                placeholder="Email"
-                                bg={'gray.100'}
-                                border={0}
-                                color={'gray.500'}
-                                _placeholder={{
-                                    color: 'gray.500',
-                                }}
-                            />
-                            <Input
-                                placeholder="Password"
-                                type='password'
-                                bg={'gray.100'}
-                                border={0}
-                                color={'gray.500'}
-                                _placeholder={{
-                                    color: 'gray.500',
-                                }}
-                            />
-                            <Input
-                                type='password'
-                                placeholder="Confirm password"
-                                bg={'gray.100'}
-                                border={0}
-                                color={'gray.500'}
-                                _placeholder={{
-                                    color: 'gray.500',
-                                }}
-                            />
-                        </Stack>
-                        <Button
-                            type={'submit'}
-                            fontFamily={'heading'}
-                            mt={8}
-                            w={'full'}
-                            bgGradient="linear(to-r, red.400,pink.400)"
-                            color={'white'}
-                            _hover={{
-                                bgGradient: 'linear(to-r, red.400,pink.400)',
-                                boxShadow: 'xl',
-                            }}>
-                            Submit
-            </Button>
+                        {
+                            !hasAccount ? (
+                                <>
+                                    <Heading
+                                        color={'gray.50'}
+                                        lineHeight={1.1}
+                                        fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}>
+                                        Sign Up
+                                    </Heading>
+
+                                    <Box as={'form'} mt={10} onSubmit={handleSubmit(handleSignUp)} >
+                                        <Stack spacing={4}>
+                                            <Input
+                                                ref={register}
+                                                placeholder="Email"
+                                                name='email'
+                                                bg={'gray.100'}
+                                                border={0}
+                                                color={'gray.500'}
+                                                _placeholder={{
+                                                    color: 'gray.500',
+                                                }}
+                                            />
+                                            <Input
+                                                ref={register}
+                                                placeholder="Password"
+                                                type='password'
+                                                name='password'
+                                                bg={'gray.100'}
+                                                border={0}
+                                                color={'gray.500'}
+                                                _placeholder={{
+                                                    color: 'gray.500',
+                                                }}
+                                            />
+                                            <Input
+                                                ref={register}
+                                                type='password'
+                                                name='confirmpassword'
+                                                placeholder="Confirm password"
+                                                bg={'gray.100'}
+                                                border={0}
+                                                color={'gray.500'}
+                                                _placeholder={{
+                                                    color: 'gray.500',
+                                                }}
+                                            />
+                                        </Stack>
+                                        <Button
+                                            type={'submit'}
+                                            fontFamily={'heading'}
+                                            mt={8}
+                                            w={'full'}
+                                            bgGradient="linear(to-r, red.400,pink.400)"
+                                            color={'white'}
+                                            _hover={{
+                                                bgGradient: 'linear(to-r, red.400,pink.400)',
+                                                boxShadow: 'xl',
+                                            }}>
+                                            SIGN UP
+                                    </Button>
+                                    </Box>
+                                </>
+                            ) :
+                                (
+                                    <>
+                                        {
+                                            forgotPassword ?
+                                                <>
+                                                    <Heading
+                                                        color={'gray.50'}
+                                                        lineHeight={1.1}
+                                                        fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}>
+                                                        Forgot Password
+                                                    </Heading>
+                                                    <Box as={'form'} mt={10} onSubmit={handleSubmit(handleForgotPassword)} >
+                                                        {disabledBtn}
+                                                        <Stack spacing={4}>
+                                                            <Input
+                                                                disabled={disabledBtn && true}
+                                                                ref={register}
+                                                                placeholder="Email"
+                                                                name='email'
+                                                                bg={'gray.100'}
+                                                                border={0}
+                                                                color={'gray.500'}
+                                                                _placeholder={{
+                                                                    color: 'gray.500',
+                                                                }}
+                                                            />
+
+                                                        </Stack>
+                                                        <Button
+                                                            disabled={disabledBtn && true}
+                                                            type={'submit'}
+                                                            fontFamily={'heading'}
+                                                            mt={8}
+                                                            w={'full'}
+                                                            bgGradient="linear(to-r, red.400,pink.400)"
+                                                            color={'white'}
+                                                            _hover={{
+                                                                bgGradient: 'linear(to-r, red.400,pink.400)',
+                                                                boxShadow: 'xl',
+                                                            }}>
+                                                            Send password
+                                                    </Button>
+                                                    </Box>
+                                                </>
+                                                : (
+                                                    <>
+                                                        <Heading
+                                                            color={'gray.50'}
+                                                            lineHeight={1.1}
+                                                            fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}>
+                                                            Sign In
+                                                    </Heading>
+                                                        <Box as={'form'} mt={10} onSubmit={handleSubmit(handleLogin)} >
+                                                            <Stack spacing={4}>
+                                                                <Input
+                                                                    ref={register}
+                                                                    placeholder="Email"
+                                                                    name='email'
+                                                                    bg={'gray.100'}
+                                                                    border={0}
+                                                                    color={'gray.500'}
+                                                                    _placeholder={{
+                                                                        color: 'gray.500',
+                                                                    }}
+                                                                />
+                                                                <Input
+                                                                    ref={register}
+                                                                    placeholder="Password"
+                                                                    type='password'
+                                                                    name='password'
+                                                                    bg={'gray.100'}
+                                                                    border={0}
+                                                                    color={'gray.500'}
+                                                                    _placeholder={{
+                                                                        color: 'gray.500',
+                                                                    }}
+                                                                />
+
+                                                            </Stack>
+                                                            <Button
+                                                                type={'submit'}
+                                                                fontFamily={'heading'}
+                                                                mt={8}
+                                                                w={'full'}
+                                                                bgGradient="linear(to-r, red.400,pink.400)"
+                                                                color={'white'}
+                                                                _hover={{
+                                                                    bgGradient: 'linear(to-r, red.400,pink.400)',
+                                                                    boxShadow: 'xl',
+                                                                }}>
+                                                                Log In
+                                                            </Button>
+                                                            {!forgotPassword && <Link onClick={() => forgotPasswordSet(true)}>Forgot password?</Link>}
+                                                        </Box>
+                                                    </>
+                                                )
+                                        }
+
+                                        <Link onClick={() => hasAccountSet(false)}>
+                                            No account?
+                                        </Link>
+                                    </>
+                                )
+                        }
                     </Box>
-
 
                     <Center p={8}>
                         <Stack spacing={2} align={'center'} maxW={'md'} w={'full'}>
@@ -261,6 +435,18 @@ export default function SignIn() {
                                 <Center>
                                     <Text onClick={signInWithFacebook}>
                                         Sign in with Facebook
+                                    </Text>
+                                </Center>
+                            </Button>
+
+                            {/* Sign in with Email */}
+                            <Button w={'full'} colorScheme={'facebook'} leftIcon={<FaEnvelope />}>
+                                <Center>
+                                    <Text onClick={() => {
+                                        hasAccountSet(true)
+                                        forgotPasswordSet(false)
+                                    }}>
+                                        Sign in with Email
                                     </Text>
                                 </Center>
                             </Button>
