@@ -124,7 +124,7 @@ export default function PhonePreview({ urls, userNameValue, profileImg }) {
             >
                 <LinkIcon />
 
-                <Link textAlign="left" href={`/${userNameValue}`} isExternal>
+                <Link textAlign="left" href={`/${userNameValue || user.uid.slice(0, 5)}`} isExternal>
                     <Text fontSize={'xl'} fontWeight={'bold'}>
                         https://cord.ly/{userNameValue || user.uid.slice(0, 5)}
                     </Text>

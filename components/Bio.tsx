@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { UserContext } from '../lib/context'
 import { updateProfilePicture } from '../utils/db'
 import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import _ from 'lodash'
 import { useForm, Controller } from "react-hook-form"
 import {
@@ -30,6 +31,7 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
     const [progress, setProgress] = useState(0)
     const [downloadURL, downloadURLSet] = useState(null)
     const [avatarName, avatarNameSet] = useState('No file choosen')
+    const [googleLoc, googleLocSet] = useState(null)
 
     const { register, handleSubmit, errors, control, reset, setValue } = useForm({
         defaultValues: {
@@ -98,15 +100,21 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
     }
 
     const onSubmit = (data) => {
+console.log(data)
 
-        dashboardFormSet(data)
+        const bio = {
+            ...data,
+            location: googleLoc.label
+        }
+
+        dashboardFormSet(bio)
 
         firestore
             .collection('users')
             .doc(user.uid)
-            .update({ bio: data })
+            .update({ bio: bio })
 
-        reset()
+        // reset()
     }
 
     return (
@@ -136,7 +144,7 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
                         borderWidth={1}
                         borderRightRadius="md"
                     >
-                        {avatarName}
+                        {avatarName.split('').slice(0, 10)}
                         <chakra.input
                             type="file"
                             onChange={(e) => uploadFile(e)}
@@ -173,14 +181,38 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
                         </FormHelperText>
                     </FormControl>
                     <FormControl>
+
                         <InputGroup>
                             <InputLeftAddon children="📍Location" />
-                            <Input
+
+                            <Box w={'100%'}>
+                                <GooglePlacesAutocomplete
+                                    apiKey={process.env.NEXT_PUBLIC_API_KEY}
+                                    selectProps={{
+                                        googleLoc,
+                                        onChange: googleLocSet,
+                                        styles: {
+                                            input: (provided) => ({
+                                                ...provided,
+                                                borderBottomLeftRadius: '0 !important',
+                                                borderBottomTopRadius: 0,
+                                                paddingBottom: '2px',
+                                            }),
+                                            option: (provided) => ({
+                                                ...provided,
+                                                color: 'gray',
+                                                backgroundColor: 'white',
+                                            }),
+                                        }
+                                    }}
+                                />
+                            </Box>
+                            {/* <Input
                                 type='text'
                                 name="location"
                                 placeholder="Barcelona, Spain"
                                 ref={register({ required: true })}
-                            />
+                            /> */}
                         </InputGroup>
                         <FormHelperText textAlign="left">
                             Where are you based in. Change when you move to a
