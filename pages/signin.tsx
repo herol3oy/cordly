@@ -7,6 +7,7 @@ import { FaEnvelope } from 'react-icons/fa'
 import { createUser } from '../utils/db'
 import { useForm } from "react-hook-form"
 import { auth, googleAuthProvider, facebookAuthProvider, emailAuthProvider } from '../lib/firebase'
+import SignInAuthCheck from '../components/SignInAuthCheck'
 import {
     Box,
     Flex,
@@ -50,11 +51,19 @@ const avatars = [
     },
 ]
 
-export default function SignIn() {
+export default function SignIn(props) {
+    return (
+        <SignInAuthCheck>
+            <SignInPage />
+        </SignInAuthCheck>
+    )
+}
+
+const SignInPage = () => {
 
     const [hasAccount, hasAccountSet] = useState(false)
     const [forgotPassword, forgotPasswordSet] = useState(false)
-    const [disabledBtn, disabledBtnSet] = useState('')
+    const [disabledBtn, disabledBtnSet] = useState(null)
 
     const { register, handleSubmit, watch, errors } = useForm();
 
@@ -99,11 +108,11 @@ export default function SignIn() {
     }
 
     const handleForgotPassword = async (data) => {
-        const { email } = data
+        const { forgotEmail } = data
 
         try {
 
-            await auth.sendPasswordResetEmail(email)
+            await auth.sendPasswordResetEmail(forgotEmail)
 
             disabledBtnSet(true)
 
@@ -129,16 +138,26 @@ export default function SignIn() {
     const handleLogin = async (loginData) => {
         const { email, password } = loginData
 
-        try {
-            await auth.signInWithEmailAndPassword(email, password)
+        if (email && password) {
+            try {
+                await auth.signInWithEmailAndPassword(email, password)
 
-            router.push('/')
+                router.push('/')
 
-        } catch (error) {
+            } catch (error) {
 
+                toast({
+                    title: "Error",
+                    description: error.message,
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                })
+            }
+        } else {
             toast({
-                title: "Login Error.",
-                description: error.message,
+                title: "Error.",
+                description: `Please fill in the email and password inputs`,
                 status: "error",
                 duration: 9000,
                 isClosable: true,
@@ -147,17 +166,22 @@ export default function SignIn() {
     }
 
     const handleSignUp = (signUpData) => {
-        const { email, password, confirmpassword } = signUpData
+        const { emailSignUp, passwordSignUp, passwordSignUpConfirm } = signUpData
 
-        if (password !== confirmpassword) {
-            // return setError("Passwords do not match")
-            return
+        if (passwordSignUp !== passwordSignUpConfirm) {
+            toast({
+                title: "Error",
+                description: 'Password do not match.',
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+            })
+        } else {
+            auth.createUserWithEmailAndPassword(emailSignUp, passwordSignUp)
+                .then((response) => handleUser(response.user))
+
+            router.push('/dashboard')
         }
-
-        auth.createUserWithEmailAndPassword(email, password)
-            .then((response) => handleUser(response.user))
-
-        router.push('/dashboard')
     }
 
     return (
@@ -257,13 +281,13 @@ export default function SignIn() {
                                         fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}>
                                         Sign Up
                                     </Heading>
-
                                     <Box as={'form'} mt={10} onSubmit={handleSubmit(handleSignUp)} >
+                                        {errors.emailSignUp && `Please type your email.`}
                                         <Stack spacing={4}>
                                             <Input
-                                                ref={register}
+                                                ref={register({ required: true })}
                                                 placeholder="Email"
-                                                name='email'
+                                                name='emailSignUp'
                                                 bg={'gray.100'}
                                                 border={0}
                                                 color={'gray.500'}
@@ -272,10 +296,10 @@ export default function SignIn() {
                                                 }}
                                             />
                                             <Input
-                                                ref={register}
+                                                ref={register({ required: true })}
                                                 placeholder="Password"
                                                 type='password'
-                                                name='password'
+                                                name='passwordSignUp'
                                                 bg={'gray.100'}
                                                 border={0}
                                                 color={'gray.500'}
@@ -284,9 +308,9 @@ export default function SignIn() {
                                                 }}
                                             />
                                             <Input
-                                                ref={register}
+                                                ref={register({ required: true })}
                                                 type='password'
-                                                name='confirmpassword'
+                                                name='passwordSignUpConfirm'
                                                 placeholder="Confirm password"
                                                 bg={'gray.100'}
                                                 border={0}
@@ -323,14 +347,14 @@ export default function SignIn() {
                                                         fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}>
                                                         Forgot Password
                                                     </Heading>
+                                                    {errors.forgotEmail && `Please type your email.`}
                                                     <Box as={'form'} mt={10} onSubmit={handleSubmit(handleForgotPassword)} >
-                                                        {disabledBtn}
                                                         <Stack spacing={4}>
                                                             <Input
                                                                 disabled={disabledBtn && true}
-                                                                ref={register}
+                                                                ref={register({ required: true })}
                                                                 placeholder="Email"
-                                                                name='email'
+                                                                name='forgotEmail'
                                                                 bg={'gray.100'}
                                                                 border={0}
                                                                 color={'gray.500'}
@@ -365,9 +389,11 @@ export default function SignIn() {
                                                             Sign In
                                                     </Heading>
                                                         <Box as={'form'} mt={10} onSubmit={handleSubmit(handleLogin)} >
+                                                            {errors.email && `Please type your email`}<br />
+                                                            {errors.password && `Please type your password`}
                                                             <Stack spacing={4}>
                                                                 <Input
-                                                                    ref={register}
+                                                                    ref={register({ required: true })}
                                                                     placeholder="Email"
                                                                     name='email'
                                                                     bg={'gray.100'}
@@ -378,7 +404,7 @@ export default function SignIn() {
                                                                     }}
                                                                 />
                                                                 <Input
-                                                                    ref={register}
+                                                                    ref={register({ required: true })}
                                                                     placeholder="Password"
                                                                     type='password'
                                                                     name='password'
@@ -461,7 +487,7 @@ export default function SignIn() {
                 left={-10}
                 style={{ filter: 'blur(70px)' }}
             />
-        </Box>
+        </Box >
     )
 }
 
