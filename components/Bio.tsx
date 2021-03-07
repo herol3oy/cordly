@@ -6,6 +6,7 @@ import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import _ from 'lodash'
 import { useForm, Controller } from "react-hook-form"
+import { useToast } from '@chakra-ui/react'
 import {
     Divider,
     Flex,
@@ -32,8 +33,10 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
     const [downloadURL, downloadURLSet] = useState(null)
     const [avatarName, avatarNameSet] = useState('No file choosen')
     const [googleLoc, googleLocSet] = useState(null)
-
-    const { register, handleSubmit, errors, control, reset, setValue } = useForm({
+    const [disabled, disabledSet] = useState(false)
+    const [currentLocation, currentLocationSet] = useState('no value')
+    
+    const { register, handleSubmit, errors, control, setValue } = useForm({
         defaultValues: {
             stagename: '',
             location: '',
@@ -45,11 +48,12 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
     })
 
     const { user } = useContext(UserContext)
-    const router = useRouter()
+    const toast = useToast()
 
     const query = firestore.collection('users').where('uid', '==', user.uid)
 
     useEffect(() => {
+
         const getAllDashData = async () => {
             await query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
                 let changes = snapshot.docChanges()
@@ -57,11 +61,13 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
                     profileImgSet(i.doc.data().profileImg)
 
                     setValue('stagename', i.doc.data().bio?.stagename)
-                    setValue('location', i.doc.data().bio?.location)
+                    // setValue('location', i.doc.data().bio?.location)
                     setValue('skills', i.doc.data().bio?.skills)
                     setValue('influences', i.doc.data().bio?.influences)
                     setValue('education', i.doc.data().bio?.education)
                     setValue('collaboration', i.doc.data().bio?.collaboration)
+
+                    currentLocationSet(i.doc.data().bio?.location)
                 })
             })
         }
@@ -99,22 +105,34 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
         })
     }
 
-    const onSubmit = (data) => {
-console.log(data)
+    const onSubmit = async (data) => {
 
-        const bio = {
-            ...data,
-            location: googleLoc.label
+        if (!googleLoc) {
+            toast({
+                title: "Error",
+                description: 'Please fill in location field',
+                status: "error",
+                duration: 2000,
+                isClosable: false,
+            })
         }
 
-        dashboardFormSet(bio)
+        else {
+            disabledSet(true)
 
-        firestore
-            .collection('users')
-            .doc(user.uid)
-            .update({ bio: bio })
+            const bio = {
+                ...data,
+                location: googleLoc?.label
+            }
 
-        // reset()
+            dashboardFormSet(bio)
+
+            await firestore
+                .collection('users')
+                .doc(user.uid)
+                .update({ bio: bio })
+                .finally(() => disabledSet(false))
+        }
     }
 
     return (
@@ -170,6 +188,7 @@ console.log(data)
                         <InputGroup>
                             <InputLeftAddon children="👩‍🎤 Stage Name" />
                             <Input
+                                isDisabled={disabled}
                                 type='text'
                                 name="stagename"
                                 placeholder="Lexi Rose"
@@ -189,13 +208,14 @@ console.log(data)
                                 <GooglePlacesAutocomplete
                                     apiKey={process.env.NEXT_PUBLIC_API_KEY}
                                     selectProps={{
+                                        name: 'googleLocation',
+                                        required: true,
+                                        isDisabled: disabled,
                                         googleLoc,
                                         onChange: googleLocSet,
                                         styles: {
                                             input: (provided) => ({
                                                 ...provided,
-                                                borderBottomLeftRadius: '0 !important',
-                                                borderBottomTopRadius: 0,
                                                 paddingBottom: '2px',
                                             }),
                                             option: (provided) => ({
@@ -207,6 +227,7 @@ console.log(data)
                                     }}
                                 />
                             </Box>
+
                             {/* <Input
                                 type='text'
                                 name="location"
@@ -216,7 +237,7 @@ console.log(data)
                         </InputGroup>
                         <FormHelperText textAlign="left">
                             Where are you based in. Change when you move to a
-                            new city.
+                            new city. Current location: {currentLocation}
                         </FormHelperText>
                     </FormControl>
 
@@ -224,6 +245,7 @@ console.log(data)
                         <InputGroup>
                             <InputLeftAddon children="💯 Skills" />
                             <Input
+                                isDisabled={disabled}
                                 type='text'
                                 name="skills"
                                 placeholder="Guitarist, Drummer, Pianist"
@@ -239,6 +261,7 @@ console.log(data)
                         <InputGroup>
                             <InputLeftAddon children="🔥 Influences" />
                             <Input
+                                isDisabled={disabled}
                                 type='text'
                                 name="influences"
                                 placeholder="Metallica, Pink Floyd, Coldplay"
@@ -252,6 +275,7 @@ console.log(data)
 
                     <Controller
                         as={<Select
+                            isDisabled={disabled}
                             ref={register}
                             placeholder="Choose your music education"
                             size="lg"
@@ -268,10 +292,12 @@ console.log(data)
                         <FormLabel htmlFor="collaboration" mb="0" >
                             Open to request for collaboration?
                         </FormLabel>
-                        <Switch name={'collaboration'} size={'lg'} colorScheme={'green'} ref={register} />
+                        <Switch isDisabled={disabled} name={'collaboration'} size={'lg'} colorScheme={'green'} ref={register} />
                     </FormControl>
 
                     <Button
+                        isLoading={disabled}
+                        disabled={disabled}
                         // onClick={() => setValue("firstName", "Bill")}
                         type="submit" colorScheme="green">
                         Submit

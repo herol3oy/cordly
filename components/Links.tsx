@@ -26,6 +26,8 @@ import {
 
 export default function Links({ urls, urlsSet }) {
 
+    const [data, dataSet] = useState({ title: '', url: '' })
+
     const { user } = useContext(UserContext)
 
     const toast = useToast()
@@ -44,20 +46,21 @@ export default function Links({ urls, urlsSet }) {
         getAllUrls()
     }, [user.uid])
 
-    const addLink = (data) => {
+    const addLink = async (data) => {
         const { title, url } = data
 
-        query.doc(user.uid).update({
+        await query.doc(user.uid).update({
             urls: arrayUnion({ [title]: url }),
         })
 
-        reset()
 
         toast({
             title: 'Link added to your public portfolio.',
             status: 'success',
             duration: 1000,
         })
+
+        reset()
     }
 
     const deleteLink = (title, link) => {
@@ -70,6 +73,13 @@ export default function Links({ urls, urlsSet }) {
             status: 'error',
             duration: 1000,
         })
+    }
+
+    const handleKeyPress = (e, data) => {
+        if (e.code === 'Enter') {
+
+            addLink(data)
+        }
     }
 
     const userUrls = urls?.map((i, idx) => (
@@ -152,6 +162,8 @@ export default function Links({ urls, urlsSet }) {
                     <InputGroup size={'lg'}>
                         <InputLeftAddon children={'Title'} />
                         <Input
+                            onChange={(e) => dataSet({ ...data, title: e.target.value })}
+                            value={data.title}
                             name={'title'}
                             type={'text'}
                             placeholder={'Youtube'}
@@ -161,10 +173,14 @@ export default function Links({ urls, urlsSet }) {
                     <InputGroup size={'lg'}>
                         <InputLeftAddon children={'URL'} />
                         <Input
+                            onChange={(e) => dataSet({ ...data, url: e.target.value })}
+                            value={data.url}
                             name={'url'}
                             type={'url'}
                             placeholder="https://youtube.com/cordly"
                             ref={register}
+                            onKeyPress={(e) => handleKeyPress(e, data)}
+
                         />
                     </InputGroup>
                     <Button
