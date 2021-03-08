@@ -164,16 +164,18 @@ const BioPreviewPanel = ({ user }) => {
         collaboration: false,
     })
 
+    const query = firestore.collection('users')
     useEffect(() => {
-        const query = firestore.collection('users')
-        const getAllUrls = async () => {
+        // const getAllUrls =  () => {
             query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
                 let changes = snapshot.docChanges()
                 changes.forEach((i) => bioSet(i.doc.data().bio))
             })
-        }
-        getAllUrls()
-    }, [bio, user.uid])
+        // }
+        // getAllUrls()
+
+        //bio, user.uid
+    }, [])
 
     return (
         <Stack>

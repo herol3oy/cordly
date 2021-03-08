@@ -37,19 +37,19 @@ export default function Links({ urls, urlsSet }) {
     const { register, handleSubmit, watch, errors, reset } = useForm()
 
     useEffect(() => {
-        const getAllUrls = async () => {
-            query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
-                let changes = snapshot.docChanges()
-                changes.forEach((i) => urlsSet(i.doc.data().urls))
-            })
-        }
-        getAllUrls()
+        // const getAllUrls = async () => {
+        query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
+            let changes = snapshot.docChanges()
+            changes.forEach((i) => urlsSet(i.doc.data().urls))
+        })
+        // }
+        // getAllUrls()
     }, [user.uid])
 
-    const addLink = async (data) => {
+    const addLink = (data) => {
         const { title, url } = data
 
-        await query.doc(user.uid).update({
+        query.doc(user.uid).update({
             urls: arrayUnion({ [title]: url }),
         })
 

@@ -54,8 +54,8 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
 
     useEffect(() => {
 
-        const getAllDashData = async () => {
-            await query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
+        // const getAllDashData = async () => {
+             query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
                 let changes = snapshot.docChanges()
                 changes.forEach((i) => {
                     profileImgSet(i.doc.data().profileImg)
@@ -70,9 +70,9 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
                     currentLocationSet(i.doc.data().bio?.location)
                 })
             })
-        }
+        // }
 
-        getAllDashData()
+        // getAllDashData()
 
     }, [user.uid])
 
@@ -105,7 +105,7 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
         })
     }
 
-    const onSubmit = async (data) => {
+    const onSubmit = (data) => {
 
         if (!googleLoc) {
             toast({
@@ -127,7 +127,7 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
 
             dashboardFormSet(bio)
 
-            await firestore
+            firestore
                 .collection('users')
                 .doc(user.uid)
                 .update({ bio: bio })
