@@ -59,7 +59,7 @@ export default function User({ data }) {
             <ProfileAvatar data={data} />
 
             <Tabs
-                defaultIndex={1}
+                defaultIndex={0}
                 isFitted
                 align="center"
                 variant="line"
