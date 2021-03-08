@@ -4,7 +4,9 @@ import { LinkIcon, DeleteIcon } from '@chakra-ui/icons'
 import { firestore, arrayUnion, arrayRemove } from '../lib/firebase'
 import { FaPlusCircle } from 'react-icons/fa'
 import { useForm } from "react-hook-form"
+import { ReactSortable } from "react-sortablejs"
 import _ from 'lodash'
+import isAbsoluteUrl from 'is-absolute-url'
 import {
     Button,
     Input,
@@ -37,30 +39,44 @@ export default function Links({ urls, urlsSet }) {
     const { register, handleSubmit, watch, errors, reset } = useForm()
 
     useEffect(() => {
-        // const getAllUrls = async () => {
-        query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
-            let changes = snapshot.docChanges()
-            changes.forEach((i) => urlsSet(i.doc.data().urls))
-        })
-        // }
-        // getAllUrls()
-    }, [user.uid])
+
+        query
+            .where('uid', '==', user.uid)
+            .onSnapshot((snapshot) => {
+                let changes = snapshot.docChanges()
+                changes.forEach((i) => urlsSet(i.doc.data().urls))
+            })
+
+    }, [user.uid,])
 
     const addLink = (data) => {
         const { title, url } = data
 
-        query.doc(user.uid).update({
-            urls: arrayUnion({ [title]: url }),
-        })
+        const isUrlSafe = isAbsoluteUrl(url)
+
+        if (isUrlSafe) {
+            query.doc(user.uid).update({
+                urls: arrayUnion({ [title]: url }),
+            })
+
+            toast({
+                title: 'Link added.',
+                status: 'success',
+                duration: 1000,
+            })
+
+            dataSet({ url: '', title: '' })
+        }
+
+        else {
+            toast({
+                title: 'Invalid url.',
+                status: 'error',
+                duration: 1000,
+            })
+        }
 
 
-        toast({
-            title: 'Link added to your public portfolio.',
-            status: 'success',
-            duration: 1000,
-        })
-
-        reset()
     }
 
     const deleteLink = (title, link) => {
@@ -119,7 +135,7 @@ export default function Links({ urls, urlsSet }) {
                         <Text fontSize={'xl'} fontWeight={'bold'}>
                             {Object.keys(i)[0]}
                         </Text>
-                        <Text color='gray.300' fontSize={'sm'}>{Object.values(i)[0]}</Text>
+                        <Text color='gray.300' fontSize={'sm'}>{Object.values(i)[0].slice(0,35)}</Text>
                     </Link>
                     <Spacer />
 
@@ -133,6 +149,7 @@ export default function Links({ urls, urlsSet }) {
                 </Stack>
             </Stack>
         </Flex>
+
     ))
 
     return (
@@ -167,7 +184,7 @@ export default function Links({ urls, urlsSet }) {
                             name={'title'}
                             type={'text'}
                             placeholder={'Youtube'}
-                            ref={register}
+                            ref={register({ required: true })}
                         />
                     </InputGroup>
                     <InputGroup size={'lg'}>
@@ -176,9 +193,9 @@ export default function Links({ urls, urlsSet }) {
                             onChange={(e) => dataSet({ ...data, url: e.target.value })}
                             value={data.url}
                             name={'url'}
-                            type={'url'}
+                            // type={'url'}
                             placeholder="https://youtube.com/cordly"
-                            ref={register}
+                            ref={register({ required: true })}
                             onKeyPress={(e) => handleKeyPress(e, data)}
 
                         />
@@ -196,8 +213,9 @@ export default function Links({ urls, urlsSet }) {
             </FormControl>
 
             <Divider my={5} />
-
-            {userUrls}
+            <ReactSortable list={urls} setList={urlsSet}>
+                {userUrls}
+            </ReactSortable>
         </Flex>
     )
 }
