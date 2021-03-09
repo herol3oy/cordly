@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import NextLink from 'next/link'
 import { GetServerSideProps } from 'next'
 import { firestore } from '../lib/firebase'
 import { CheckCircleIcon } from '@chakra-ui/icons'
-import AvatarSVG from '../components/AvatarSVG'
+import ReactPlayer from 'react-player'
+import getYouTubeID from 'get-youtube-id';
 import {
     Tab,
     Tabs,
@@ -23,6 +25,7 @@ import {
     useColorModeValue,
     Button,
     Link,
+    Avatar,
 } from '@chakra-ui/react'
 
 export default function User({ data }) {
@@ -64,7 +67,7 @@ export default function User({ data }) {
                 align="center"
                 variant="line"
                 colorScheme="green"
-                w='sm'
+                w={['sm', 'md', 'md', 'xl']}
             >
                 <TabList>
                     <Tab>LINKS</Tab>
@@ -192,25 +195,35 @@ const ProfileBio = ({ data }) => {
 
 const ProfileLinks = ({ data }) => {
 
+    const [showVideo, showVideoSet] = useState(false)
+
     const { urls } = data
 
-    const links = urls?.map((i, idx) => (
+    const links = urls?.map((i, idx) => {
 
-        <Button
-            key={idx}
-            size='lg'
-            color={'gray.400'}
-            bg={useColorModeValue('gray.50', 'gray.900')}
-        >
-            <NextLink href={Object.values(i)[0].toString()} passHref>
-                <Link isExternal>
-                    {Object.keys(i)[0].toString()}
-                </Link>
-            </NextLink>
-        </Button>
+        const title = Object.keys(i)[0].toString()
+        const url = Object.values(i)[0].toString()
 
+        const isYoutube = getYouTubeID(url)
 
-    ))
+        return (
+            <Box key={idx} onClick={() => showVideoSet(p => !p)}>
+                <Button
+                    w={'100%'}
+                    size='lg'
+                    color={'gray.400'}
+                    bg={useColorModeValue('gray.50', 'gray.900')}
+                >
+                    <NextLink href={url} passHref>
+                        <Link isExternal>
+                            {title}
+                        </Link>
+                    </NextLink>
+                </Button>
+                {isYoutube && <ReactPlayer style={{ display: `${showVideo ? 'block' : 'none'}` }} width={'100%'} url={url} />}
+            </Box>
+        )
+    })
 
     return (
         <Flex align="center" alignItems="stretch" direction="column">
@@ -225,16 +238,19 @@ const ProfileLinks = ({ data }) => {
 }
 
 const ProfileAvatar = ({ data }) => {
-    const { profileImg, email, photoUrl, username } = data
+
+    const { profileImg, email, photoUrl, username, name, bio } = data
 
     return (
         <Flex direction={'column'} justify={'center'} alignItems='center'>
-            <Box mt={28}>
-                <AvatarSVG imageUrl={profileImg || photoUrl} />
-            </Box>
+
+            <Avatar mt={36} size="xl" name={name} src={profileImg || photoUrl} />
+
+            <Heading as={'h3'} size={'md'} mt={2}>{bio.stagename}</Heading>
+
             <Box >
-                <Flex mt={3} mb={5} alignItems='center'>
-                    <Heading letterSpacing={2} textAlign='center' as="h6" size="sm">
+                <Flex mt={4} mb={5} alignItems='center'>
+                    <Heading fontWeight={'light'} letterSpacing={2} textAlign={'center'} as={'h6'} size={'sm'}>
                         @{username || email.split('@')?.[0]}
                     </Heading>
                     <CheckCircleIcon ml={'2'} color={'green.300'} />
