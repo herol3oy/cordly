@@ -1,12 +1,10 @@
+import dynamic from 'next/dynamic'
 import { useState } from 'react'
 import NextLink from 'next/link'
 import { GetServerSideProps } from 'next'
 import { firestore } from '../lib/firebase'
 import { CheckCircleIcon } from '@chakra-ui/icons'
-import ReactPlayer from 'react-player'
 import getYouTubeID from 'get-youtube-id'
-import YouTube from 'react-youtube'
-
 import {
     Tab,
     Tabs,
@@ -29,6 +27,8 @@ import {
     Link,
     Avatar,
 } from '@chakra-ui/react'
+
+const ReactPlayer = dynamic(() => import('react-player/lazy'))
 
 export default function User({ data }) {
     return (
@@ -199,6 +199,7 @@ const ProfileLinks = ({ data }) => {
 
     const [row, setRow] = useState(undefined)
 
+
     const { urls } = data
 
     const links = urls?.map((i, idx) => {
@@ -225,12 +226,7 @@ const ProfileLinks = ({ data }) => {
                     </NextLink>
                 </Button>
                 {isYoutube &&
-                    <ReactPlayer style={{ display: row === i ? "block" : "none" }} width={'100%'} url={url} />
-                }
-
-                {/* {isYoutube &&
-                    <YouTube videoId="2g811Eo7K8U" />
-                } */}
+                    <ReactPlayer url={url} style={{ display: row === i ? "block" : "none" }} width={'100%'} />}
             </Box>
         )
     })
@@ -243,7 +239,6 @@ const ProfileLinks = ({ data }) => {
             >
                 {links}
             </VStack>
-
         </Flex>
     )
 }
