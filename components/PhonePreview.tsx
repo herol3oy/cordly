@@ -4,6 +4,7 @@ import { UserContext } from '../lib/context'
 import NextLink from 'next/link'
 import { LinkIcon } from '@chakra-ui/icons'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
+import QRCode from 'qrcode'
 import {
     Box,
     Flex,
@@ -21,14 +22,26 @@ import {
     WrapItem,
     useColorModeValue,
     useClipboard,
+    Image,
 } from '@chakra-ui/react'
 
 export default function PhonePreview({ urls, userNameValue, profileImg }) {
+    const [imageUrl, setImageUrl] = useState('')
 
     const { user } = useContext(UserContext)
 
-    const { hasCopied, onCopy } = useClipboard(`https://cord.ly/${userNameValue || user.uid.slice(0, 5)}`)
-    // const { hasCopied, onCopy } = useClipboard(`salam`)
+    const userProfileUrl = `https://cord.ly/${userNameValue || user.uid.slice(0, 5)}`
+
+    const { hasCopied, onCopy } = useClipboard(userProfileUrl)
+
+    const generateQrCode = async () => {
+        try {
+            const response = await QRCode.toDataURL(userProfileUrl)
+            setImageUrl(response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <Flex
@@ -130,7 +143,7 @@ export default function PhonePreview({ urls, userNameValue, profileImg }) {
 
                 <Link textAlign="left" href={`/${userNameValue || user.uid.slice(0, 5)}`} isExternal>
                     <Text fontSize={'xl'} fontWeight={'bold'}>
-                        https://cord.ly/{userNameValue || user.uid.slice(0, 5)}
+                        {userProfileUrl}
                     </Text>
                 </Link>
                 {/* <ExternalLinkIcon /> */}
@@ -138,6 +151,10 @@ export default function PhonePreview({ urls, userNameValue, profileImg }) {
                     {hasCopied ? "Copied" : "Copy"}
                 </Button>
             </Stack>
+
+            <Button onClick={() => generateQrCode()}>Generate</Button>
+
+            {imageUrl && <Image src={imageUrl} />}
         </Flex>
     )
 }
