@@ -5,6 +5,7 @@ module.exports = {
             'lh4.googleusercontent.com',
             'graph.facebook.com',
             'firebasestorage.googleapis.com',
+            'youtube.com',
         ],
     },
 }

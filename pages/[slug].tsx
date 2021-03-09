@@ -4,7 +4,9 @@ import { GetServerSideProps } from 'next'
 import { firestore } from '../lib/firebase'
 import { CheckCircleIcon } from '@chakra-ui/icons'
 import ReactPlayer from 'react-player'
-import getYouTubeID from 'get-youtube-id';
+import getYouTubeID from 'get-youtube-id'
+import YouTube from 'react-youtube'
+
 import {
     Tab,
     Tabs,
@@ -195,7 +197,7 @@ const ProfileBio = ({ data }) => {
 
 const ProfileLinks = ({ data }) => {
 
-    const [showVideo, showVideoSet] = useState(false)
+    const [row, setRow] = useState(undefined)
 
     const { urls } = data
 
@@ -206,13 +208,10 @@ const ProfileLinks = ({ data }) => {
 
         const isYoutube = getYouTubeID(url)
 
-        const showYoutubeIframe = (idx) =>{
-            console.log(idx)
-            return showVideo ? 'block' : 'none'
-        }
+        const clickHandle = (i) => row === i ? setRow(undefined) : setRow(i)
 
         return (
-            <Box key={idx} onClick={(idx) => showVideoSet(p => !p)}>
+            <Box key={idx} onClick={() => clickHandle(i)}>
                 <Button
                     w={'100%'}
                     size='lg'
@@ -225,7 +224,13 @@ const ProfileLinks = ({ data }) => {
                         </Link>
                     </NextLink>
                 </Button>
-                {isYoutube && <ReactPlayer style={{ display: `${showYoutubeIframe(idx)}` }} width={'100%'} url={url} />}
+                {isYoutube &&
+                    <ReactPlayer style={{ display: row === i ? "block" : "none" }} width={'100%'} url={url} />
+                }
+
+                {/* {isYoutube &&
+                    <YouTube videoId="2g811Eo7K8U" />
+                } */}
             </Box>
         )
     })
@@ -238,6 +243,7 @@ const ProfileLinks = ({ data }) => {
             >
                 {links}
             </VStack>
+
         </Flex>
     )
 }
