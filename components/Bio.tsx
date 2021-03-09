@@ -24,6 +24,8 @@ import {
     Box,
     Switch,
     FormLabel,
+    RadioGroup,
+    Radio,
 } from '@chakra-ui/react'
 
 export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
@@ -35,7 +37,8 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
     const [googleLoc, googleLocSet] = useState(null)
     const [disabled, disabledSet] = useState(false)
     const [currentLocation, currentLocationSet] = useState('no value')
-    
+    const [radio, radioSet] = useState<number | string>(null)
+
     const { register, handleSubmit, errors, control, setValue } = useForm({
         defaultValues: {
             stagename: '',
@@ -48,6 +51,7 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
     })
 
     const { user } = useContext(UserContext)
+
     const toast = useToast()
 
     const query = firestore.collection('users').where('uid', '==', user.uid)
@@ -55,21 +59,21 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
     useEffect(() => {
 
         // const getAllDashData = async () => {
-             query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
-                let changes = snapshot.docChanges()
-                changes.forEach((i) => {
-                    profileImgSet(i.doc.data().profileImg)
+        query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
+            let changes = snapshot.docChanges()
+            changes.forEach((i) => {
+                profileImgSet(i.doc.data().profileImg)
 
-                    setValue('stagename', i.doc.data().bio?.stagename)
-                    // setValue('location', i.doc.data().bio?.location)
-                    setValue('skills', i.doc.data().bio?.skills)
-                    setValue('influences', i.doc.data().bio?.influences)
-                    setValue('education', i.doc.data().bio?.education)
-                    setValue('collaboration', i.doc.data().bio?.collaboration)
+                setValue('stagename', i.doc.data().bio?.stagename)
+                // setValue('location', i.doc.data().bio?.location)
+                setValue('skills', i.doc.data().bio?.skills)
+                setValue('influences', i.doc.data().bio?.influences)
+                setValue('education', i.doc.data().bio?.education)
+                setValue('collaboration', i.doc.data().bio?.collaboration)
 
-                    currentLocationSet(i.doc.data().bio?.location)
-                })
+                currentLocationSet(i.doc.data().bio?.location)
             })
+        })
         // }
 
         // getAllDashData()
@@ -106,7 +110,6 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
     }
 
     const onSubmit = (data) => {
-
         if (!googleLoc) {
             toast({
                 title: "Error",
@@ -274,17 +277,14 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
                     </FormControl>
 
                     <Controller
-                        as={<Select
-                            isDisabled={disabled}
-                            ref={register}
-                            placeholder="Choose your music education"
-                            size="lg"
-                            variant="filled"
-                        >
-                            <option value="self-studied">Self-Studied</option>
-                            <option value="academic">Academic</option>
-                        </Select>}
-                        name="education"
+                        as={<RadioGroup size={'lg'} ref={register} onChange={radioSet} value={radio}>
+                            <Stack direction="row">
+                                <Text>Education:</Text>
+                                <Radio isDisabled={disabled} name='self-taught' value="self-taught">Self-taught</Radio>
+                                <Radio isDisabled={disabled} name='academic' value="academic">Academic</Radio>
+                            </Stack>
+                        </RadioGroup>}
+                        name='education'
                         control={control}
                     />
 

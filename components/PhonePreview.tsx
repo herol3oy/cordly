@@ -19,12 +19,16 @@ import {
     Link,
     Wrap,
     WrapItem,
-    useColorModeValue
+    useColorModeValue,
+    useClipboard,
 } from '@chakra-ui/react'
 
 export default function PhonePreview({ urls, userNameValue, profileImg }) {
 
     const { user } = useContext(UserContext)
+
+    const { hasCopied, onCopy } = useClipboard(`https://cord.ly/${userNameValue || user.uid.slice(0, 5)}`)
+    // const { hasCopied, onCopy } = useClipboard(`salam`)
 
     return (
         <Flex
@@ -129,7 +133,10 @@ export default function PhonePreview({ urls, userNameValue, profileImg }) {
                         https://cord.ly/{userNameValue || user.uid.slice(0, 5)}
                     </Text>
                 </Link>
-                <ExternalLinkIcon />
+                {/* <ExternalLinkIcon /> */}
+                <Button onClick={onCopy} ml={2}>
+                    {hasCopied ? "Copied" : "Copy"}
+                </Button>
             </Stack>
         </Flex>
     )
@@ -167,10 +174,10 @@ const BioPreviewPanel = ({ user }) => {
     const query = firestore.collection('users')
     useEffect(() => {
         // const getAllUrls =  () => {
-            query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
-                let changes = snapshot.docChanges()
-                changes.forEach((i) => bioSet(i.doc.data().bio))
-            })
+        query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
+            let changes = snapshot.docChanges()
+            changes.forEach((i) => bioSet(i.doc.data().bio))
+        })
         // }
         // getAllUrls()
 

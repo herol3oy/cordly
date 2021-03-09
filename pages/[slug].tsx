@@ -206,8 +206,13 @@ const ProfileLinks = ({ data }) => {
 
         const isYoutube = getYouTubeID(url)
 
+        const showYoutubeIframe = (idx) =>{
+            console.log(idx)
+            return showVideo ? 'block' : 'none'
+        }
+
         return (
-            <Box key={idx} onClick={() => showVideoSet(p => !p)}>
+            <Box key={idx} onClick={(idx) => showVideoSet(p => !p)}>
                 <Button
                     w={'100%'}
                     size='lg'
@@ -220,7 +225,7 @@ const ProfileLinks = ({ data }) => {
                         </Link>
                     </NextLink>
                 </Button>
-                {isYoutube && <ReactPlayer style={{ display: `${showVideo ? 'block' : 'none'}` }} width={'100%'} url={url} />}
+                {isYoutube && <ReactPlayer style={{ display: `${showYoutubeIframe(idx)}` }} width={'100%'} url={url} />}
             </Box>
         )
     })
