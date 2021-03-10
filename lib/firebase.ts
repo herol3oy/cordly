@@ -25,6 +25,7 @@ export const emailAuthProvider = new firebase.auth.EmailAuthProvider()
 export const firestore = firebase.firestore()
 export const arrayUnion = firebase.firestore.FieldValue.arrayUnion
 export const arrayRemove = firebase.firestore.FieldValue.arrayRemove
+export const increment = firebase.firestore.FieldValue.increment
 
 export const storage = firebase.storage()
 export const STATE_CHANGED = firebase.storage.TaskEvent.STATE_CHANGED

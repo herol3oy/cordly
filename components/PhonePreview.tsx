@@ -23,6 +23,8 @@ import {
     useColorModeValue,
     useClipboard,
     Image,
+    Badge,
+    Heading,
 } from '@chakra-ui/react'
 
 export default function PhonePreview({ urls, userNameValue, profileImg }) {
@@ -91,10 +93,16 @@ export default function PhonePreview({ urls, userNameValue, profileImg }) {
                     name="profile picture"
                     src={profileImg || user.photoURL}
                 />
+                <Heading as={'h3'} size={'md'} mt={2}>{userNameValue || user.uid.slice(0, 5)}</Heading>
 
-                <Text mb={5} mt={2} textAlign="center">
-                    @{userNameValue || user.uid.slice(0, 5)}
-                </Text>
+                <Flex mt={2} mb={5} justifyContent='center' alignItems='center'>
+                    <Text fontWeight={'light'} textAlign="center">
+                        @{userNameValue || user.uid.slice(0, 5)}
+                    </Text>
+
+                    <Badge variant="solid" colorScheme="green" ml={2}>PRO</Badge>
+                </Flex>
+
                 <Tabs
                     isFitted
                     align="center"
@@ -162,17 +170,15 @@ export default function PhonePreview({ urls, userNameValue, profileImg }) {
 const LinksPreviewPanel = ({ urls }) => {
     return (
         <Stack>
-            {
-                urls?.map((i, idx) => (
-                    <Button key={idx} w={'100%'}>
-                        <NextLink href={Object.values(i)[0].toString()} passHref>
-                            <Link isExternal>
-                                {Object.keys(i)[0].toString()}
-                            </Link>
-                        </NextLink>
-                    </Button>
-                ))
-            }
+            {urls?.map((i, idx) => (
+                <Button key={idx} w={'100%'}>
+                    <NextLink href={Object.values(i)[0].toString()} passHref>
+                        <Link isExternal>
+                            {Object.keys(i)[0].toString()}
+                        </Link>
+                    </NextLink>
+                </Button>
+            ))}
         </Stack>
     )
 }
@@ -183,6 +189,7 @@ const BioPreviewPanel = ({ user }) => {
         stagename: '',
         location: '',
         skills: '',
+        styles: '',
         influences: '',
         education: '',
         collaboration: false,
@@ -252,44 +259,76 @@ const BioPreviewPanel = ({ user }) => {
 
             <Wrap justify={'center'}>
                 {
-                    bio?.skills?.split(',').map((i, idx) => (
-                        <WrapItem key={idx}>
-                            <Text
-                                key={idx}
-                                color={'gray.400'}
-                                fontWeight={600}
-                                fontSize={'sm'}
-                                bg={'gray.900'}
+                    bio?.skills
+                        ?.split(',')
+                        .slice(0, 5)
+                        .map((i, idx) => (
+                            <WrapItem key={idx}>
+                                <Text
+                                    key={idx}
+                                    color={'gray.400'}
+                                    fontWeight={600}
+                                    fontSize={'sm'}
+                                    bg={'gray.900'}
 
-                                p={3}
-                                alignSelf={'flex-start'}
-                                rounded={'md'}
-                            >
-                                💯 {i}
-                            </Text>
-                        </WrapItem>
-                    ))
+                                    p={3}
+                                    alignSelf={'flex-start'}
+                                    rounded={'md'}
+                                >
+                                    💯 {i}
+                                </Text>
+                            </WrapItem>
+                        ))
                 }
             </Wrap>
+
             <Wrap justify={'center'}>
                 {
-                    bio?.influences?.split(',').map((i, idx) => (
-                        <WrapItem key={idx}>
-                            <Text
-                                key={idx}
-                                color={'gray.400'}
-                                fontWeight={600}
-                                fontSize={'sm'}
-                                bg={'gray.900'}
+                    bio?.styles
+                        ?.split(',')
+                        .slice(0, 3)
+                        .map((i, idx) => (
+                            <WrapItem key={idx}>
+                                <Text
+                                    key={idx}
+                                    color={'gray.400'}
+                                    fontWeight={600}
+                                    fontSize={'sm'}
+                                    bg={'gray.900'}
 
-                                p={3}
-                                alignSelf={'center'}
-                                rounded={'md'}
-                            >
-                                🔥 {i}
-                            </Text>
-                        </WrapItem>
-                    ))
+                                    p={3}
+                                    alignSelf={'flex-start'}
+                                    rounded={'md'}
+                                >
+                                    💅 {i}
+                                </Text>
+                            </WrapItem>
+                        ))
+                }
+            </Wrap>
+
+            <Wrap justify={'center'}>
+                {
+                    bio?.influences
+                        ?.split(',')
+                        .slice(0, 5)
+                        .map((i, idx) => (
+                            <WrapItem key={idx}>
+                                <Text
+                                    key={idx}
+                                    color={'gray.400'}
+                                    fontWeight={600}
+                                    fontSize={'sm'}
+                                    bg={'gray.900'}
+
+                                    p={3}
+                                    alignSelf={'center'}
+                                    rounded={'md'}
+                                >
+                                    🔥 {i}
+                                </Text>
+                            </WrapItem>
+                        ))
                 }
             </Wrap>
         </Stack>

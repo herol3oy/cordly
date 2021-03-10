@@ -6,7 +6,7 @@ import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import _ from 'lodash'
 import { useForm, Controller } from "react-hook-form"
-import { useToast } from '@chakra-ui/react'
+import { Spacer, useToast } from '@chakra-ui/react'
 import {
     Divider,
     Flex,
@@ -251,12 +251,28 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
                                 isDisabled={disabled}
                                 type='text'
                                 name="skills"
-                                placeholder="Guitarist, Drummer, Pianist"
+                                placeholder="Guitar, Drum, Piano, Edit & Master, Base"
                                 ref={register({ required: true })}
                             />
                         </InputGroup>
                         <FormHelperText textAlign="left">
-                            Please type your top 3 skills seprating with comma ','
+                            Please type your top 5 (max) skills seprating with comma ','
+                        </FormHelperText>
+                    </FormControl>
+
+                    <FormControl>
+                        <InputGroup>
+                            <InputLeftAddon children="💅 Styles" />
+                            <Input
+                                isDisabled={disabled}
+                                type='text'
+                                name="styles"
+                                placeholder="Rock, Pop, Jazz"
+                                ref={register({ required: true })}
+                            />
+                        </InputGroup>
+                        <FormHelperText textAlign="left">
+                            Please type your top 3 (max) styles seprating with comma ','
                         </FormHelperText>
                     </FormControl>
 
@@ -272,14 +288,59 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
                             />
                         </InputGroup>
                         <FormHelperText textAlign="left">
-                            Please type your top 3-5 influences seprating with comma ','
+                            Please type your top 5 (max) influences seprating with comma ','
                         </FormHelperText>
                     </FormControl>
 
                     <Controller
-                        as={<RadioGroup size={'lg'} ref={register} onChange={radioSet} value={radio}>
+                        as={<RadioGroup
+                            rounded={'xl'}
+                            px={4}
+                            py={3}
+                            direction={'row'}
+                            alignItems={'center'}
+                            spacing={2}
+                            bg="gray.700"
+                            color={'green.400'}
+                            align={'center'}
+                            size={'md'}
+                            ref={register}
+                            onChange={radioSet}
+                            value={radio}
+                        >
                             <Stack direction="row">
-                                <Text>Education:</Text>
+                                <Text fontSize={['sm', 'lg']}>👾 Gender:</Text>
+                                <Spacer />
+                                <Radio isDisabled={disabled} name='female' value="female">👩‍🎤 Female</Radio>
+                                <Radio isDisabled={disabled} name='male' value="male">👨‍🎤 Male</Radio>
+                                <Radio isDisabled={disabled} name='diverse' value="diverse">🌈 Diverse</Radio>
+                            </Stack>
+                        </RadioGroup>}
+                        name='gender'
+                        control={control}
+                    />
+                    {/* </Stack> */}
+
+
+                    <Controller
+                        as={<RadioGroup
+                            rounded={'xl'}
+                            px={4}
+                            py={3}
+                            direction={'row'}
+                            alignItems={'center'}
+                            spacing={2}
+                            bg="gray.700"
+                            color={'green.400'}
+                            align={'center'}
+                            size={'md'}
+                            ref={register}
+                            onChange={radioSet}
+                            value={radio}
+                        >
+                            <Stack direction="row">
+                                <Text>🎓 Education:</Text>
+                                <Spacer />
                                 <Radio isDisabled={disabled} name='self-taught' value="self-taught">Self-taught</Radio>
                                 <Radio isDisabled={disabled} name='academic' value="academic">Academic</Radio>
                             </Stack>
@@ -288,10 +349,22 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
                         control={control}
                     />
 
-                    <FormControl display="flex" alignItems="center">
+                    <FormControl
+                        rounded={'xl'}
+                        px={4}
+                        py={3}
+                        direction={'row'}
+                        alignItems={'center'}
+                        spacing={2}
+                        bg="gray.700"
+                        color={'green.400'}
+                        align={'center'}
+                        display="flex"
+                    >
                         <FormLabel htmlFor="collaboration" mb="0" >
-                            Open to request for collaboration?
+                            🟢 Open to request for collaboration?
                         </FormLabel>
+                        <Spacer />
                         <Switch isDisabled={disabled} name={'collaboration'} size={'lg'} colorScheme={'green'} ref={register} />
                     </FormControl>
 

@@ -1,8 +1,8 @@
+import { useState, useEffect } from 'react'
+import { firestore, increment } from '../lib/firebase'
 import dynamic from 'next/dynamic'
-import { useState } from 'react'
 import NextLink from 'next/link'
 import { GetServerSideProps } from 'next'
-import { firestore } from '../lib/firebase'
 import { CheckCircleIcon } from '@chakra-ui/icons'
 import getYouTubeID from 'get-youtube-id'
 import {
@@ -26,11 +26,20 @@ import {
     Button,
     Link,
     Avatar,
+    Badge,
 } from '@chakra-ui/react'
 
 const ReactPlayer = dynamic(() => import('react-player/lazy'))
 
 export default function User({ data }) {
+
+    useEffect(() => {
+        const query = firestore
+        .collection('users')
+        .doc(data.uid)
+        query.update({ pageVisit: increment(1) })
+    }, [])
+
     return (
         <Flex
             as={'section'}
@@ -94,12 +103,14 @@ export default function User({ data }) {
 const ProfileBio = ({ data }) => {
     let location = ''
     let skills = ''
+    let styles = ''
     let influences = ''
     let education = ''
     let collaboration = ''
 
     location = data?.bio?.location
     skills = data?.bio?.skills
+    styles = data?.bio?.styles
     influences = data?.bio?.influences
     education = data?.bio?.education
     collaboration = data?.bio?.collaboration
@@ -153,7 +164,7 @@ const ProfileBio = ({ data }) => {
 
             <Wrap justify={'center'}>
                 {
-                    skills?.split(',').map((i, idx) => (
+                    skills?.split(',').slice(0, 5).map((i, idx) => (
                         <WrapItem key={idx}>
                             <Text
                                 key={idx}
@@ -171,9 +182,31 @@ const ProfileBio = ({ data }) => {
                     ))
                 }
             </Wrap>
+
             <Wrap justify={'center'}>
                 {
-                    influences?.split(',').map((i, idx) => (
+                    styles?.split(',').slice(0, 3).map((i, idx) => (
+                        <WrapItem key={idx}>
+                            <Text
+                                key={idx}
+                                color={'gray.400'}
+                                fontWeight={600}
+                                fontSize={'sm'}
+                                bg={useColorModeValue('gray.50', 'gray.900')}
+                                p={3}
+                                alignSelf={'flex-start'}
+                                rounded={'md'}
+                            >
+                                💅 {i}
+                            </Text>
+                        </WrapItem>
+                    ))
+                }
+            </Wrap>
+
+            <Wrap justify={'center'}>
+                {
+                    influences?.split(',').slice(0, 5).map((i, idx) => (
                         <WrapItem key={idx}>
                             <Text
                                 key={idx}
@@ -259,7 +292,8 @@ const ProfileAvatar = ({ data }) => {
                     <Heading fontWeight={'light'} letterSpacing={2} textAlign={'center'} as={'h6'} size={'sm'}>
                         @{username || email.split('@')?.[0]}
                     </Heading>
-                    <CheckCircleIcon ml={'2'} color={'green.300'} />
+                    {/* <CheckCircleIcon ml={'2'} color={'green.300'} /> */}
+                    <Badge variant="solid" colorScheme="green" ml={2}>PRO</Badge>
                 </Flex>
             </Box>
         </Flex>
