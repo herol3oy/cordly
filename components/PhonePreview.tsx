@@ -31,6 +31,7 @@ import {
     IconButton,
     MenuList,
     MenuItem,
+    MenuDivider,
 } from '@chakra-ui/react'
 
 export default function PhonePreview({ urls, userNameValue, avatarCoverImg }) {
@@ -96,8 +97,10 @@ export default function PhonePreview({ urls, userNameValue, avatarCoverImg }) {
                             onClick={onCopy}
                             as={Link}
                         >
-                            {hasCopied ? "Copied" : "Copy"}
+                            {hasCopied ? "Copied" : "Copy Link"}
                         </MenuItem>
+
+                        <MenuDivider />
 
                         <MenuItem
                             icon={<FaDownload />}
@@ -106,7 +109,7 @@ export default function PhonePreview({ urls, userNameValue, avatarCoverImg }) {
                             href={imageUrl}
                             download
                         >
-                            Download
+                            Download QR 
                         </MenuItem>
                     </MenuList>
                 </Menu>
