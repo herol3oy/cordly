@@ -4,6 +4,7 @@ import { UserContext } from '../lib/context'
 import NextLink from 'next/link'
 import { LinkIcon } from '@chakra-ui/icons'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
+import { FaShareAlt, FaRegCopy, FaDownload } from 'react-icons/fa'
 import QRCode from 'qrcode'
 import {
     Box,
@@ -25,6 +26,11 @@ import {
     Image,
     Badge,
     Heading,
+    Menu,
+    MenuButton,
+    IconButton,
+    MenuList,
+    MenuItem,
 } from '@chakra-ui/react'
 
 export default function PhonePreview({ urls, userNameValue, avatarCoverImg }) {
@@ -53,7 +59,59 @@ export default function PhonePreview({ urls, userNameValue, avatarCoverImg }) {
             alignItems={'center'}
             justifyContent={'flex-start'}
         >
+            <Stack
+                rounded={'xl'}
+                px={4}
+                py={3}
+                direction={'row'}
+                alignItems={'center'}
+                mb={2}
+                spacing={2}
+                bg="gray.700"
+                color={'green.400'}
+                align={'center'}
+            >
+                <LinkIcon />
 
+                <Link textAlign="left" href={`/${userNameValue || user.uid.slice(0, 5)}`} isExternal>
+                    <Text fontSize={'xl'} fontWeight={'bold'}>
+                        {userProfileUrl}
+                    </Text>
+                </Link>
+
+             
+                <Menu>
+                    <MenuButton
+                        as={Button}
+                        aria-label="Menu Options"
+                        leftIcon={<FaShareAlt />}
+                        size="sm"
+                        variant="outline"
+                    >
+                        Share
+                        </MenuButton>
+                    <MenuList>
+                        <MenuItem
+                            // icon={<FaRegCopy />}
+                            onClick={onCopy}
+                        >
+                            {hasCopied ? "Copied" : "Copy"}
+                        </MenuItem>
+                        <MenuItem
+                            // icon={<FaDownload />}
+                            onClick={() => generateQrCode()}
+                        >
+                            <Link
+                                download
+                                href={imageUrl}
+                                alt='qr code'>
+                                QR
+                            </Link>
+
+                        </MenuItem>
+                    </MenuList>
+                </Menu>
+            </Stack>
             <Box
                 borderColor={'gray.300'}
                 width={['90vw', 'sm']}
@@ -136,34 +194,14 @@ export default function PhonePreview({ urls, userNameValue, avatarCoverImg }) {
                 </Tabs>
             </Box>
 
-            <Stack
-                rounded={'xl'}
-                px={4}
-                py={3}
-                direction={'row'}
-                alignItems={'center'}
-                mb={2}
-                spacing={2}
-                bg="gray.700"
-                color={'green.400'}
-                align={'center'}
-            >
-                <LinkIcon />
 
-                <Link textAlign="left" href={`/${userNameValue || user.uid.slice(0, 5)}`} isExternal>
-                    <Text fontSize={'xl'} fontWeight={'bold'}>
-                        {userProfileUrl}
-                    </Text>
-                </Link>
-                {/* <ExternalLinkIcon /> */}
-                <Button onClick={onCopy} ml={2}>
-                    {hasCopied ? "Copied" : "Copy"}
-                </Button>
-            </Stack>
-
+            {/* 
             <Button onClick={() => generateQrCode()}>Generate</Button>
+      {imageUrl &&
+                <Link href={imageUrl} download>
+                    <Image src={imageUrl} />
+                </Link>} */}
 
-            {imageUrl && <Image src={imageUrl} />}
         </Flex>
     )
 }
