@@ -27,7 +27,8 @@ import {
     Heading,
 } from '@chakra-ui/react'
 
-export default function PhonePreview({ urls, userNameValue, profileImg }) {
+export default function PhonePreview({ urls, userNameValue, avatarCoverImg }) {
+    console.log(avatarCoverImg)
     const [imageUrl, setImageUrl] = useState('')
 
     const { user } = useContext(UserContext)
@@ -67,9 +68,9 @@ export default function PhonePreview({ urls, userNameValue, profileImg }) {
             >
 
                 <Flex
-                    backgroundImage={'url("https://is.gd/jkE1Df")'}
+                    backgroundImage={`url("${avatarCoverImg.cover}")`}
                     backgroundRepeat={'no-repeat'}
-                    backgroundPosition={'top'}
+                    // backgroundPosition={'bottom'}
                     backgroundSize={'cover'}
                     height={'150px'}
                     w={'sm'}
@@ -91,7 +92,7 @@ export default function PhonePreview({ urls, userNameValue, profileImg }) {
                     mt={28}
                     size="lg"
                     name="profile picture"
-                    src={profileImg || user.photoURL}
+                    src={avatarCoverImg.avatar || user.photoURL}
                 />
                 <Heading as={'h3'} size={'md'} mt={2}>{userNameValue || user.uid.slice(0, 5)}</Heading>
 

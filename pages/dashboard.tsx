@@ -39,7 +39,7 @@ const DashboardPanel = () => {
     const [urls, urlsSet] = useState([])
     const [formValue, formValueSet] = useState('')
     const [userNameValue, userNameValueSet] = useState('')
-    const [profileImg, profileImgSet] = useState('')
+    const [avatarCoverImg, avatarCoverImgSet] = useState({avatar:'', cover:''})
     const [dashboardForm, dashboardFormSet] = useState(defaultValues)
 
     return (
@@ -50,6 +50,7 @@ const DashboardPanel = () => {
                 columns={[1, 1, 2, 2]} spacing={5}>
                 <Flex as="section" direction="column" alignItems="center">
                     <Tabs
+                        defaultIndex={1}
                         paddingTop="12"
                         isFitted
                         align="center"
@@ -79,8 +80,8 @@ const DashboardPanel = () => {
 
                             <TabPanel>
                                 <Bio
-                                    profileImg={profileImg}
-                                    profileImgSet={profileImgSet}
+                                    avatarCoverImg={avatarCoverImg}
+                                    avatarCoverImgSet={avatarCoverImgSet}
                                     dashboardFormSet={dashboardFormSet}
                                 />
                             </TabPanel>
@@ -100,7 +101,7 @@ const DashboardPanel = () => {
                 <PhonePreview
                     urls={urls}
                     userNameValue={userNameValue}
-                    profileImg={profileImg}
+                    avatarCoverImg={avatarCoverImg}
                 // dashboardForm={dashboardForm}
                 />
             </SimpleGrid>

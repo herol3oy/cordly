@@ -35,8 +35,8 @@ export default function User({ data }) {
 
     useEffect(() => {
         const query = firestore
-        .collection('users')
-        .doc(data.uid)
+            .collection('users')
+            .doc(data.uid)
         query.update({ pageVisit: increment(1) })
     }, [])
 
@@ -49,9 +49,9 @@ export default function User({ data }) {
             alignSelf='center'
         >
             <Flex
-                backgroundImage={'url("https://is.gd/jkE1Df")'}
+                backgroundImage={`url("${data.coverImg}")`}
                 backgroundRepeat={'no-repeat'}
-                backgroundPosition={'top'}
+                // backgroundPosition={'bottom'}
                 backgroundSize={'cover'}
                 height={['30vh', '40vh', '30vh', '25vh']}
                 w={['100vw', '100vw', '40vw', '30vw']}

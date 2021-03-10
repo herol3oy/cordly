@@ -26,14 +26,15 @@ import {
     FormLabel,
     RadioGroup,
     Radio,
+    Progress,
 } from '@chakra-ui/react'
 
-export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
+export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSet }) {
 
-    const [uploading, setUploading] = useState(false)
+    const [uploading, setUploading] = useState({ avatar: false, cover: false })
     const [progress, setProgress] = useState(0)
-    const [downloadURL, downloadURLSet] = useState(null)
-    const [avatarName, avatarNameSet] = useState('No file choosen')
+    const [downloadURL, downloadURLSet] = useState({ avatar: null, cover: null })
+    const [imageFileChosenName, imageFileChosenNameSet] = useState({ avatar: 'No file choosen', cover: 'No file choosen' })
     const [googleLoc, googleLocSet] = useState(null)
     const [disabled, disabledSet] = useState(false)
     const [currentLocation, currentLocationSet] = useState('no value')
@@ -58,11 +59,10 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
 
     useEffect(() => {
 
-        // const getAllDashData = async () => {
         query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
             let changes = snapshot.docChanges()
             changes.forEach((i) => {
-                profileImgSet(i.doc.data().profileImg)
+                avatarCoverImgSet({...avatarCoverImg, avatar: i.doc.data().profileImg , cover:i.doc.data().coverImg })
 
                 setValue('stagename', i.doc.data().bio?.stagename)
                 // setValue('location', i.doc.data().bio?.location)
@@ -74,39 +74,66 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
                 currentLocationSet(i.doc.data().bio?.location)
             })
         })
-        // }
-
-        // getAllDashData()
 
     }, [user.uid])
 
     const uploadFile = async (e) => {
         const file = e.target.files[0]
+        const name = e.target.name
         const extension = file['type'].split('/')[1]
 
-        avatarNameSet(file['name'])
+        if (name === 'avatar') {
+            imageFileChosenNameSet({ ...imageFileChosenName, avatar: file['name'] })
 
-        const ref = storage.ref(
-            `uploads/${user.uid}/${Date.now()}.${extension}`
-        )
+            const ref = storage.ref(
+                `uploads/${user.uid}/avatar-${Date.now()}.${extension}`
+            )
 
-        setUploading(true)
+            setUploading({ ...uploading, avatar: true })
 
-        const task = ref.put(file)
+            const task = ref.put(file)
 
-        task.on(STATE_CHANGED, (snapshot) => {
-            const pct = (
-                (snapshot.bytesTransferred / snapshot.totalBytes) *
-                100
-            ).toFixed(0)
-            setProgress(+pct)
-        })
+            task.on(STATE_CHANGED, (snapshot) => {
+                const pct = (
+                    (snapshot.bytesTransferred / snapshot.totalBytes) *
+                    100
+                ).toFixed(0)
+                setProgress(+pct)
+            })
 
-        task.then((d) => ref.getDownloadURL()).then((url) => {
-            downloadURLSet(url)
-            updateProfilePicture(user.uid, url)
-            setUploading(false)
-        })
+            task.then((d) => ref.getDownloadURL()).then((url) => {
+                downloadURLSet({ ...downloadURL, avatar: url })
+                updateProfilePicture(user.uid, url)
+                setUploading({ ...uploading, avatar: false })
+
+            })
+
+        } else {
+            imageFileChosenNameSet({ ...imageFileChosenName, cover: file['name'] })
+            const ref = storage.ref(
+                `uploads/${user.uid}/cover-${Date.now()}.${extension}`
+            )
+
+            setUploading({ ...uploading, cover: true })
+
+            const task = ref.put(file)
+
+            task.on(STATE_CHANGED, (snapshot) => {
+                const pct = (
+                    (snapshot.bytesTransferred / snapshot.totalBytes) *
+                    100
+                ).toFixed(0)
+                setProgress(+pct)
+            })
+
+            task.then((d) => ref.getDownloadURL()).then((url) => {
+                downloadURLSet({ ...downloadURL, cover: url })
+                updateProfilePicture(user.uid, url)
+                setUploading({ ...uploading, cover: false })
+            })
+        }
+
+
     }
 
     const onSubmit = (data) => {
@@ -140,23 +167,23 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
 
     return (
         <Flex
-            display="flex"
-            justify="center"
-            alignItems="center"
-            margin="auto"
+            // display="flex"
+            // justify="center"
+            // alignItems="center"
+            // margin="auto"
             flexDirection="column"
             w={['90vw', '70vw', '60vw', '30vw']}
         >
             <Stack>
-                <Avatar
+                {/* <Avatar
                     src={profileImg || user.photoURL}
                     alt="Profile picture"
                     size="xl"
                     margin="auto"
                     mb={4}
-                />
+                /> */}
                 <InputGroup>
-                    <InputLeftAddon children="📸 Choose file" />
+                    <InputLeftAddon children="📸 Profile Image" />
                     <Flex
                         w="100%"
                         whiteSpace="nowrap"
@@ -165,8 +192,9 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
                         borderWidth={1}
                         borderRightRadius="md"
                     >
-                        {avatarName.split('').slice(0, 10)}
+                        {imageFileChosenName.avatar.split('').slice(0, 20)}
                         <chakra.input
+                            name='avatar'
                             type="file"
                             onChange={(e) => uploadFile(e)}
                             w="100%"
@@ -176,14 +204,62 @@ export default function Bio({ profileImg, profileImgSet, dashboardFormSet }) {
                         />
                     </Flex>
                 </InputGroup>
-                <FormControl>
+
+                {uploading.avatar &&
+                    <Progress
+                        hasStripe
+                        size="xs"
+                        colorScheme="green"
+                        isIndeterminate={uploading.avatar}
+                        value={progress > 0 ? progress : 0}
+                    />}
+
+                {/* <FormControl mb={'10'}>
                     <FormHelperText textAlign="left">
-                        Update your avatar by choosing a new image.
+                        Update your profile picture by choosing a new file.
                     </FormHelperText>
-                </FormControl>
+                </FormControl> */}
+
+                <InputGroup >
+                    <InputLeftAddon children="🖼️ Cover Background" />
+                    <Flex
+                        w="100%"
+                        whiteSpace="nowrap"
+                        px={4}
+                        align="center"
+                        borderWidth={1}
+                        borderRightRadius="md"
+                    >
+                        {imageFileChosenName.cover.split('').slice(0, 20)}
+                        <chakra.input
+                            name='coverImg'
+                            type="file"
+                            onChange={(e) => uploadFile(e)}
+                            w="100%"
+                            opacity={0}
+                            pos="absolute"
+                            inset="0"
+                        />
+                    </Flex>
+                </InputGroup>
+
+                {uploading.cover &&
+                    <Progress
+                        hasStripe
+                        size="xs"
+                        colorScheme="green"
+                        isIndeterminate={uploading.cover}
+                        value={progress > 0 ? progress : 0}
+                    />}
+
+                {/* <FormControl >
+                    <FormHelperText textAlign="left">
+                        Update your cover background by choosing a new image.
+                    </FormHelperText>
+                </FormControl> */}
             </Stack>
 
-            <Divider my={8} />
+            <Divider my={6} />
 
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Stack width="100%" spacing={6}>

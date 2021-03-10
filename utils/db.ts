@@ -19,5 +19,15 @@ export function createUser(uid, data) {
 }
 
 export function updateProfilePicture(uid, image) {
-    return firestore.collection('users').doc(uid).update({ profileImg: image })
+    if (image.toString().includes('avatar')) {
+        return firestore
+            .collection('users')
+            .doc(uid)
+            .update({ profileImg: image })
+    } else {
+        return firestore
+        .collection('users')
+        .doc(uid)
+        .update({ coverImg: image })
+    }
 }
