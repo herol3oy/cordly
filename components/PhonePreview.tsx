@@ -34,13 +34,13 @@ import {
 } from '@chakra-ui/react'
 
 export default function PhonePreview({ urls, userNameValue, avatarCoverImg }) {
-    console.log(avatarCoverImg)
+
     const [imageUrl, setImageUrl] = useState('')
 
     const { user } = useContext(UserContext)
 
     const userProfileUrl = `https://cord.ly/${userNameValue || user.uid.slice(0, 5)}`
-
+    
     const { hasCopied, onCopy } = useClipboard(userProfileUrl)
 
     const generateQrCode = async () => {
@@ -79,7 +79,7 @@ export default function PhonePreview({ urls, userNameValue, avatarCoverImg }) {
                     </Text>
                 </Link>
 
-             
+
                 <Menu>
                     <MenuButton
                         as={Button}
@@ -92,22 +92,21 @@ export default function PhonePreview({ urls, userNameValue, avatarCoverImg }) {
                         </MenuButton>
                     <MenuList>
                         <MenuItem
-                            // icon={<FaRegCopy />}
+                            icon={<FaRegCopy />}
                             onClick={onCopy}
+                            as={Link}
                         >
                             {hasCopied ? "Copied" : "Copy"}
                         </MenuItem>
-                        <MenuItem
-                            // icon={<FaDownload />}
-                            onClick={() => generateQrCode()}
-                        >
-                            <Link
-                                download
-                                href={imageUrl}
-                                alt='qr code'>
-                                QR
-                            </Link>
 
+                        <MenuItem
+                            icon={<FaDownload />}
+                            onClick={() => generateQrCode()}
+                            as={Link}
+                            href={imageUrl}
+                            download
+                        >
+                            Download
                         </MenuItem>
                     </MenuList>
                 </Menu>

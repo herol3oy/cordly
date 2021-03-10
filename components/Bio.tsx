@@ -6,7 +6,6 @@ import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import _ from 'lodash'
 import { useForm, Controller } from "react-hook-form"
-import { Spacer, useToast } from '@chakra-ui/react'
 import {
     Divider,
     Flex,
@@ -27,6 +26,8 @@ import {
     RadioGroup,
     Radio,
     Progress,
+    Spacer,
+    useToast,
 } from '@chakra-ui/react'
 
 export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSet }) {
@@ -62,7 +63,7 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
         query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
             let changes = snapshot.docChanges()
             changes.forEach((i) => {
-                avatarCoverImgSet({...avatarCoverImg, avatar: i.doc.data().profileImg , cover:i.doc.data().coverImg })
+                avatarCoverImgSet({ ...avatarCoverImg, avatar: i.doc.data().profileImg, cover: i.doc.data().coverImg })
 
                 setValue('stagename', i.doc.data().bio?.stagename)
                 // setValue('location', i.doc.data().bio?.location)
@@ -105,7 +106,12 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                 downloadURLSet({ ...downloadURL, avatar: url })
                 updateProfilePicture(user.uid, url)
                 setUploading({ ...uploading, avatar: false })
-
+                toast({
+                    title: "Profile image updated.",
+                    status: "success",
+                    duration: 2000,
+                    isClosable: false,
+                  })
             })
 
         } else {
@@ -130,6 +136,12 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                 downloadURLSet({ ...downloadURL, cover: url })
                 updateProfilePicture(user.uid, url)
                 setUploading({ ...uploading, cover: false })
+                toast({
+                    title: "Cover image updated.",
+                    status: "success",
+                    duration: 2000,
+                    isClosable: false,
+                  })
             })
         }
 
