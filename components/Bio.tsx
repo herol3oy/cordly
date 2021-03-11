@@ -1,11 +1,15 @@
 import { useState, useEffect, useContext } from 'react'
-import { useRouter } from 'next/router'
 import { UserContext } from '../lib/context'
 import { updateProfilePicture } from '../utils/db'
 import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import _ from 'lodash'
 import { useForm, Controller } from "react-hook-form"
+import {
+    DatePicker,
+    MuiPickersUtilsProvider
+} from "@material-ui/pickers"
+import DayjsUtils from "@date-io/dayjs"
 import {
     Divider,
     Flex,
@@ -28,6 +32,7 @@ import {
     Progress,
     Spacer,
     useToast,
+    IconButton,
 } from '@chakra-ui/react'
 
 export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSet }) {
@@ -40,6 +45,9 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
     const [disabled, disabledSet] = useState(false)
     const [currentLocation, currentLocationSet] = useState('no value')
     const [radio, radioSet] = useState<number | string>(null)
+    const [selectedDate, handleDateChange] = useState(new Date())
+
+
 
     const { register, handleSubmit, errors, control, setValue } = useForm({
         defaultValues: {
@@ -78,6 +86,8 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
 
     }, [user.uid])
 
+
+
     const uploadFile = async (e) => {
         const file = e.target.files[0]
         const name = e.target.name
@@ -111,7 +121,7 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                     status: "success",
                     duration: 2000,
                     isClosable: false,
-                  })
+                })
             })
 
         } else {
@@ -141,7 +151,7 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                     status: "success",
                     duration: 2000,
                     isClosable: false,
-                  })
+                })
             })
         }
 
@@ -149,32 +159,33 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
     }
 
     const onSubmit = (data) => {
-        if (!googleLoc) {
-            toast({
-                title: "Error",
-                description: 'Please fill in location field',
-                status: "error",
-                duration: 2000,
-                isClosable: false,
-            })
-        }
+        console.log(data)
+        // if (!googleLoc) {
+        //     toast({
+        //         title: "Error",
+        //         description: 'Please fill in location field',
+        //         status: "error",
+        //         duration: 2000,
+        //         isClosable: false,
+        //     })
+        // }
 
-        else {
-            disabledSet(true)
+        // else {
+        //     disabledSet(true)
 
-            const bio = {
-                ...data,
-                location: googleLoc?.label
-            }
+        //     const bio = {
+        //         ...data,
+        //         location: googleLoc?.label
+        //     }
 
-            dashboardFormSet(bio)
+        //     dashboardFormSet(bio)
 
-            firestore
-                .collection('users')
-                .doc(user.uid)
-                .update({ bio: bio })
-                .finally(() => disabledSet(false))
-        }
+        //     firestore
+        //         .collection('users')
+        //         .doc(user.uid)
+        //         .update({ bio: bio })
+        //         .finally(() => disabledSet(false))
+        // }
     }
 
     return (
@@ -290,8 +301,28 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                             Displays on your card in front page.
                         </FormHelperText>
                     </FormControl>
-                    <FormControl>
 
+                    {/* <Flex>
+                        <Controller
+                            as={<DatePicker
+                                ref={register}
+                                selected={startDate}
+                                onChange={date => setStartDate(date)}
+                                customInput={<IconButton aria-label="date picker" icon={<FaCalendarDay />} />}
+                                dateFormat="MMMM d, yyyy"
+                            />}
+                            name='birthdate'
+                            control={control}
+                        />
+                        {moment(startDate).format("DD MMMM YYYY") || 'Birthdate'}
+                        {console.log(startDate)}
+                    </Flex> */}
+
+                    <MuiPickersUtilsProvider utils={DayjsUtils}>
+                        <DatePicker value={selectedDate} onChange={(date) => console.log(date)} />
+                    </MuiPickersUtilsProvider>
+
+                    <FormControl>
                         <InputGroup>
                             <InputLeftAddon children="📍Location" />
 
