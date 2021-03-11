@@ -13,6 +13,7 @@ import {
 } from "@material-ui/pickers"
 import styled from 'styled-components';
 import DayjsUtils from "@date-io/dayjs"
+import moment from 'moment'
 import {
     Divider,
     Flex,
@@ -47,8 +48,10 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
     const [googleLoc, googleLocSet] = useState(null)
     const [disabled, disabledSet] = useState(false)
     const [currentLocation, currentLocationSet] = useState('no value')
-    const [radio, radioSet] = useState<number | string>(null)
-    const [selectedDate, handleDateChange] = useState(new Date())
+    const [radioEdu, radioEduSet] = useState<number | string>(null)
+    const [radioGender, radioGenderSet] = useState<number | string>(null)
+    const [birthdate, birthdateSet] = useState(new Date())
+    const [colabSwitch, colabSwitchSet] = useState(false)
 
     const defaultMaterialTheme = createMuiTheme({
         palette: {
@@ -85,14 +88,18 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                 setValue('skills', i.doc.data().bio?.skills)
                 setValue('influences', i.doc.data().bio?.influences)
                 setValue('education', i.doc.data().bio?.education)
-                setValue('collaboration', i.doc.data().bio?.collaboration)
+                setValue('styles', i.doc.data().bio?.styles)
+                setValue('gender', i.doc.data().bio?.gender)
 
                 currentLocationSet(i.doc.data().bio?.location)
+
+                birthdateSet(i.doc.data().bio?.birthdate?.toString())
+
+                colabSwitchSet(i.doc.data().bio?.collaboration)
             })
         })
 
     }, [user.uid])
-
 
     const DatePickerStyled = styled(DatePicker)`
     color: red !important;
@@ -100,7 +107,7 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
     border: solid 1px #ffffff3d !important;
     border-radius: 0.3rem;
 `;
-    
+
     const uploadFile = async (e) => {
         const file = e.target.files[0]
         const name = e.target.name
@@ -173,22 +180,10 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
 
     const onSubmit = (data) => {
 
-        const birthDate = data?.birthdate?.$d?.toString()
-
-        const {
-            collaboration,
-            education,
-            gender,
-            influences,
-            skills,
-            stagename,
-            styles,
-        } = data
-
-        if (!googleLoc || !birthDate) {
+        if (!googleLoc || !birthdate) {
             toast({
                 title: "Error",
-                description: 'Please fill in location field',
+                description: 'Please fill in location or birthdate field',
                 status: "error",
                 duration: 2000,
                 isClosable: false,
@@ -199,15 +194,9 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
             disabledSet(true)
 
             const bio = {
-                birthDate,
-                collaboration,
-                education,
-                gender,
-                influences,
-                skills,
-                stagename,
-                styles,
+                ...data,
                 location: googleLoc?.label,
+                birthdate: birthdate,
             }
 
             dashboardFormSet(bio)
@@ -336,13 +325,22 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
 
                     {/* birthdate */}
                     <Flex justifyContent={'space-between'} >
-                        <Controller
-                            name='birthdate'
-                            control={control}
-                            render={({ value, onChange }) => <ThemeProvider theme={defaultMaterialTheme}><MuiPickersUtilsProvider utils={DayjsUtils}>
-                                <DatePickerStyled value={value} onChange={onChange} openTo='year' inputVariant='outlined' animateYearScrolling={true} format="MM/DD/YYYY" />
-                            </MuiPickersUtilsProvider></ThemeProvider>}
-                        />
+                        <Text>Birthdate:</Text>
+                        <ThemeProvider theme={defaultMaterialTheme}>
+                            <MuiPickersUtilsProvider utils={DayjsUtils}>
+                                <DatePickerStyled
+                                    value={birthdate}
+                                    onChange={(e) => birthdateSet(e.$d.toString())}
+                                    openTo='year'
+                                    inputVariant='outlined'
+                                    animateYearScrolling={true}
+                                    format="MM/DD/YYYY" />
+                            </MuiPickersUtilsProvider>
+                        </ThemeProvider>
+
+
+                        <Text>{moment(birthdate).format("Do MMM YYYY")}</Text>
+                        {/* {console.log(birthdate)} */}
                     </Flex>
 
 
@@ -449,8 +447,8 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                             align={'center'}
                             size={'md'}
                             ref={register}
-                            onChange={radioSet}
-                            value={radio}
+                            onChange={radioGenderSet}
+                            value={radioGender}
                         >
                             <Stack direction="row">
                                 <Text fontSize={['sm', 'lg']}>👾 Gender:</Text>
@@ -463,7 +461,6 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                         name='gender'
                         control={control}
                     />
-                    {/* </Stack> */}
 
 
                     <Controller
@@ -479,8 +476,8 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                             align={'center'}
                             size={'md'}
                             ref={register}
-                            onChange={radioSet}
-                            value={radio}
+                            onChange={radioEduSet}
+                            value={radioEdu}
                         >
                             <Stack direction="row">
                                 <Text>🎓 Education:</Text>
@@ -509,7 +506,15 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                             🟢 Open to request for collaboration?
                         </FormLabel>
                         <Spacer />
-                        <Switch isDisabled={disabled} name={'collaboration'} size={'lg'} colorScheme={'green'} ref={register} />
+                        <Switch
+                            isChecked={colabSwitch}
+                            // value={colabSwitch}
+                            onChange={() => colabSwitchSet(p => !p)}
+                            isDisabled={disabled}
+                            name='collaboration'
+                            size={'lg'}
+                            colorScheme={'green'}
+                            ref={register} />
                     </FormControl>
 
                     <Button
