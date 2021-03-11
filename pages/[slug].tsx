@@ -53,8 +53,10 @@ export default function User({ data }) {
                 backgroundRepeat={'no-repeat'}
                 // backgroundPosition={'bottom'}
                 backgroundSize={'cover'}
-                height={['30vh', '40vh', '30vh', '25vh']}
-                w={['100vw', '100vw', '40vw', '30vw']}
+                h={['30vh', '60vh', '30vh', '25vh']}
+                w={['100vw', '100vw', '100vw', 'lg']}
+                // w={['sm', 'md', 'lg', 'xl']}
+                
                 pos='absolute'
                 zIndex={-1}
                 _after={{
@@ -78,7 +80,7 @@ export default function User({ data }) {
                 align="center"
                 variant="line"
                 colorScheme="green"
-                w={['sm', 'md', 'md', 'xl']}
+                w={['sm', 'md', 'lg', 'lg']}
             >
                 <TabList>
                     <Tab>LINKS</Tab>
@@ -285,17 +287,14 @@ const ProfileAvatar = ({ data }) => {
 
             <Avatar mt={36} size="xl" name={name} src={profileImg || photoUrl} />
 
-            <Heading as={'h3'} size={'md'} mt={2}>{bio.stagename}</Heading>
+            <Flex mt={2} mb={3} justifyContent='center' alignItems='center' flexDir='row'>
+                <Heading as={'h3'} size={'md'}>{bio.stagename}</Heading>
+                <Badge variant="solid" colorScheme="green" ml={1}>PRO</Badge>
+            </Flex>
 
-            <Box >
-                <Flex mt={4} mb={5} alignItems='center'>
-                    <Heading fontWeight={'light'} letterSpacing={2} textAlign={'center'} as={'h6'} size={'sm'}>
-                        @{username || email.split('@')?.[0]}
-                    </Heading>
-                    {/* <CheckCircleIcon ml={'2'} color={'green.300'} /> */}
-                    <Badge variant="solid" colorScheme="green" ml={2}>PRO</Badge>
-                </Flex>
-            </Box>
+            <Heading fontWeight={'light'} letterSpacing={2} textAlign={'center'} as={'h6'} size={'sm'}>
+                @{username || email.split('@')?.[0]}
+            </Heading>
         </Flex>
     )
 }

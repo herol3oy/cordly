@@ -1,11 +1,18 @@
 import { useState, useEffect, useContext } from 'react'
-import { useRouter } from 'next/router'
 import { UserContext } from '../lib/context'
 import { updateProfilePicture } from '../utils/db'
 import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
-import _ from 'lodash'
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import { useForm, Controller } from "react-hook-form"
+import { createMuiTheme } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
+import indigo from "@material-ui/core/colors/indigo";
+import {
+    DatePicker,
+    MuiPickersUtilsProvider
+} from "@material-ui/pickers"
+import styled from 'styled-components';
+import DayjsUtils from "@date-io/dayjs"
 import {
     Divider,
     Flex,
@@ -28,6 +35,7 @@ import {
     Progress,
     Spacer,
     useToast,
+    IconButton,
 } from '@chakra-ui/react'
 
 export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSet }) {
@@ -40,6 +48,13 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
     const [disabled, disabledSet] = useState(false)
     const [currentLocation, currentLocationSet] = useState('no value')
     const [radio, radioSet] = useState<number | string>(null)
+    const [selectedDate, handleDateChange] = useState(new Date())
+
+    const defaultMaterialTheme = createMuiTheme({
+        palette: {
+            primary: indigo,
+        },
+    });
 
     const { register, handleSubmit, errors, control, setValue } = useForm({
         defaultValues: {
@@ -78,6 +93,14 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
 
     }, [user.uid])
 
+
+    const DatePickerStyled = styled(DatePicker)`
+    color: red !important;
+    background: #1a202c;
+    border: solid 1px #ffffff3d !important;
+    border-radius: 0.3rem;
+`;
+    
     const uploadFile = async (e) => {
         const file = e.target.files[0]
         const name = e.target.name
@@ -111,7 +134,7 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                     status: "success",
                     duration: 2000,
                     isClosable: false,
-                  })
+                })
             })
 
         } else {
@@ -141,7 +164,7 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                     status: "success",
                     duration: 2000,
                     isClosable: false,
-                  })
+                })
             })
         }
 
@@ -149,7 +172,20 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
     }
 
     const onSubmit = (data) => {
-        if (!googleLoc) {
+
+        const birthDate = data?.birthdate?.$d?.toString()
+
+        const {
+            collaboration,
+            education,
+            gender,
+            influences,
+            skills,
+            stagename,
+            styles,
+        } = data
+
+        if (!googleLoc || !birthDate) {
             toast({
                 title: "Error",
                 description: 'Please fill in location field',
@@ -163,8 +199,15 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
             disabledSet(true)
 
             const bio = {
-                ...data,
-                location: googleLoc?.label
+                birthDate,
+                collaboration,
+                education,
+                gender,
+                influences,
+                skills,
+                stagename,
+                styles,
+                location: googleLoc?.label,
             }
 
             dashboardFormSet(bio)
@@ -290,8 +333,21 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                             Displays on your card in front page.
                         </FormHelperText>
                     </FormControl>
-                    <FormControl>
 
+                    {/* birthdate */}
+                    <Flex justifyContent={'space-between'} >
+                        <Controller
+                            name='birthdate'
+                            control={control}
+                            render={({ value, onChange }) => <ThemeProvider theme={defaultMaterialTheme}><MuiPickersUtilsProvider utils={DayjsUtils}>
+                                <DatePickerStyled value={value} onChange={onChange} openTo='year' inputVariant='outlined' animateYearScrolling={true} format="MM/DD/YYYY" />
+                            </MuiPickersUtilsProvider></ThemeProvider>}
+                        />
+                    </Flex>
+
+
+
+                    <FormControl>
                         <InputGroup>
                             <InputLeftAddon children="📍Location" />
 
