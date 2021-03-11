@@ -3,12 +3,15 @@ import { UserContext } from '../lib/context'
 import { updateProfilePicture } from '../utils/db'
 import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
-import _ from 'lodash'
 import { useForm, Controller } from "react-hook-form"
+import { createMuiTheme } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/styles";
+import indigo from "@material-ui/core/colors/indigo";
 import {
     DatePicker,
     MuiPickersUtilsProvider
 } from "@material-ui/pickers"
+import styled from 'styled-components';
 import DayjsUtils from "@date-io/dayjs"
 import {
     Divider,
@@ -47,7 +50,11 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
     const [radio, radioSet] = useState<number | string>(null)
     const [selectedDate, handleDateChange] = useState(new Date())
 
-
+    const defaultMaterialTheme = createMuiTheme({
+        palette: {
+            primary: indigo,
+        },
+    });
 
     const { register, handleSubmit, errors, control, setValue } = useForm({
         defaultValues: {
@@ -87,7 +94,13 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
     }, [user.uid])
 
 
-
+    const DatePickerStyled = styled(DatePicker)`
+    color: red !important;
+    background: #1a202c;
+    border: solid 1px #ffffff3d !important;
+    border-radius: 0.3rem;
+`;
+    
     const uploadFile = async (e) => {
         const file = e.target.files[0]
         const name = e.target.name
@@ -159,33 +172,52 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
     }
 
     const onSubmit = (data) => {
-        console.log(data)
-        // if (!googleLoc) {
-        //     toast({
-        //         title: "Error",
-        //         description: 'Please fill in location field',
-        //         status: "error",
-        //         duration: 2000,
-        //         isClosable: false,
-        //     })
-        // }
 
-        // else {
-        //     disabledSet(true)
+        const birthDate = data?.birthdate?.$d?.toString()
 
-        //     const bio = {
-        //         ...data,
-        //         location: googleLoc?.label
-        //     }
+        const {
+            collaboration,
+            education,
+            gender,
+            influences,
+            skills,
+            stagename,
+            styles,
+        } = data
 
-        //     dashboardFormSet(bio)
+        if (!googleLoc || !birthDate) {
+            toast({
+                title: "Error",
+                description: 'Please fill in location field',
+                status: "error",
+                duration: 2000,
+                isClosable: false,
+            })
+        }
 
-        //     firestore
-        //         .collection('users')
-        //         .doc(user.uid)
-        //         .update({ bio: bio })
-        //         .finally(() => disabledSet(false))
-        // }
+        else {
+            disabledSet(true)
+
+            const bio = {
+                birthDate,
+                collaboration,
+                education,
+                gender,
+                influences,
+                skills,
+                stagename,
+                styles,
+                location: googleLoc?.label,
+            }
+
+            dashboardFormSet(bio)
+
+            firestore
+                .collection('users')
+                .doc(user.uid)
+                .update({ bio: bio })
+                .finally(() => disabledSet(false))
+        }
     }
 
     return (
@@ -302,25 +334,18 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                         </FormHelperText>
                     </FormControl>
 
-                    {/* <Flex>
+                    {/* birthdate */}
+                    <Flex justifyContent={'space-between'} >
                         <Controller
-                            as={<DatePicker
-                                ref={register}
-                                selected={startDate}
-                                onChange={date => setStartDate(date)}
-                                customInput={<IconButton aria-label="date picker" icon={<FaCalendarDay />} />}
-                                dateFormat="MMMM d, yyyy"
-                            />}
                             name='birthdate'
                             control={control}
+                            render={({ value, onChange }) => <ThemeProvider theme={defaultMaterialTheme}><MuiPickersUtilsProvider utils={DayjsUtils}>
+                                <DatePickerStyled value={value} onChange={onChange} openTo='year' inputVariant='outlined' animateYearScrolling={true} format="MM/DD/YYYY" />
+                            </MuiPickersUtilsProvider></ThemeProvider>}
                         />
-                        {moment(startDate).format("DD MMMM YYYY") || 'Birthdate'}
-                        {console.log(startDate)}
-                    </Flex> */}
+                    </Flex>
 
-                    <MuiPickersUtilsProvider utils={DayjsUtils}>
-                        <DatePicker value={selectedDate} onChange={(date) => console.log(date)} />
-                    </MuiPickersUtilsProvider>
+
 
                     <FormControl>
                         <InputGroup>
