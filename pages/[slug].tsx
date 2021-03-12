@@ -80,7 +80,7 @@ export default function User({ data }) {
                 align="center"
                 variant="line"
                 colorScheme="green"
-                w={['sm', 'md', 'lg', 'lg']}
+                w={['xs', 'md', 'lg', 'lg']}
             >
                 <TabList>
                     <Tab>LINKS</Tab>

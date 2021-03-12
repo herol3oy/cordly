@@ -99,7 +99,7 @@ export default function Username({ formValue, formValueSet, userNameValue, userN
             <Stack width="100%" spacing={8}>
                 <FormControl>
                     <InputGroup>
-                        <InputLeftAddon children="🔑 Username" />
+                        <InputLeftAddon children="🔑 cord.ly/" />
                         <Input
                             value={formValue}
                             onChange={onChange}
