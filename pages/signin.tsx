@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import Navigation from '../components/Navigation'
 import { FcGoogle } from 'react-icons/fc'
 import { FaFacebook } from 'react-icons/fa'
 import { FaEnvelope } from 'react-icons/fa'
@@ -165,10 +164,24 @@ const SignInPage = () => {
         }
     }
 
-    const handleSignUp = (signUpData) => {
+    const handleSignUp = async (signUpData) => {
+
         const { emailSignUp, passwordSignUp, passwordSignUpConfirm } = signUpData
 
-        if (passwordSignUp !== passwordSignUpConfirm) {
+        const endpoint = `https://open.kickbox.com/v1/disposable/${emailSignUp}`
+        const { disposable } = await (await fetch(endpoint)).json()
+
+        if (disposable) {
+            toast({
+                title: "Error",
+                description: 'This is a disposal email. Please use another email.',
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            })
+        }
+
+        else if (passwordSignUp !== passwordSignUpConfirm) {
             toast({
                 title: "Error",
                 description: 'Password do not match.',
@@ -176,9 +189,14 @@ const SignInPage = () => {
                 duration: 9000,
                 isClosable: true,
             })
-        } else {
-            auth.createUserWithEmailAndPassword(emailSignUp, passwordSignUp)
-                .then((response) => handleUser(response.user))
+        }
+
+        else {
+            const newUser = await auth.createUserWithEmailAndPassword(emailSignUp, passwordSignUp)
+            
+            handleUser(newUser.user)
+
+            await auth.currentUser.sendEmailVerification()
 
             router.push('/dashboard')
         }
@@ -186,7 +204,6 @@ const SignInPage = () => {
 
     return (
         <Box position={'relative'}>
-            <Navigation />
             <Container
                 as={SimpleGrid}
                 maxW={'7xl'}

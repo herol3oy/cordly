@@ -1,5 +1,4 @@
-import Navigation from '../components/Navigation'
-import { firestore } from '../lib/firebase'
+import { firestore,auth } from '../lib/firebase'
 import Musician from '../components/Musician'
 import {
     Text,
@@ -15,7 +14,6 @@ import {
 export default function Home({ musicians }) {
     return (
         <>
-            <Navigation />
             <Container maxW="container.xl">
                 <SimpleGrid columns={2}>
                     <Flex justify={'center'} flexDirection={'column'} alignItems={'center'} >

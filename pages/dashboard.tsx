@@ -4,7 +4,6 @@ import PhonePreview from '../components/PhonePreview'
 import Links from '../components/Links'
 import Bio from '../components/Bio'
 import AuthCheck from '../components/AuthCheck'
-import Navigation from '../components/Navigation'
 import {
     Box,
     Flex,
@@ -39,16 +38,16 @@ const DashboardPanel = () => {
     const [urls, urlsSet] = useState([])
     const [formValue, formValueSet] = useState('')
     const [userNameValue, userNameValueSet] = useState('')
-    const [avatarCoverImg, avatarCoverImgSet] = useState({avatar:'', cover:''})
+    const [avatarCoverImg, avatarCoverImgSet] = useState({ avatar: '', cover: '' })
     const [dashboardForm, dashboardFormSet] = useState(defaultValues)
 
     return (
         <>
-            <Navigation />
-
             <SimpleGrid
+            height='100vh'
+            overflow='hidden'
                 columns={[1, 1, 2, 2]} spacing={5}>
-                <Flex as="section" direction="column" alignItems="center">
+                <Flex overflow='scroll' as="section" direction="column" alignItems="center">
                     <Tabs
                         defaultIndex={1}
                         paddingTop="12"

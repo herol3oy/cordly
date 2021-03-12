@@ -34,10 +34,10 @@ const ReactPlayer = dynamic(() => import('react-player/lazy'))
 export default function User({ data }) {
 
     useEffect(() => {
-        const query = firestore
+        firestore
             .collection('users')
             .doc(data.uid)
-        query.update({ pageVisit: increment(1) })
+            .update({ pageVisit: increment(1) })
     }, [])
 
     return (
@@ -56,7 +56,7 @@ export default function User({ data }) {
                 h={['30vh', '60vh', '30vh', '25vh']}
                 w={['100vw', '100vw', '100vw', 'lg']}
                 // w={['sm', 'md', 'lg', 'xl']}
-                
+
                 pos='absolute'
                 zIndex={-1}
                 _after={{
@@ -288,7 +288,7 @@ const ProfileAvatar = ({ data }) => {
             <Avatar mt={36} size="xl" name={name} src={profileImg || photoUrl} />
 
             <Flex mt={2} mb={3} justifyContent='center' alignItems='center' flexDir='row'>
-                <Heading as={'h3'} size={'md'}>{bio.stagename}</Heading>
+                <Heading as={'h3'} size={'md'}>{bio?.stagename}</Heading>
                 <Badge variant="solid" colorScheme="green" ml={1}>PRO</Badge>
             </Flex>
 
