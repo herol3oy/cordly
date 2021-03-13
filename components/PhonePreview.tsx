@@ -90,10 +90,12 @@ export default function PhonePreview({ urls, userNameValue, avatarCoverImg, dash
                             href={`/${userNameValue || user.uid.slice(0, 5)}`}
                             isExternal>
                             <Text
+                                textStyle={'cordlyUrl'}
                                 color='gray.800'
                                 fontSize={['md', 'xx-large']}
                                 fontWeight={'bold'}
-                                letterSpacing={1}>
+                                letterSpacing={1}
+                                >
                                 {userProfileUrl}
                             </Text>
                         </Link>
@@ -101,7 +103,7 @@ export default function PhonePreview({ urls, userNameValue, avatarCoverImg, dash
                             mr={2}
                             onClick={onCopy}
                             size='xs'
-                            colorScheme='green'
+                            colorScheme='blue'
                             variant='solid'
                             leftIcon={<FaRegCopy />}>
                             {hasCopied ? "Copied" : "Copy"}
@@ -112,7 +114,7 @@ export default function PhonePreview({ urls, userNameValue, avatarCoverImg, dash
                             download
                             onClick={() => generateQrCode()}
                             size='xs'
-                            colorScheme='green'
+                            colorScheme='blue'
                             variant='solid'
                             leftIcon={<FaDownload />}>
                             QR

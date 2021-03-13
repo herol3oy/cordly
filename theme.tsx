@@ -12,6 +12,9 @@ const theme = extendTheme({
         textsub: {
             fontFamily: '"Playfair Display", serif',
         },
+        cordlyUrl: {
+            fontFamily: '"Roboto Mono", monospace',
+        },
     },
     config: {
         initialColorMode: 'dark',
