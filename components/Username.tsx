@@ -95,8 +95,8 @@ export default function Username({ formValue, formValueSet, userNameValue, userN
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack width="100%" spacing={8}>
+        <Stack w={['90vw', '70vw', 'sm', '30vw']} spacing={8}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <FormControl>
                     <InputGroup>
                         <InputLeftAddon children="🔑 cord.ly/" />
@@ -140,8 +140,8 @@ export default function Username({ formValue, formValueSet, userNameValue, userN
                     isValid={isValid}
                     loading={loading}
                 />
-            </Stack>
-        </form>
+            </form>
+        </Stack>
     )
 }
 

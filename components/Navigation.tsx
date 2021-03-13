@@ -6,14 +6,11 @@ import { UserContext } from '../lib/context'
 import { firestore } from '../lib/firebase'
 import { FaSun } from 'react-icons/fa'
 import { FaMoon } from 'react-icons/fa'
-import { FaGoogle } from 'react-icons/fa'
-import { FaFacebook } from 'react-icons/fa'
 import { createUser } from '../utils/db'
 import { auth, googleAuthProvider, facebookAuthProvider } from '../lib/firebase'
 import {
     Button,
     Stack,
-    Text,
     IconButton,
     Heading,
     useColorModeValue,
@@ -98,38 +95,27 @@ export default function Navigation() {
 
     return (
         <Flex
-            align={{ base: 'flex-start', sm: 'center' }}
-            direction={{ base: 'row', sm: 'row' }}
+            direction={['row','row','row','column']}
             justify={'center'}
-            px={{ base: '3', md: '6', lg: '8' }}
-            borderBottomColor={useColorModeValue('gray.100', 'gray.700')}
-            borderBottomWidth={'2px'}
-            py={'3'}
+            px={{ base: '3', md: '6', lg: '4' }}
+            py={3}
             color={'white'}
-            bg={'gray.800'}
+            bg={'gray.700'}
             shadow="0 0 10px 0 rgba(0,0,0, 0.035);"
+            borderBottomColor={['red','green']}
         >
             <NextLink href={'/'} passHref>
                 <Link>
-                    <Heading textStyle={'logo'}>Cordly</Heading>
+                    <Heading 
+                     textStyle={'logo'}
+                     >C</Heading>
                 </Link>
             </NextLink>
 
             <Spacer />
 
-            <IconButton
-                size={'md'}
-                fontSize={'lg'}
-                aria-label={`Switch to ${text} mode`}
-                variant={'ghost'}
-                color={'current'}
-                ml={{ base: '0', md: '3' }}
-                icon={<SwitchIcon />}
-                onClick={toggleColorMode}
-                mr={2}
-            />
             {!user && (
-                <Stack direction={{ base: 'column', sm: 'row' }}>
+                <Stack direction='column'>
                     <NextLink href={'/signin'} passHref>
                         <Link>
                             <Button
@@ -144,22 +130,18 @@ export default function Navigation() {
             )}
             {user && (
                 <Stack
-                    direction={{ base: 'column', sm: 'row' }}
+                    direction='column'
                     alignItems={'center'}
                 >
-                    <Text display={['none', 'block']}>
-                        Hi {username || user.displayName?.split(' ')[0] || 'Sneeky'}!
-                    </Text>
                     <Menu>
                         <MenuButton
                             as={IconButton}
                             aria-label="Menu button"
                             icon={
                                 <Avatar
-                                    showBorder={true}
-                                    borderColor={'white'}
                                     name={user.displayName}
                                     src={newProfileImg || user.photoURL}
+                                    size='sm'
                                 />
                             }
                             size="xs"

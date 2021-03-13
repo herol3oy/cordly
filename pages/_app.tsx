@@ -18,7 +18,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     return (
         <UserContext.Provider value={userData}>
             <ChakraProvider resetCSS theme={theme}>
-                {!isUserSlug && <Navigation />}
+                {/* {!isUserSlug && <Navigation />} */}
                 <Component {...pageProps} />
                 {homepage && !dashboard && !isUserSlug && <Footer />}
             </ChakraProvider>

@@ -124,7 +124,8 @@ export default function Links({ urls, urlsSet }) {
             alignItems={'center'}
             margin={'auto'}
             flexDirection={'column'}
-            w={['90vw', '70vw', '60vw', '30vw']}
+            w={['90vw', '70vw', 'sm', '30vw']}
+
         >
             <VStack my={'6'}>
                 <Heading borderBottom={'1px'} pb={2} fontWeight="500" as="h1">

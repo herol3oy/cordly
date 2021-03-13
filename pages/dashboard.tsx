@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Username from '../components/Username'
 import PhonePreview from '../components/PhonePreview'
 import Links from '../components/Links'
+import Navigation from '../components/Navigation'
 import Bio from '../components/Bio'
 import AuthCheck from '../components/AuthCheck'
 import {
@@ -40,70 +41,101 @@ const DashboardPanel = () => {
     const [userNameValue, userNameValueSet] = useState('')
     const [avatarCoverImg, avatarCoverImgSet] = useState({ avatar: '', cover: '' })
     const [dashboardForm, dashboardFormSet] = useState(defaultValues)
+    const [tabIndex, tabIndexSet] = useState(0)
 
     return (
         <>
-            <SimpleGrid
-            height='100vh'
-            overflow='hidden'
-                columns={[1, 1, 2, 2]} spacing={5}>
-                <Flex overflow='scroll' as="section" direction="column" alignItems="center">
-                    <Tabs
-                        defaultIndex={1}
-                        paddingTop="12"
-                        isFitted
-                        align="center"
-                        variant="line"
-                        colorScheme="green"
-                    >
-                        <TabList>
-                            <Tab>
-                                <Box>🔗</Box>
-                                <Text ml={3}>Links</Text>
-                            </Tab>
+            <Flex
+                height='100vh'
+                justifyContent='space-between'
+                // columns={[1, 1, 3, 3]}
+                // spacing={5}
+                // display='flex'
+                // pos='relative'
+                flexDir={['column', 'column', 'column', 'row']}
+            >
 
-                            <Tab>
-                                <Box>✍️</Box>
-                                <Text ml={3}>Bio</Text>
-                            </Tab>
+                {/* <Text>salam</Text> */}
+                <Navigation />
 
-                            <Tab>
-                                <Box>👑</Box>
-                                <Text ml={3}>Username</Text>
-                            </Tab>
-                        </TabList>
-                        <TabPanels>
-                            <TabPanel>
-                                <Links urls={urls} urlsSet={urlsSet} />
-                            </TabPanel>
+                <Tabs
+                    alignSelf='stretch'
+                    minW={['xs', 'sm', 'md', '6xl']}
+                    overflow='scroll'
+                    overflowX='hidden'
+                    minH='100vh'
+                    defaultIndex={1}
+                    paddingTop="6"
+                    isFitted
+                    align="center"
+                    variant='line'
+                    colorScheme="green"
+                    // pb={'28'}
+                    // bg={'gray.600'}
+                    onChange={(index) => tabIndexSet(index)}
+                >
+                    <TabList>
+                        <Tab>
+                            <Box>🔗</Box>
+                            <Text ml={3}>Links</Text>
+                        </Tab>
 
-                            <TabPanel>
-                                <Bio
-                                    avatarCoverImg={avatarCoverImg}
-                                    avatarCoverImgSet={avatarCoverImgSet}
-                                    dashboardFormSet={dashboardFormSet}
-                                />
-                            </TabPanel>
+                        <Tab>
+                            <Box>✍️</Box>
+                            <Text ml={3}>Bio</Text>
+                        </Tab>
 
-                            <TabPanel>
-                                <Username
-                                    formValue={formValue}
-                                    formValueSet={formValueSet}
-                                    userNameValue={userNameValue}
-                                    userNameValueSet={userNameValueSet}
-                                />
-                            </TabPanel>
-                        </TabPanels>
-                    </Tabs>
-                </Flex>
+                        <Tab>
+                            <Box>👑</Box>
+                            <Text ml={3}>Username</Text>
+                        </Tab>
+                    </TabList>
+                    <TabPanels>
+                        <TabPanel>
+                            <Links urls={urls} urlsSet={urlsSet} />
+                        </TabPanel>
+
+                        <TabPanel>
+                            <Bio
+                                avatarCoverImg={avatarCoverImg}
+                                avatarCoverImgSet={avatarCoverImgSet}
+                                dashboardFormSet={dashboardFormSet}
+                            />
+                        </TabPanel>
+
+                        <TabPanel>
+                            <Username
+                                formValue={formValue}
+                                formValueSet={formValueSet}
+                                userNameValue={userNameValue}
+                                userNameValueSet={userNameValueSet}
+                            />
+                        </TabPanel>
+                    </TabPanels>
+                </Tabs>
+
 
                 <PhonePreview
+                    tabIndex={tabIndex}
                     urls={urls}
                     userNameValue={userNameValue}
                     avatarCoverImg={avatarCoverImg}
-                // dashboardForm={dashboardForm}
+                    dashboardForm={dashboardForm}
                 />
-            </SimpleGrid>
+            </Flex>
+            <style global jsx>{`
+                ::-webkit-scrollbar {
+                    width: 0.15rem;
+                }
+                
+                ::-webkit-scrollbar-thumb {
+                    background: #48BB78;
+                }
+                
+                ::-webkit-scrollbar-track {
+                    background: #111;
+                }
+            `}</style>
         </>
     )
 }

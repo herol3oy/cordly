@@ -211,21 +211,10 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
 
     return (
         <Flex
-            // display="flex"
-            // justify="center"
-            // alignItems="center"
-            // margin="auto"
             flexDirection="column"
-            w={['90vw', '70vw', '60vw', '30vw']}
+            w={['90vw', '70vw', 'sm', '30vw']}
         >
             <Stack>
-                {/* <Avatar
-                    src={profileImg || user.photoURL}
-                    alt="Profile picture"
-                    size="xl"
-                    margin="auto"
-                    mb={4}
-                /> */}
                 <InputGroup>
                     <InputLeftAddon children="📸 Profile Image" />
                     <Flex
