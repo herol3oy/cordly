@@ -4,13 +4,6 @@ import { updateProfilePicture } from '../utils/db'
 import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import { useForm, Controller } from "react-hook-form"
-import { ThemeProvider } from "@material-ui/styles";
-import {
-    DatePicker,
-    MuiPickersUtilsProvider
-} from "@material-ui/pickers"
-import styled from 'styled-components';
-import DayjsUtils from "@date-io/dayjs"
 import {
     Divider,
     Flex,
@@ -32,7 +25,6 @@ import {
     Progress,
     Spacer,
     useToast,
-    IconButton,
 } from '@chakra-ui/react'
 
 export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSet }) {
@@ -49,6 +41,14 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
     const [birthdate, birthdateSet] = useState(new Date())
     const [colabSwitch, colabSwitchSet] = useState(false)
 
+    const yearOfBirths = []
+
+    const currentYear = new Date().getFullYear()
+
+    for (let i = currentYear; i >= 1950; i--) {
+        yearOfBirths.push(i)
+    }
+
     const { register, handleSubmit, errors, control, setValue } = useForm({
         defaultValues: {
             stagename: '',
@@ -63,6 +63,7 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
         }
     })
 
+
     const { user } = useContext(UserContext)
 
     const toast = useToast()
@@ -74,22 +75,33 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
         query.where('uid', '==', user.uid).onSnapshot((snapshot) => {
             let changes = snapshot.docChanges()
             changes.forEach((i) => {
-                avatarCoverImgSet({ ...avatarCoverImg, avatar: i.doc.data().profileImg, cover: i.doc.data().coverImg })
 
-                setValue('stagename', i.doc.data().bio?.stagename)
-                // setValue('location', i.doc.data().bio?.location)
-                setValue('skills', i.doc.data().bio?.skills)
-                setValue('influences', i.doc.data().bio?.influences)
-                setValue('education', i.doc.data().bio?.education)
-                setValue('styles', i.doc.data().bio?.styles)
-                setValue('gender', i.doc.data().bio?.gender)
-                setValue('birthdate', i.doc.data().bio?.birthdate)
+                const doc = i.doc.data()
 
-                currentLocationSet(i.doc.data().bio?.location)
+                const {
+                    stagename,
+                    skills,
+                    influences,
+                    education,
+                    styles,
+                    gender,
+                    birthdate,
+                    location,
+                    collaboration,
+                } = i.doc.data().bio
 
-                birthdateSet(i.doc.data().bio?.birthdate?.toString())
+                avatarCoverImgSet({ ...avatarCoverImg, avatar: doc.profileImg, cover: doc.coverImg })
 
-                colabSwitchSet(i.doc.data().bio?.collaboration)
+                setValue('stagename', stagename)
+                setValue('skills', skills)
+                setValue('influences', influences)
+                setValue('education', education)
+                setValue('styles', styles)
+                setValue('gender', gender)
+                setValue('birthdate', birthdate)
+
+                currentLocationSet(location)
+                colabSwitchSet(collaboration)
             })
         })
 
@@ -168,10 +180,10 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
 
     const onSubmit = (data) => {
 
-        if (!googleLoc || !birthdate) {
+        if (!googleLoc) {
             toast({
                 title: "Error",
-                description: 'Please fill in location or birthdate field',
+                description: 'Please type your location',
                 status: "error",
                 duration: 2000,
                 isClosable: false,
@@ -184,7 +196,6 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
             const bio = {
                 ...data,
                 location: googleLoc?.label,
-                birthdate: birthdate,
             }
 
             dashboardFormSet(bio)
@@ -196,12 +207,6 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                 .finally(() => disabledSet(false))
         }
     }
-
-    const StyledMuiPickersUtilsProvider = styled(MuiPickersUtilsProvider)`
-             background-color: 'red' !important;
-             color:'red' !important;
-             background:'blue' !important;
-    `
 
     return (
         <Flex
@@ -241,12 +246,6 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                         value={progress > 0 ? progress : 0}
                     />}
 
-                {/* <FormControl mb={'10'}>
-                    <FormHelperText textAlign="left">
-                        Update your profile picture by choosing a new file.
-                    </FormHelperText>
-                </FormControl> */}
-
                 <InputGroup >
                     <InputLeftAddon children="🖼️ Cover Background" />
                     <Flex
@@ -278,12 +277,6 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                         isIndeterminate={uploading.cover}
                         value={progress > 0 ? progress : 0}
                     />}
-
-                {/* <FormControl >
-                    <FormHelperText textAlign="left">
-                        Update your cover background by choosing a new image.
-                    </FormHelperText>
-                </FormControl> */}
             </Stack>
 
             <Divider my={6} />
@@ -306,31 +299,31 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                         </FormHelperText>
                     </FormControl>
 
-                    {/* birthdate */}
-                    <InputGroup>
-                        <InputLeftAddon children="Birthdate" />
-                        <Flex
-                            align='flex-start'
-                            borderWidth={1}
-                            borderRightRadius="md"
-                        // whiteSpace="nowrap"
-                        // w="100%"
-                        >
-                            <IconButton
-                                colorScheme="transparent"
-                                aria-label="birthdate"
-                                icon={<MuiPickersUtilsProvider utils={DayjsUtils}>
-                                        <DatePicker
-                                            variant="dialog"
-                                            value={birthdate}
-                                            onChange={(e) => birthdateSet(e.$d.toString())}
-                                            openTo='year'
-                                            animateYearScrolling={true}
-                                            format="MM/DD/YYYY" />
-                                    </MuiPickersUtilsProvider>}
-                            />
-                        </Flex>
-                    </InputGroup>
+
+                    <FormControl>
+                        <InputGroup>
+                            <InputLeftAddon children="Birthdate" />
+                            <Select
+                                isDisabled={disabled}
+                                name="birthdate"
+                                placeholder="Year of Birth"
+                                ref={register({ required: true })}
+                            >
+                                {yearOfBirths
+                                    .map((i, idx) => (
+                                        <option
+                                            key={idx}
+                                            value={i}>
+                                            {i}
+                                        </option>
+                                    ))}
+                            </Select>
+                        </InputGroup>
+
+                        <FormHelperText textAlign="left">
+                            It doesn't display on your page.
+                        </FormHelperText>
+                    </FormControl>
 
 
                     <FormControl>
