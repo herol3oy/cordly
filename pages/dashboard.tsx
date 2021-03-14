@@ -4,6 +4,7 @@ import PhonePreview from '../components/PhonePreview'
 import Links from '../components/Links'
 import Navigation from '../components/Navigation'
 import Bio from '../components/Bio'
+import Design from '../components/Design'
 import AuthCheck from '../components/AuthCheck'
 import {
     Box,
@@ -42,6 +43,7 @@ const DashboardPanel = () => {
     const [avatarCoverImg, avatarCoverImgSet] = useState({ avatar: '', cover: '' })
     const [dashboardForm, dashboardFormSet] = useState(defaultValues)
     const [tabIndex, tabIndexSet] = useState(0)
+    const [bgColor, bgColorSet] = useState('#1a202c')
 
     return (
         <>
@@ -56,7 +58,7 @@ const DashboardPanel = () => {
             >
 
                 {/* <Text>salam</Text> */}
-                <Navigation />
+                {/* <Navigation /> */}
 
                 <Tabs
                     alignSelf='stretch'
@@ -65,11 +67,12 @@ const DashboardPanel = () => {
                     overflowX='hidden'
                     minH='100vh'
                     defaultIndex={1}
-                    paddingTop="6"
+                    paddingTop="3"
                     isFitted
                     align="center"
                     variant='line'
                     colorScheme="green"
+                    index={tabIndex ? tabIndex : 0}
                     // pb={'28'}
                     // bg={'gray.600'}
                     onChange={(index) => tabIndexSet(index)}
@@ -83,6 +86,11 @@ const DashboardPanel = () => {
                         <Tab>
                             <Box>✍️</Box>
                             <Text ml={3}>Bio</Text>
+                        </Tab>
+
+                        <Tab>
+                            <Box>🎨</Box>
+                            <Text ml={3}>Design</Text>
                         </Tab>
 
                         <Tab>
@@ -104,6 +112,10 @@ const DashboardPanel = () => {
                         </TabPanel>
 
                         <TabPanel>
+                            <Design bgColorSet={bgColorSet} />
+                        </TabPanel>
+
+                        <TabPanel>
                             <Username
                                 formValue={formValue}
                                 formValueSet={formValueSet}
@@ -117,10 +129,12 @@ const DashboardPanel = () => {
 
                 <PhonePreview
                     tabIndex={tabIndex}
+                    tabIndexSet={tabIndexSet}
                     urls={urls}
                     userNameValue={userNameValue}
                     avatarCoverImg={avatarCoverImg}
                     dashboardForm={dashboardForm}
+                    bgColor={bgColor}
                 />
             </Flex>
             <style global jsx>{`

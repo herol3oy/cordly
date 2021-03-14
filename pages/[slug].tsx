@@ -80,7 +80,7 @@ export default function User({ data }) {
                 align="center"
                 variant="line"
                 colorScheme="green"
-                w={['xs', 'md', 'lg', 'lg']}
+                w={['sm', 'md', 'lg', 'lg']}
             >
                 <TabList>
                     <Tab>LINKS</Tab>
@@ -251,6 +251,7 @@ const ProfileLinks = ({ data }) => {
                 <Button
                     w={'100%'}
                     size='lg'
+                    py={8}
                     color={'gray.400'}
                     bg={useColorModeValue('gray.50', 'gray.900')}
                 >
@@ -292,7 +293,7 @@ const ProfileAvatar = ({ data }) => {
                 <Badge variant="solid" colorScheme="green" ml={1}>PRO</Badge>
             </Flex>
 
-            <Heading fontWeight={'light'} letterSpacing={2} textAlign={'center'} as={'h6'} size={'sm'}>
+            <Heading textStyle={'cordlyUrl'} fontWeight={'light'} letterSpacing={2} textAlign={'center'} as={'h6'} size={'sm'}>
                 @{username || email.split('@')?.[0]}
             </Heading>
         </Flex>

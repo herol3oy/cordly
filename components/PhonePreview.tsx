@@ -27,7 +27,7 @@ import {
     SimpleGrid,
 } from '@chakra-ui/react'
 
-export default function PhonePreview({ urls, userNameValue, avatarCoverImg, dashboardForm, tabIndex }) {
+export default function PhonePreview({ urls, userNameValue, avatarCoverImg, dashboardForm, tabIndex, tabIndexSet, bgColor }) {
 
     const [imageUrl, setImageUrl] = useState('')
     const [stageName, stageNameSet] = useState('')
@@ -63,10 +63,7 @@ export default function PhonePreview({ urls, userNameValue, avatarCoverImg, dash
     }
 
     return (
-        <Flex
-            direction='column'
-            w='100%'
-        >
+        <Flex direction='column' w='100%'>
             <Flex
                 w='100%'
                 direction={['column-reverse', 'column']}
@@ -74,7 +71,14 @@ export default function PhonePreview({ urls, userNameValue, avatarCoverImg, dash
                 justifyContent={'center'}
             >
 
-                <SimpleGrid pos='sticky' bottom='0' zIndex='99' columns={2} alignSelf='stretch' color={'green.400'}>
+                <SimpleGrid
+                    pos='sticky'
+                    bottom='0'
+                    zIndex='99'
+                    columns={2}
+                    alignSelf='stretch'
+                    color={'green.400'}
+                >
                     <Flex
                         border='solid 1px transparent'
                         borderRightColor='black'
@@ -95,7 +99,7 @@ export default function PhonePreview({ urls, userNameValue, avatarCoverImg, dash
                                 fontSize={['md', 'xx-large']}
                                 fontWeight={'bold'}
                                 letterSpacing={1}
-                                >
+                            >
                                 {userProfileUrl}
                             </Text>
                         </Link>
@@ -150,9 +154,11 @@ export default function PhonePreview({ urls, userNameValue, avatarCoverImg, dash
                     textAlign="center"
                     my={10}
                     pos={'relative'}
+                    bg={bgColor}
                 >
 
                     <Flex
+                        background={'gray'}
                         backgroundImage={`url("${avatarCoverImg.cover}")`}
                         backgroundRepeat={'no-repeat'}
                         backgroundSize={'cover'}
@@ -167,7 +173,7 @@ export default function PhonePreview({ urls, userNameValue, avatarCoverImg, dash
                             top: 0,
                             width: '100%',
                             height: '100%',
-                            background: 'linear-gradient(to top, #1a202c 0%, rgba(255, 255, 255, 0) 100%)'
+                            background: `linear-gradient(to top, ${bgColor} 0%, rgba(255, 255, 255, 0) 100%)`
 
                         }}
                     />
@@ -194,6 +200,8 @@ export default function PhonePreview({ urls, userNameValue, avatarCoverImg, dash
                         variant="line"
                         colorScheme="green"
                         index={tabIndex === 0 ? 0 : 1}
+                        onChange={(index) => tabIndexSet(index)}
+
                     >
                         <TabList>
                             <Tab>
@@ -229,7 +237,7 @@ const LinksPreviewPanel = ({ urls }) => {
     return (
         <Stack>
             {urls?.map((i, idx) => (
-                <Button key={idx} w={'100%'}>
+                <Button size='lg' key={idx} w={'100%'}>
                     <NextLink href={Object.values(i)[0].toString()} passHref>
                         <Link isExternal>
                             {Object.keys(i)[0].toString()}

@@ -26,7 +26,7 @@ import {
     Link,
 } from '@chakra-ui/react'
 
-export default function Navigation() {
+export default function Navigation({ dashboard }) {
     const [newProfileImg, newProfileImgSet] = useState('')
 
     const { user, username } = useContext(UserContext)
@@ -94,25 +94,39 @@ export default function Navigation() {
     }
 
     return (
-        <Flex
-            direction={['row','row','row','column']}
+        <Stack
+            direction={dashboard ? 'column' : 'row'}
             justify={'center'}
-            px={{ base: '3', md: '6', lg: '4' }}
+            px={{ base: '3', md: '6', lg: '3' }}
             py={3}
             color={'white'}
             bg={'gray.700'}
             shadow="0 0 10px 0 rgba(0,0,0, 0.035);"
-            borderBottomColor={['red','green']}
+            alignItems='center'
+            borderBottomColor={['red', 'green']}
         >
             <NextLink href={'/'} passHref>
                 <Link>
-                    <Heading 
-                     textStyle={'logo'}
-                     >C</Heading>
+                    <Heading
+                        textStyle={'logo'}
+                    >C</Heading>
                 </Link>
             </NextLink>
 
             <Spacer />
+
+            <IconButton
+                size="md"
+                onClick={toggleColorMode}
+                // mr={2}
+                // mb={{ base: "0", md: "3" }}
+                isRound
+                icon={<SwitchIcon />}
+                fontSize="lg"
+                colorScheme='whiteAlpha'
+                color="current"
+                aria-label={`Switch to ${text} mode`}
+            />
 
             {!user && (
                 <Stack direction='column'>
@@ -161,6 +175,6 @@ export default function Navigation() {
                     </Menu>
                 </Stack>
             )}
-        </Flex>
+        </Stack>
     )
 }

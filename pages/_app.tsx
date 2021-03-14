@@ -2,7 +2,7 @@ import type { AppProps } from 'next/app'
 import theme from '../theme'
 import { useUserData } from '../lib/hooks'
 import { UserContext } from '../lib/context'
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, Flex } from '@chakra-ui/react'
 import { AuthProvider } from '../utils/auth'
 import Navigation from '../components/Navigation'
 import Footer from '../components/Footer'
@@ -18,9 +18,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     return (
         <UserContext.Provider value={userData}>
             <ChakraProvider resetCSS theme={theme}>
-                {/* {!isUserSlug && <Navigation />} */}
-                <Component {...pageProps} />
-                {homepage && !dashboard && !isUserSlug && <Footer />}
+                <Flex flexDirection={dashboard ? 'row' : 'column'}>
+                    {!isUserSlug && <Navigation dashboard={dashboard} />}
+                    <Component {...pageProps} />
+                    {homepage && !dashboard && !isUserSlug && <Footer />}
+                </Flex>
             </ChakraProvider>
         </UserContext.Provider>
     )

@@ -4,22 +4,18 @@ import { updateProfilePicture } from '../utils/db'
 import { firestore, storage, STATE_CHANGED } from '../lib/firebase'
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import { useForm, Controller } from "react-hook-form"
-import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
-import indigo from "@material-ui/core/colors/indigo";
 import {
     DatePicker,
     MuiPickersUtilsProvider
 } from "@material-ui/pickers"
 import styled from 'styled-components';
 import DayjsUtils from "@date-io/dayjs"
-import moment from 'moment'
 import {
     Divider,
     Flex,
     Stack,
     chakra,
-    Avatar,
     InputLeftAddon,
     InputGroup,
     FormControl,
@@ -53,12 +49,6 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
     const [birthdate, birthdateSet] = useState(new Date())
     const [colabSwitch, colabSwitchSet] = useState(false)
 
-    const defaultMaterialTheme = createMuiTheme({
-        palette: {
-            primary: indigo,
-        },
-    });
-
     const { register, handleSubmit, errors, control, setValue } = useForm({
         defaultValues: {
             stagename: '',
@@ -67,6 +57,9 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
             influences: '',
             education: '',
             collaboration: false,
+            styles: '',
+            gender: '',
+            birthdate: '',
         }
     })
 
@@ -90,6 +83,7 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                 setValue('education', i.doc.data().bio?.education)
                 setValue('styles', i.doc.data().bio?.styles)
                 setValue('gender', i.doc.data().bio?.gender)
+                setValue('birthdate', i.doc.data().bio?.birthdate)
 
                 currentLocationSet(i.doc.data().bio?.location)
 
@@ -101,12 +95,6 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
 
     }, [user.uid])
 
-    const DatePickerStyled = styled(DatePicker)`
-    color: red !important;
-    background: #1a202c;
-    border: solid 1px #ffffff3d !important;
-    border-radius: 0.3rem;
-`;
 
     const uploadFile = async (e) => {
         const file = e.target.files[0]
@@ -208,6 +196,12 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                 .finally(() => disabledSet(false))
         }
     }
+
+    const StyledMuiPickersUtilsProvider = styled(MuiPickersUtilsProvider)`
+             background-color: 'red' !important;
+             color:'red' !important;
+             background:'blue' !important;
+    `
 
     return (
         <Flex
@@ -313,25 +307,30 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                     </FormControl>
 
                     {/* birthdate */}
-                    <Flex justifyContent={'space-between'} >
-                        <Text>Birthdate:</Text>
-                        <ThemeProvider theme={defaultMaterialTheme}>
-                            <MuiPickersUtilsProvider utils={DayjsUtils}>
-                                <DatePickerStyled
-                                    value={birthdate}
-                                    onChange={(e) => birthdateSet(e.$d.toString())}
-                                    openTo='year'
-                                    inputVariant='outlined'
-                                    animateYearScrolling={true}
-                                    format="MM/DD/YYYY" />
-                            </MuiPickersUtilsProvider>
-                        </ThemeProvider>
-
-
-                        <Text>{moment(birthdate).format("Do MMM YYYY")}</Text>
-                        {/* {console.log(birthdate)} */}
-                    </Flex>
-
+                    <InputGroup>
+                        <InputLeftAddon children="Birthdate" />
+                        <Flex
+                            align='flex-start'
+                            borderWidth={1}
+                            borderRightRadius="md"
+                        // whiteSpace="nowrap"
+                        // w="100%"
+                        >
+                            <IconButton
+                                colorScheme="transparent"
+                                aria-label="birthdate"
+                                icon={<MuiPickersUtilsProvider utils={DayjsUtils}>
+                                        <DatePicker
+                                            variant="dialog"
+                                            value={birthdate}
+                                            onChange={(e) => birthdateSet(e.$d.toString())}
+                                            openTo='year'
+                                            animateYearScrolling={true}
+                                            format="MM/DD/YYYY" />
+                                    </MuiPickersUtilsProvider>}
+                            />
+                        </Flex>
+                    </InputGroup>
 
 
                     <FormControl>
@@ -444,7 +443,7 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                                 <Spacer />
                                 <Radio isDisabled={disabled} name='female' value="female">👩‍🎤 Female</Radio>
                                 <Radio isDisabled={disabled} name='male' value="male">👨‍🎤 Male</Radio>
-                                <Radio isDisabled={disabled} name='diverse' value="diverse">🌈 Diverse</Radio>
+                                <Radio isDisabled={disabled} name='non-binary' value="non-binary">Non-binary</Radio>
                             </Stack>
                         </RadioGroup>}
                         name='gender'

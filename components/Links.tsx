@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 import { UserContext } from '../lib/context'
-import { LinkIcon, DeleteIcon } from '@chakra-ui/icons'
+import { LinkIcon, DeleteIcon, DragHandleIcon } from '@chakra-ui/icons'
 import { firestore, arrayUnion, arrayRemove } from '../lib/firebase'
 import { FaPlusCircle } from 'react-icons/fa'
 import { useForm } from "react-hook-form"
@@ -216,7 +216,8 @@ export default function Links({ urls, urlsSet }) {
                                                         align={'center'}
                                                         w={'100%'}
                                                     >
-                                                        <LinkIcon />
+                                                        <DragHandleIcon />
+                                                        {/* <LinkIcon /> */}
 
                                                         <Link
                                                             textAlign="left"

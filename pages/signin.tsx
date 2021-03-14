@@ -171,34 +171,44 @@ const SignInPage = () => {
         const endpoint = `https://open.kickbox.com/v1/disposable/${emailSignUp}`
         const { disposable } = await (await fetch(endpoint)).json()
 
-        if (disposable) {
+        try {
+            if (disposable) {
+                toast({
+                    title: "Error",
+                    description: 'This is a disposal email. Please use another email.',
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                })
+            }
+    
+            else if (passwordSignUp !== passwordSignUpConfirm) {
+                toast({
+                    title: "Error",
+                    description: 'Password do not match.',
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                })
+            }
+    
+            else {
+                const newUser = await auth.createUserWithEmailAndPassword(emailSignUp, passwordSignUp)
+                
+                handleUser(newUser.user)
+    
+                await auth.currentUser.sendEmailVerification()
+    
+                router.push('/dashboard')
+            }
+        } catch (error) {
             toast({
                 title: "Error",
-                description: 'This is a disposal email. Please use another email.',
+                description: error.message,
                 status: "error",
-                duration: 5000,
+                duration: 4000,
                 isClosable: true,
             })
-        }
-
-        else if (passwordSignUp !== passwordSignUpConfirm) {
-            toast({
-                title: "Error",
-                description: 'Password do not match.',
-                status: "error",
-                duration: 9000,
-                isClosable: true,
-            })
-        }
-
-        else {
-            const newUser = await auth.createUserWithEmailAndPassword(emailSignUp, passwordSignUp)
-            
-            handleUser(newUser.user)
-
-            await auth.currentUser.sendEmailVerification()
-
-            router.push('/dashboard')
         }
     }
 
