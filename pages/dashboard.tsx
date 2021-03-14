@@ -67,7 +67,7 @@ const DashboardPanel = () => {
                     overflowX='hidden'
                     minH='100vh'
                     defaultIndex={1}
-                    paddingTop="3"
+                    // paddingTop="3"
                     isFitted
                     align="center"
                     variant='line'
@@ -76,24 +76,25 @@ const DashboardPanel = () => {
                     // pb={'28'}
                     // bg={'gray.600'}
                     onChange={(index) => tabIndexSet(index)}
+                    
                 >
                     <TabList>
-                        <Tab>
+                        <Tab _selected={{ color: "white", bg: "green.400" }}>
                             <Box>🔗</Box>
                             <Text ml={3}>Links</Text>
                         </Tab>
 
-                        <Tab>
+                        <Tab _selected={{ color: "white", bg: "green.400" }}>
                             <Box>✍️</Box>
                             <Text ml={3}>Bio</Text>
                         </Tab>
 
-                        <Tab>
+                        <Tab _selected={{ color: "white", bg: "green.400" }}>
                             <Box>🎨</Box>
                             <Text ml={3}>Design</Text>
                         </Tab>
 
-                        <Tab>
+                        <Tab _selected={{ color: "white", bg: "green.400" }}>
                             <Box>👑</Box>
                             <Text ml={3}>Username</Text>
                         </Tab>

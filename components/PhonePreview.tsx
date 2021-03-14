@@ -25,6 +25,7 @@ import {
     Heading,
     useColorModeValue,
     SimpleGrid,
+    Tooltip,
 } from '@chakra-ui/react'
 
 export default function PhonePreview({ urls, userNameValue, avatarCoverImg, dashboardForm, tabIndex, tabIndexSet, bgColor }) {
@@ -124,22 +125,24 @@ export default function PhonePreview({ urls, userNameValue, avatarCoverImg, dash
                             QR
                     </Button>
                     </Flex>
-                    <Flex
-                        justify='center'
-                        alignItems='center'
-                        bg='green.200'
-                        w='100%'
-                        color='green.900'
-                    >
-                        <FaEye size='30px' />
-                        <Text
-                            fontSize={['md', 'x-large']}
-                            fontWeight='bold'
-                            ml={2}
+                    <Tooltip hasArrow label="Page Visits" bg="gray.300" color="black">
+                        <Flex
+                            justify='center'
+                            alignItems='center'
+                            bg='green.200'
+                            w='100%'
+                            color='green.900'
                         >
-                            {pageVisit}
-                        </Text>
-                    </Flex>
+                            <FaEye size='30px' />
+                            <Text
+                                fontSize={['md', 'x-large']}
+                                fontWeight='bold'
+                                ml={2}
+                            >
+                                {pageVisit}
+                            </Text>
+                        </Flex>
+                    </Tooltip>
                 </SimpleGrid>
 
 

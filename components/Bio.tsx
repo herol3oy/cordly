@@ -78,6 +78,12 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
 
                 const doc = i.doc.data()
 
+                avatarCoverImgSet({
+                    ...avatarCoverImg,
+                    avatar: doc.profileImg,
+                    cover: doc.coverImg
+                })
+
                 const {
                     stagename,
                     skills,
@@ -89,8 +95,6 @@ export default function Bio({ avatarCoverImg, avatarCoverImgSet, dashboardFormSe
                     location,
                     collaboration,
                 } = i.doc.data().bio
-
-                avatarCoverImgSet({ ...avatarCoverImg, avatar: doc.profileImg, cover: doc.coverImg })
 
                 setValue('stagename', stagename)
                 setValue('skills', skills)
