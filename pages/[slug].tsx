@@ -50,12 +50,9 @@ export default function User({ data }) {
       <Flex
         backgroundImage={`url("${data.coverImg}")`}
         backgroundRepeat={"no-repeat"}
-        // backgroundPosition={'bottom'}
         backgroundSize={"cover"}
         h={["30vh", "60vh", "30vh", "25vh"]}
         w={["100vw", "100vw", "100vw", "lg"]}
-        // w={['sm', 'md', 'lg', 'xl']}
-
         pos="absolute"
         zIndex={-1}
         _after={{
@@ -79,7 +76,7 @@ export default function User({ data }) {
         align="center"
         variant="line"
         colorScheme="green"
-        w={["sm", "md", "lg", "lg"]}
+        w={["xs", "md", "lg", "lg"]}
       >
         <TabList>
           <Tab>LINKS</Tab>
@@ -255,7 +252,7 @@ const ProfileLinks = ({ data }) => {
         <Button
           w={"100%"}
           size="lg"
-          py={8}
+          // py={8}
           color={"gray.400"}
           bg={useColorModeValue("gray.50", "gray.900")}
         >
@@ -276,7 +273,7 @@ const ProfileLinks = ({ data }) => {
 
   return (
     <Flex align="center" alignItems="stretch" direction="column">
-      <VStack spacing={4} align="stretch">
+      <VStack spacing={3} align="stretch">
         {links}
       </VStack>
     </Flex>
