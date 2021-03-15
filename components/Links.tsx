@@ -28,7 +28,7 @@ import {
   Box,
 } from "@chakra-ui/react";
 
-export default function Links({ urls, urlsSet }) {
+export default function Links({ urlsSet }) {
   const [data, dataSet] = useState({ title: "", url: "" });
   const [urlItems, setUrlItems] = useState([]);
 
