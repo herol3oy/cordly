@@ -260,6 +260,7 @@ const BioPreviewPanel = ({ user }) => {
     influences: "",
     education: "",
     collaboration: false,
+    teaching: false,
   });
 
   const query = firestore.collection("users");
@@ -315,6 +316,22 @@ const BioPreviewPanel = ({ user }) => {
             </Text>
           </WrapItem>
         )}
+
+        {bio?.teaching && (
+          <WrapItem>
+            <Text
+              color={"gray.400"}
+              fontWeight={600}
+              fontSize={"sm"}
+              bg={"gray.900"}
+              p={2}
+              alignSelf={"center"}
+              rounded={"md"}
+            >
+              🟣 Teaching
+            </Text>
+          </WrapItem>
+        )}
       </Wrap>
 
       <Wrap justify={"center"}>
@@ -355,7 +372,7 @@ const BioPreviewPanel = ({ user }) => {
                 alignSelf={"flex-start"}
                 rounded={"md"}
               >
-                💅 {i}
+                🎵 {i}
               </Text>
             </WrapItem>
           ))}

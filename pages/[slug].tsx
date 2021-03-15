@@ -67,9 +67,7 @@ export default function User({ data }) {
             "linear-gradient(to top, #1a202c 0%, rgba(255, 255, 255, 0) 100%)",
         }}
       />
-
       <ProfileAvatar data={data} />
-
       <Tabs
         defaultIndex={0}
         isFitted
@@ -99,7 +97,7 @@ export default function User({ data }) {
         textAlign="center"
       >
         CORDLY
-      </Text>
+        </Text>
     </Flex>
   );
 }
@@ -111,6 +109,7 @@ const ProfileBio = ({ data }) => {
   let influences = "";
   let education = "";
   let collaboration = "";
+  let teaching = "";
 
   location = data?.bio?.location;
   skills = data?.bio?.skills;
@@ -118,6 +117,7 @@ const ProfileBio = ({ data }) => {
   influences = data?.bio?.influences;
   education = data?.bio?.education;
   collaboration = data?.bio?.collaboration;
+  teaching = data?.bio?.teaching;
 
   return (
     <Stack>
@@ -144,7 +144,7 @@ const ProfileBio = ({ data }) => {
             alignSelf={"center"}
             rounded={"md"}
           >
-            🎓 {education === "academic" ? "Academic" : "Self-studied"}
+            {education === "academic" ? "🎓 Academic" : "🎸 Self-studied"}
           </Text>
         </WrapItem>
 
@@ -163,16 +163,31 @@ const ProfileBio = ({ data }) => {
             </Text>
           </WrapItem>
         )}
+
+        {teaching && (
+          <WrapItem>
+            <Text
+              color={"gray.400"}
+              fontWeight={600}
+              fontSize={"sm"}
+              bg={useColorModeValue("gray.50", "gray.900")}
+              p={2}
+              alignSelf={"center"}
+              rounded={"md"}
+            >
+              🟣 Teaching
+            </Text>
+          </WrapItem>
+        )}
       </Wrap>
 
       <Wrap justify={"center"}>
         {skills
           ?.split(",")
           .slice(0, 5)
-          .map((i, idx) => (
-            <WrapItem key={idx}>
+          .map((location, i) => (
+            <WrapItem key={i}>
               <Text
-                key={idx}
                 color={"gray.400"}
                 fontWeight={600}
                 fontSize={"sm"}
@@ -181,7 +196,7 @@ const ProfileBio = ({ data }) => {
                 alignSelf={"flex-start"}
                 rounded={"md"}
               >
-                💯 {i}
+                💯 {location}
               </Text>
             </WrapItem>
           ))}
@@ -191,10 +206,10 @@ const ProfileBio = ({ data }) => {
         {styles
           ?.split(",")
           .slice(0, 3)
-          .map((i, idx) => (
-            <WrapItem key={idx}>
+          .map((style, i) => (
+            <WrapItem key={i}>
               <Text
-                key={idx}
+                key={i}
                 color={"gray.400"}
                 fontWeight={600}
                 fontSize={"sm"}
@@ -203,7 +218,7 @@ const ProfileBio = ({ data }) => {
                 alignSelf={"flex-start"}
                 rounded={"md"}
               >
-                💅 {i}
+                🎵 {style}
               </Text>
             </WrapItem>
           ))}
@@ -213,10 +228,10 @@ const ProfileBio = ({ data }) => {
         {influences
           ?.split(",")
           .slice(0, 5)
-          .map((i, idx) => (
-            <WrapItem key={idx}>
+          .map((influence, i) => (
+            <WrapItem key={i}>
               <Text
-                key={idx}
+                key={i}
                 color={"gray.400"}
                 fontWeight={600}
                 fontSize={"sm"}
@@ -225,7 +240,7 @@ const ProfileBio = ({ data }) => {
                 alignSelf={"center"}
                 rounded={"md"}
               >
-                🔥 {i}
+                🔥 {influence}
               </Text>
             </WrapItem>
           ))}
@@ -239,16 +254,16 @@ const ProfileLinks = ({ data }) => {
 
   const { urls } = data;
 
-  const links = urls?.map((i, idx) => {
-    const title = Object.keys(i)[0].toString();
-    const url = Object.values(i)[0].toString();
+  const links = urls?.map((url, i) => {
+    const title = Object.keys(url)[0].toString();
+    const urlAddress = Object.values(url)[0].toString();
 
-    const isYoutube = getYouTubeID(url);
+    const isYoutube = getYouTubeID(urlAddress);
 
-    const clickHandle = (i) => (row === i ? setRow(undefined) : setRow(i));
+    const clickHandle = (url) => (row === url ? setRow(undefined) : setRow(url));
 
     return (
-      <Box key={idx} onClick={() => clickHandle(i)}>
+      <Box key={i} onClick={() => clickHandle(url)}>
         <Button
           w={"100%"}
           size="lg"
@@ -256,14 +271,14 @@ const ProfileLinks = ({ data }) => {
           color={"gray.400"}
           bg={useColorModeValue("gray.50", "gray.900")}
         >
-          <NextLink href={url} passHref>
+          <NextLink href={urlAddress} passHref>
             <Link isExternal>{title}</Link>
           </NextLink>
         </Button>
         {isYoutube && (
           <ReactPlayer
-            url={url}
-            style={{ display: row === i ? "block" : "none" }}
+            url={urlAddress}
+            style={{ display: row === url ? "block" : "none" }}
             width={"100%"}
           />
         )}

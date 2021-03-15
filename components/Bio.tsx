@@ -25,6 +25,11 @@ import {
   Progress,
   Spacer,
   useToast,
+  VStack,
+  Heading,
+  useColorModeValue,
+  Code,
+  HStack
 } from "@chakra-ui/react";
 
 export default function Bio({
@@ -39,8 +44,8 @@ export default function Bio({
     cover: null,
   });
   const [imageFileChosenName, imageFileChosenNameSet] = useState({
-    avatar: "No file choosen",
-    cover: "No file choosen",
+    avatar: "click here",
+    cover: "click here",
   });
   const [googleLoc, googleLocSet] = useState(null);
   const [disabled, disabledSet] = useState(false);
@@ -48,6 +53,7 @@ export default function Bio({
   const [radioEdu, radioEduSet] = useState<number | string>(null);
   const [radioGender, radioGenderSet] = useState<number | string>(null);
   const [colabSwitch, colabSwitchSet] = useState(false);
+  const [teachingSwitch, teachingSwitchSet] = useState(false);
 
   const yearOfBirths = [];
 
@@ -99,6 +105,7 @@ export default function Bio({
           birthdate,
           location,
           collaboration,
+          teaching,
         } = i.doc.data().bio;
 
         setValue("stagename", stagename);
@@ -111,6 +118,7 @@ export default function Bio({
 
         currentLocationSet(location);
         colabSwitchSet(collaboration);
+        colabSwitchSet(teaching);
       });
     });
   }, [user.uid]);
@@ -221,6 +229,19 @@ export default function Bio({
 
   return (
     <Flex flexDirection="column" w={["90vw", "70vw", "sm", "30vw"]}>
+      <VStack my={"6"}>
+        <Heading borderBottom={"1px"} pb={2} fontWeight="500" as="h1">
+          Bio Information
+        </Heading>
+        <Text
+          fontSize={["xl", "2xl"]}
+          color={useColorModeValue("gray.500", "gray.200")}
+          maxW="lg"
+          textAlign="center"
+        >
+          Add your carrier details
+        </Text>
+      </VStack>
       <Stack>
         <InputGroup>
           <InputLeftAddon children="📸 Profile Image" />
@@ -327,7 +348,8 @@ export default function Bio({
             </InputGroup>
 
             <FormHelperText textAlign="left">
-              It doesn't display on your page.
+              It won't be published on your profile page.
+              Only for query through our search engine.
             </FormHelperText>
           </FormControl>
 
@@ -359,8 +381,7 @@ export default function Bio({
               </Box>
             </InputGroup>
             <FormHelperText textAlign="left">
-              Where are you based in. Change when you move to a new city.
-              Current location: {currentLocation}
+              Current location: <Code colorScheme="green">{currentLocation}</Code>
             </FormHelperText>
           </FormControl>
 
@@ -376,13 +397,13 @@ export default function Bio({
               />
             </InputGroup>
             <FormHelperText textAlign="left">
-              Please type your top 5 (max) skills seprating with comma ','
+              Top 5 skills seprating with comma
             </FormHelperText>
           </FormControl>
 
           <FormControl>
             <InputGroup>
-              <InputLeftAddon children="💅 Styles" />
+              <InputLeftAddon children="🎵 Styles" />
               <Input
                 isDisabled={disabled}
                 type="text"
@@ -392,7 +413,7 @@ export default function Bio({
               />
             </InputGroup>
             <FormHelperText textAlign="left">
-              Please type your top 3 (max) styles seprating with comma ','
+              Top 3 styles seprating with comma
             </FormHelperText>
           </FormControl>
 
@@ -408,7 +429,7 @@ export default function Bio({
               />
             </InputGroup>
             <FormHelperText textAlign="left">
-              Please type your top 5 (max) influences seprating with comma ','
+              Top 5 influences seprating with comma
             </FormHelperText>
           </FormControl>
 
@@ -470,17 +491,17 @@ export default function Bio({
                 value={radioEdu}
               >
                 <Stack direction="row">
-                  <Text>🎓 Education:</Text>
+                  <Text>📚 Education:</Text>
                   <Spacer />
                   <Radio
                     isDisabled={disabled}
                     name="self-taught"
                     value="self-taught"
                   >
-                    Self-taught
+                    🎸 Self-taught
                   </Radio>
                   <Radio isDisabled={disabled} name="academic" value="academic">
-                    Academic
+                    🎓 Academic
                   </Radio>
                 </Stack>
               </RadioGroup>
@@ -489,33 +510,61 @@ export default function Bio({
             control={control}
           />
 
-          <FormControl
-            rounded={"xl"}
-            px={4}
-            py={3}
-            direction={"row"}
-            alignItems={"center"}
-            spacing={2}
-            bg="gray.700"
-            color={"green.400"}
-            align={"center"}
-            display="flex"
-          >
-            <FormLabel htmlFor="collaboration" mb="0">
-              🟢 Open to request for collaboration?
-            </FormLabel>
-            <Spacer />
-            <Switch
-              isChecked={colabSwitch}
-              // value={colabSwitch}
-              onChange={() => colabSwitchSet((p) => !p)}
-              isDisabled={disabled}
-              name="collaboration"
-              size={"lg"}
-              colorScheme={"green"}
-              ref={register}
-            />
-          </FormControl>
+          <HStack>
+            <FormControl
+              rounded={"xl"}
+              px={4}
+              py={3}
+              direction={"row"}
+              alignItems={"center"}
+              spacing={2}
+              bg="gray.700"
+              color={"green.400"}
+              align={"center"}
+              display="flex"
+            >
+              <FormLabel htmlFor="collaboration" mb="0">
+                🟢 Collaboration?
+              </FormLabel>
+              <Switch
+                isChecked={colabSwitch}
+                // value={colabSwitch}
+                onChange={() => colabSwitchSet((p) => !p)}
+                isDisabled={disabled}
+                name="collaboration"
+                size={"lg"}
+                colorScheme={"green"}
+                ref={register}
+              />
+            </FormControl>
+
+            <FormControl
+              rounded={"xl"}
+              px={4}
+              py={3}
+              direction={"row"}
+              alignItems={"center"}
+              spacing={2}
+              bg="gray.700"
+              color={"green.400"}
+              align={"center"}
+              display="flex"
+            >
+              <FormLabel htmlFor="teaching" mb="0">
+                🟣 Teaching?
+              </FormLabel>
+              <Switch
+                isChecked={teachingSwitch}
+                // value={teachingSwitch}
+                onChange={() => teachingSwitchSet((p) => !p)}
+                isDisabled={disabled}
+                name="teaching"
+                size={"lg"}
+                colorScheme={"green"}
+                ref={register}
+              />
+            </FormControl>
+          </HStack>
 
           <Button
             isLoading={disabled}
@@ -523,7 +572,7 @@ export default function Bio({
             type="submit"
             colorScheme="green"
           >
-            Submit
+            Update
           </Button>
         </Stack>
       </form>
