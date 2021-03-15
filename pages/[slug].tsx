@@ -5,6 +5,7 @@ import NextLink from "next/link";
 import { GetServerSideProps } from "next";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 import getYouTubeID from "get-youtube-id";
+import EmojiAnimation from "../components/EmojiAnimation";
 import {
   Tab,
   Tabs,
@@ -98,6 +99,7 @@ export default function User({ data }) {
       >
         CORDLY
         </Text>
+      <EmojiAnimation />
     </Flex>
   );
 }
@@ -144,7 +146,7 @@ const ProfileBio = ({ data }) => {
             alignSelf={"center"}
             rounded={"md"}
           >
-            {education === "academic" ? "🎓 Academic" : "🎸 Self-studied"}
+            {education === "academic" ? "🎓 Academic" : "🥁 Self-studied"}
           </Text>
         </WrapItem>
 
