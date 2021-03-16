@@ -5,6 +5,9 @@ import { UserContext } from "../lib/context";
 import { useState, useEffect, useContext } from "react";
 import NextLink from "next/link";
 import QRCode from "qrcode";
+import { Picker } from 'emoji-mart'
+import EmojiAnimation from '../components/EmojiAnimation'
+import { DeleteIcon } from "@chakra-ui/icons";
 import {
   Box,
   Flex,
@@ -23,9 +26,14 @@ import {
   useClipboard,
   Badge,
   Heading,
-  useColorModeValue,
   SimpleGrid,
   Tooltip,
+  PopoverContent,
+  Popover,
+  useDisclosure,
+  PopoverTrigger,
+  IconButton,
+  ButtonGroup,
 } from "@chakra-ui/react";
 
 export default function PhonePreview({
@@ -40,6 +48,7 @@ export default function PhonePreview({
   const [imageUrl, setImageUrl] = useState("");
   const [stageName, stageNameSet] = useState("");
   const [pageVisit, pageVisitSet] = useState(0);
+  const [emoji, emojiSet] = useState('');
 
   const { user } = useContext(UserContext);
 
@@ -49,15 +58,9 @@ export default function PhonePreview({
 
   const query = firestore.collection("users");
 
-  useEffect(() => {
-    query.where("uid", "==", user.uid).onSnapshot((snapshot) => {
-      let changes = snapshot.docChanges();
-      changes.forEach((i) => {
-        stageNameSet(i.doc.data().bio?.stagename);
-        pageVisitSet(i.doc.data()?.pageVisit);
-      });
-    });
-  }, [user.uid]);
+  // useEffect(() => {
+
+  // }, [user.uid, emoji]);
 
   const generateQrCode = async () => {
     try {
@@ -68,18 +71,38 @@ export default function PhonePreview({
     }
   };
 
+  const handleSelectEmoji = (emoji) => {
+
+    emojiSet(emoji);
+
+    query
+      .doc(user.uid)
+      .update({ emoji });
+
+  }
+
+  const deleteEmoji = () => {
+
+    emojiSet('');
+
+    query
+      .doc(user.uid)
+      .update({ emoji: '' });
+  }
+
+
   return (
     <Flex direction="column" w="100%">
       <Flex
         w="100%"
-        direction={["column-reverse", "column"]}
+        direction={["column", "column"]}
         alignItems={"center"}
         justifyContent={"center"}
       >
         <SimpleGrid
           pos="sticky"
           bottom="0"
-          zIndex="99"
+          zIndex="1"
           columns={2}
           alignSelf="stretch"
           color={"green.400"}
@@ -158,9 +181,10 @@ export default function PhonePreview({
           overflow="hidden"
           textAlign="center"
           my={10}
-          pos={"relative"}
+          position={"relative"}
           bg={bgColor}
         >
+
           <Flex
             background={"gray"}
             backgroundImage={`url("${avatarCoverImg.cover}")`}
@@ -231,7 +255,28 @@ export default function PhonePreview({
               </TabPanel>
             </TabPanels>
           </Tabs>
+          <EmojiAnimation emoji={emoji} />
+
+
         </Box>
+        <Popover>
+          <ButtonGroup size="sm" isAttached variant="outline">
+            <Button mr="-px">What's your vibe today?</Button>
+            <PopoverTrigger>
+              <Button>{emoji || '🤔'}</Button>
+            </PopoverTrigger>
+            {emoji && <IconButton onClick={deleteEmoji} aria-label="delete" icon={<DeleteIcon />} />}
+          </ButtonGroup>
+          <PopoverContent>
+
+            <Picker
+              onSelect={(emoji) => handleSelectEmoji(emoji.native)}
+              showPreview={true}
+              theme={'dark'}
+              set='apple'
+            />
+          </PopoverContent>
+        </Popover>
       </Flex>
     </Flex>
   );

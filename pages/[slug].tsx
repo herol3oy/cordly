@@ -33,11 +33,21 @@ import {
 const ReactPlayer = dynamic(() => import("react-player/lazy"));
 
 export default function User({ data }) {
+
+  const query = firestore.collection("users");
+
   useEffect(() => {
-    firestore
-      .collection("users")
+    query
       .doc(data.uid)
       .update({ pageVisit: increment(1) });
+
+    // query.where("uid", "==", user.uid).onSnapshot((snapshot) => {
+    //   let changes = snapshot.docChanges();
+    //   changes.forEach((i) => {
+    //     urlsSet(i.doc.data().urls);
+    //     setUrlItems(i.doc.data().urls);
+    //   });
+    // });
   }, []);
 
   return (
@@ -55,7 +65,7 @@ export default function User({ data }) {
         h={["30vh", "60vh", "30vh", "25vh"]}
         w={["100vw", "100vw", "100vw", "lg"]}
         pos="absolute"
-        zIndex={-1}
+        zIndex={-5}
         _after={{
           display: "inline-block",
           content: '""',
@@ -99,7 +109,7 @@ export default function User({ data }) {
       >
         CORDLY
         </Text>
-      <EmojiAnimation />
+      <EmojiAnimation emoji={data.emoji} />
     </Flex>
   );
 }

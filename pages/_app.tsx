@@ -7,7 +7,7 @@ import { AuthProvider } from "../utils/auth";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import { useRouter } from "next/router";
-// import './emojiAnimation.css'
+import 'emoji-mart/css/emoji-mart.css'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const userData = useUserData();
