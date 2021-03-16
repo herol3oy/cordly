@@ -58,9 +58,15 @@ export default function PhonePreview({
 
   const query = firestore.collection("users");
 
-  // useEffect(() => {
-
-  // }, [user.uid, emoji]);
+  useEffect(() => {
+    query.where("uid", "==", user.uid).onSnapshot((snapshot) => {
+      let changes = snapshot.docChanges();
+      changes.forEach((i) => {
+        stageNameSet(i.doc.data().bio?.stagename);
+        pageVisitSet(i.doc.data()?.pageVisit);
+      });
+    });
+  }, [user.uid]);
 
   const generateQrCode = async () => {
     try {
@@ -94,17 +100,17 @@ export default function PhonePreview({
   return (
     <Flex direction="column" w="100%">
       <Flex
-        w="100%"
-        direction={["column", "column"]}
+        // w="100%"
+        direction={["column-reverse", "column"]}
         alignItems={"center"}
         justifyContent={"center"}
       >
-        <SimpleGrid
+        <Flex
           pos="sticky"
           bottom="0"
-          zIndex="1"
+          zIndex="99"
           columns={2}
-          alignSelf="stretch"
+          // alignSelf="stretch"
           color={"green.400"}
         >
           <Flex
@@ -115,6 +121,7 @@ export default function PhonePreview({
             bg="green.100"
             alignItems="center"
             justifyContent="space-between"
+          // minW='100%'
           >
             <Link
               mr={2}
@@ -155,21 +162,24 @@ export default function PhonePreview({
               QR
             </Button>
           </Flex>
-          <Tooltip hasArrow label="Page Visits" bg="gray.300" color="black">
-            <Flex
-              justify="center"
-              alignItems="center"
-              bg="green.200"
-              w="100%"
-              color="green.900"
-            >
-              <FaEye size="30px" />
-              <Text fontSize={["md", "x-large"]} fontWeight="bold" ml={2}>
-                {pageVisit}
-              </Text>
-            </Flex>
-          </Tooltip>
-        </SimpleGrid>
+          {/* <Tooltip hasArrow label="Page Visits" bg="gray.300" color="black"> */}
+          <Flex
+            // justify="center"
+            alignItems="center"
+            // alignContent='flex-end'
+            bg="green.200"
+            w="100%"
+            alignContent='stretch'
+
+            color="green.900"
+          >
+            <FaEye size="30px" />
+            <Text fontSize={["md", "x-large"]} fontWeight="bold" ml={2}>
+              {pageVisit}
+            </Text>
+          </Flex>
+          {/* </Tooltip> */}
+        </Flex>
 
         <Box
           borderColor={"gray.300"}
@@ -181,7 +191,7 @@ export default function PhonePreview({
           overflow="hidden"
           textAlign="center"
           my={10}
-          position={"relative"}
+          pos={"relative"}
           bg={bgColor}
         >
 

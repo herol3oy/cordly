@@ -1,5 +1,5 @@
 import { Box, Text } from "@chakra-ui/react";
-export default function EmojiAnimation({ emoji }) {
+export default function EmojiAnimation({ emoji, slug }) {
   return (
     <Box as={'article'}>
       <Text as={'h5'} fontSize='xl'>{emoji}</Text>
@@ -15,7 +15,7 @@ export default function EmojiAnimation({ emoji }) {
                 width: 100%;
                 height: 100%;
                 overflow: hidden;
-                // z-index: -1;
+                z-index: ${slug ? -1 : 1};
               }
               
               article h5 {

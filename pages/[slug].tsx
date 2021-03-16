@@ -109,7 +109,7 @@ export default function User({ data }) {
       >
         CORDLY
         </Text>
-      <EmojiAnimation emoji={data.emoji} />
+      <EmojiAnimation slug emoji={data.emoji} />
     </Flex>
   );
 }
