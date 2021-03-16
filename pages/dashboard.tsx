@@ -101,7 +101,7 @@ const DashboardPanel = () => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <Links urls={urls} urlsSet={urlsSet} />
+              <Links urlsSet={urlsSet} />
             </TabPanel>
 
             <TabPanel>
