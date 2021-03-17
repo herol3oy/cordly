@@ -52,13 +52,16 @@ const DashboardPanel = () => {
       <Flex
         height="100vh"
         justifyContent="space-between"
-        // columns={[1, 1, 3, 3]}
-        // spacing={5}
-        // display='flex'
-        // pos='relative'
-        flexDir={["column", "column", "column", "row"]}
+        w='100%'
+        flexDirection={['column', 'column', 'row', 'row']}
+        columns={[1, 1, 3, 3]}
+      // spacing={5}
+      // display='flex'
+      // pos='relative'
+      // alignItems='stretch'
+
+      // flexDir={["column", "column", "column", "row"]}
       >
-        {/* <Text>salam</Text> */}
         {/* <Navigation /> */}
 
         <Tabs

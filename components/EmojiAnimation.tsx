@@ -1,12 +1,12 @@
 import { Box, Text } from "@chakra-ui/react";
+
 export default function EmojiAnimation({ emoji, slug }) {
+
   return (
     <Box as={'article'}>
-      <Text as={'h5'} fontSize='xl'>{emoji}</Text>
-      <Text as={'h5'} fontSize='2xl'>{emoji}</Text>
-      <Text as={'h5'} fontSize='3xl'>{emoji}</Text>
-      <Text as={'h5'} fontSize='4xl'>{emoji}</Text>
-      <Text as={'h5'} fontSize='6xl'>{emoji}</Text>
+      {Array.from(Array(5).keys()).map((i) =>
+        <Text key={i} as={'h5'} fontSize={`${i + 2}xl`}>{emoji}</Text>)}
+
       <style global jsx>{`
             article {
                 position: absolute;

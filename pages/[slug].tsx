@@ -62,7 +62,7 @@ export default function User({ data }) {
         backgroundImage={`url("${data.coverImg}")`}
         backgroundRepeat={"no-repeat"}
         backgroundSize={"cover"}
-        h={["30vh", "60vh", "30vh", "25vh"]}
+        h={["30vh", "60vh", "60vh", "25vh"]}
         w={["100vw", "100vw", "100vw", "lg"]}
         pos="absolute"
         zIndex={-5}
@@ -109,7 +109,7 @@ export default function User({ data }) {
       >
         CORDLY
         </Text>
-      <EmojiAnimation slug emoji={data.emoji} />
+      <EmojiAnimation slug={true} emoji={data.emoji} />
     </Flex>
   );
 }
