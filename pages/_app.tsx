@@ -19,7 +19,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <UserContext.Provider value={userData}>
       <ChakraProvider resetCSS theme={theme}>
-        <Flex flexDirection={dashboard ? ['column', 'column', 'row', 'row'] : 'column'}>
+        <Flex flexDirection={dashboard ? ['column', 'row'] : 'column'}>
           {!isUserSlug && <Navigation dashboard={dashboard} />}
           <Component {...pageProps} />
           {homepage && !dashboard && !isUserSlug && <Footer />}

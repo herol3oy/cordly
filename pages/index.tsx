@@ -1,7 +1,8 @@
 import { firestore, auth } from "../lib/firebase";
 import Musician from "../components/Musician";
+import PhonePreview from '../components/PhonePreview'
 import {
-  Text,
+  Heading,
   Flex,
   Container,
   IconProps,
@@ -9,76 +10,49 @@ import {
   Box,
   useBreakpointValue,
   SimpleGrid,
+  Text,
+  Image,
 } from "@chakra-ui/react";
 
 export default function Home({ musicians }) {
   return (
-    <>
-      <Container maxW="container.xl">
-        <SimpleGrid columns={2}>
-          <Flex
-            justify={"center"}
-            flexDirection={"column"}
-            alignItems={"center"}
+    <Container h='100vh' bg='gray.900' maxW="container.xl">
+      <SimpleGrid columns={2}>
+        <Flex
+          // justify={"center"}
+          flexDirection={"column"}
+        // alignItems={"center"}
+        >
+          <Heading
+            mt={12}
+            mb={4}
+            textAlign={"left"}
+            as="h2"
+            size="2xl"
+          // fontSize={["2xl", "2xl", "4xl", "4xl"]}
           >
-            <Text
-              mt={12}
-              mb={4}
-              textStyle={"intro"}
-              textAlign={"left"}
-              fontSize={["2xl", "2xl", "4xl", "4xl"]}
-            >
-              Musician Community Minimalized
-            </Text>
-            <Text
-              mt={6}
-              textStyle={"textsub"}
-              textAlign={"left"}
-              m={"auto"}
-              fontSize="2xl"
-              maxW={"container.md"}
-            >
-              We are taking a short break while we move physical locations and
-              get ready to launch the next
-            </Text>
-          </Flex>
-          <Text>Rightside</Text>
-        </SimpleGrid>
+            Musician Community Minimalized
+            </Heading>
+          <Heading
+            // mt={6}
+            // textStyle={"textsub"}
+            textAlign={"left"}
+            // m={"auto"}
+            fontSize='larger  '
+            maxW={"container.md"}
+            fontWeight='thin'
+          >
+            We are taking a short break while we move physical locations and
+            get ready to launch the next
+            </Heading>
+        </Flex>
+        <Image h='70%' src={'/preview.png'} />
+      </SimpleGrid>
 
-        <Musician data={musicians} />
-      </Container>
-
-      <Blur
-        position={"absolute"}
-        top={-10}
-        left={-10}
-        style={{ filter: "blur(70px)" }}
-      />
-    </>
+      <Musician data={musicians} />
+    </Container>
   );
 }
-
-export const Blur = (props: IconProps) => {
-  return (
-    <Icon
-      width={useBreakpointValue({ base: "100%", md: "40vw", lg: "30vw" })}
-      zIndex={useBreakpointValue({ base: -22, md: -1, lg: -2 })}
-      height="560px"
-      viewBox="0 0 528 560"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <circle cx="71" cy="61" r="111" fill="#F56565" />
-      <circle cx="244" cy="106" r="139" fill="#ED64A6" />
-      <circle cy="291" r="139" fill="#ED64A6" />
-      <circle cx="80.5" cy="189.5" r="101.5" fill="#ED8936" />
-      <circle cx="196.5" cy="317.5" r="101.5" fill="#ECC94B" />
-      <circle cx="70.5" cy="458.5" r="101.5" fill="#48BB78" />
-      <circle cx="426.5" cy="-0.5" r="101.5" fill="#4299E1" />
-    </Icon>
-  );
-};
 
 export async function getServerSideProps() {
   const query = firestore.collection("users");

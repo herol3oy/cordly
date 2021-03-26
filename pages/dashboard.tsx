@@ -55,18 +55,17 @@ const DashboardPanel = () => {
         w='100%'
         flexDirection={['column', 'column', 'row', 'row']}
         columns={[1, 1, 3, 3]}
-      // spacing={5}
-      // display='flex'
-      // pos='relative'
-      // alignItems='stretch'
+        // spacing={5}
+        // display='flex'
+        // pos='relative'
+        // alignItems='stretch'
+        minW={["xs", "sm", "md", "xl"]}
 
       // flexDir={["column", "column", "column", "row"]}
       >
-        {/* <Navigation /> */}
-
         <Tabs
           alignSelf="stretch"
-          minW={["xs", "sm", "md", "6xl"]}
+          minW={["xs", "sm", "md", "4xl"]}
           overflow="scroll"
           overflowX="hidden"
           minH="100vh"

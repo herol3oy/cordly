@@ -40,7 +40,6 @@ export default function PhonePreview({
   urls,
   userNameValue,
   avatarCoverImg,
-  dashboardForm,
   tabIndex,
   tabIndexSet,
   bgColor,
@@ -64,9 +63,10 @@ export default function PhonePreview({
       changes.forEach((i) => {
         stageNameSet(i.doc.data().bio?.stagename);
         pageVisitSet(i.doc.data()?.pageVisit);
+        emojiSet(i.doc.data()?.emoji)
       });
     });
-  }, [user.uid]);
+  }, [user.uid, emoji]);
 
   const generateQrCode = async () => {
     try {

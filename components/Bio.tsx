@@ -32,6 +32,15 @@ import {
   HStack
 } from "@chakra-ui/react";
 
+
+const yearOfBirths = [];
+
+const currentYear = new Date().getFullYear();
+
+for (let i = currentYear; i >= 1950; i--) {
+  yearOfBirths.push(i);
+}
+
 export default function Bio({
   avatarCoverImg,
   avatarCoverImgSet,
@@ -54,14 +63,6 @@ export default function Bio({
   const [radioGender, radioGenderSet] = useState<number | string>(null);
   const [colabSwitch, colabSwitchSet] = useState(false);
   const [teachingSwitch, teachingSwitchSet] = useState(false);
-
-  const yearOfBirths = [];
-
-  const currentYear = new Date().getFullYear();
-
-  for (let i = currentYear; i >= 1950; i--) {
-    yearOfBirths.push(i);
-  }
 
   const { register, handleSubmit, errors, control, setValue } = useForm({
     defaultValues: {
@@ -339,6 +340,7 @@ export default function Bio({
                 placeholder="Year of Birth"
                 ref={register({ required: true })}
               >
+
                 {yearOfBirths.map((i, idx) => (
                   <option key={idx} value={i}>
                     {i}
