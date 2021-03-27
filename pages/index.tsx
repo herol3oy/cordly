@@ -1,52 +1,62 @@
-import { firestore, auth } from "../lib/firebase";
+import { firestore } from "../lib/firebase";
 import Musician from "../components/Musician";
-import PhonePreview from '../components/PhonePreview'
+import SvgListeningMusic from "../components/SvgListeningMusic";
+import FaqAccordion from '../components/FaqAccordion'
 import {
   Heading,
   Flex,
   Container,
-  IconProps,
-  Icon,
-  Box,
-  useBreakpointValue,
   SimpleGrid,
   Text,
   Image,
+  Button,
 } from "@chakra-ui/react";
 
 export default function Home({ musicians }) {
   return (
-    <Container h='100vh' bg='gray.900' maxW="container.xl">
-      <SimpleGrid columns={2}>
+    <Container
+      h='100vh'
+      maxW="container.xl"
+    >
+      <SimpleGrid columns={[1, 2]} h='100%'>
         <Flex
-          // justify={"center"}
           flexDirection={"column"}
-        // alignItems={"center"}
+          alignItems={"start"}
+          justify='center'
         >
           <Heading
-            mt={12}
             mb={4}
             textAlign={"left"}
             as="h2"
-            size="2xl"
-          // fontSize={["2xl", "2xl", "4xl", "4xl"]}
+            size="4xl"
           >
-            Musician Community Minimalized
+            Cordly is all in one home for musicians
             </Heading>
+
           <Heading
-            // mt={6}
-            // textStyle={"textsub"}
             textAlign={"left"}
-            // m={"auto"}
             fontSize='larger  '
             maxW={"container.md"}
             fontWeight='thin'
           >
-            We are taking a short break while we move physical locations and
-            get ready to launch the next
+            Let your fans know all about you in one single page, where talent agencies can trust to look you up.
             </Heading>
+          <Button mt='8' size='lg' variant='solid' colorScheme='green'>Sign In</Button>
         </Flex>
-        <Image h='70%' src={'/preview.png'} />
+
+        <Flex justify='center' flexDir='column' alignItems='center' justifyContent='center'>
+          <Image w='50%' src={'/preview.png'} />
+          <Flex alignItems='center' mt={4} borderRadius={50} backgroundColor='gray.700' px={8} py={4}>
+            <Text textColor='gray.100' fontWeight="bold" fontSize={'x-large'}>
+              cord.ly/herol3oy
+              </Text>
+          </Flex>
+        </Flex>
+      </SimpleGrid>
+
+      <SimpleGrid columns={[1, 2]} alignItems='center'>
+        <SvgListeningMusic />
+        <FaqAccordion />
       </SimpleGrid>
 
       <Musician data={musicians} />

@@ -22,7 +22,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <Flex flexDirection={dashboard ? ['column', 'row'] : 'column'}>
           {!isUserSlug && <Navigation dashboard={dashboard} />}
           <Component {...pageProps} />
-          {homepage && !dashboard && !isUserSlug && <Footer />}
+          {/* {homepage && !dashboard && !isUserSlug && <Footer />} */}
         </Flex>
       </ChakraProvider>
     </UserContext.Provider>
