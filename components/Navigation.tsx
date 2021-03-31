@@ -67,7 +67,7 @@ export default function Navigation({ dashboard }) {
 
     toast({
       title: "See ya!.",
-      description: "Good news for you!",
+      description: "",
       status: "error",
       duration: 2000,
       isClosable: false,

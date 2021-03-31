@@ -135,7 +135,7 @@ const DashboardPanel = () => {
           urls={urls}
           userNameValue={userNameValue}
           avatarCoverImg={avatarCoverImg}
-          dashboardForm={dashboardForm}
+          // dashboardForm={dashboardForm}
           bgColor={bgColor}
         />
       </Flex>

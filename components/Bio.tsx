@@ -89,25 +89,22 @@ export default function Bio({
       let changes = snapshot.docChanges();
       changes.forEach((i) => {
         const doc = i.doc.data();
-
         avatarCoverImgSet({
           ...avatarCoverImg,
           avatar: doc.profileImg,
           cover: doc.coverImg,
         });
 
-        const {
-          stagename,
-          skills,
-          influences,
-          education,
-          styles,
-          gender,
-          birthdate,
-          location,
-          collaboration,
-          teaching,
-        } = i.doc.data().bio;
+        const skills = doc?.bio?.skills
+        const stagename = doc?.bio?.stagename
+        const influences = doc?.bio?.influences
+        const education = doc?.bio?.education
+        const styles = doc?.bio?.styles
+        const gender = doc?.bio?.gender
+        const birthdate = doc?.bio?.birthdate
+        const location = doc?.bio?.location
+        const collaboration = doc?.bio?.collaboration
+        const teaching = doc?.bio?.teaching
 
         setValue("stagename", stagename);
         setValue("skills", skills);
