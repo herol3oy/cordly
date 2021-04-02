@@ -2,6 +2,8 @@ import { firestore } from "../lib/firebase";
 import Musician from "../components/Musician";
 import SvgListeningMusic from "../components/SvgListeningMusic";
 import FaqAccordion from '../components/FaqAccordion'
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 import {
   Heading,
   Flex,
@@ -10,7 +12,29 @@ import {
   Text,
   Image,
   Button,
+  Avatar,
 } from "@chakra-ui/react";
+import { Head } from "next/document";
+
+const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 1
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1
+  }
+};
 
 export default function Home({ musicians }) {
   return (
@@ -58,6 +82,51 @@ export default function Home({ musicians }) {
         <SvgListeningMusic />
         <FaqAccordion />
       </SimpleGrid>
+
+      <Flex
+        flexDir='column'
+        m={10}
+        alignContent='center'
+        justify='center'
+      >
+        <Heading textAlign='center'>
+          Pro Community
+        </Heading>
+        <Text textAlign='center' maxW={'md'} m='auto'>
+          From fatntastic composer to a extrodinary piano player.
+          The vraiety of profiles are vast.
+      </Text>
+      </Flex>
+      <Carousel
+        ssr={false}
+        infinite={true}
+        centerMode={true}
+        responsive={responsive}>
+        {
+          Array.from(Array(10).keys()).map((item) => (
+            <Flex
+              rounded='lg'
+              alignItems='flex-end'
+              w='xs'
+              minH='150px'
+              p={'4'}
+              backgroundRepeat={"no-repeat"}
+              backgroundSize={"cover"}
+              backgroundImage={`url('https://is.gd/oRxkiI')`}>
+              <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />
+              <Flex flexDirection='column'>
+                <Text fontWeight='black'>Jack Johnson</Text>
+                <Text>@jack</Text>
+              </Flex>
+            </Flex>
+          ))
+
+        }
+
+      </Carousel>
+
+
+
 
       <Musician data={musicians} />
     </Container>
