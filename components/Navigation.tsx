@@ -104,14 +104,14 @@ export default function Navigation({ dashboard }) {
       px={{ base: "3", md: "6", lg: "3" }}
       py={3}
       color={"white"}
-      bg={"gray.700"}
+      // bg={"gray.700"}
       shadow="0 0 10px 0 rgba(0,0,0, 0.035);"
       alignItems="center"
       borderBottomColor={["red", "green"]}
     >
       <NextLink href={"/"} passHref>
         <Link>
-          <Heading fontSize="x-large" textStyle={"logo"}>
+          <Heading color="gray.600" fontSize="x-large" textStyle={"logo"}>
             {dashboard ? "C" : "Cordly"}
           </Heading>
         </Link>

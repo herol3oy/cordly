@@ -42,7 +42,7 @@ const SocialButton = ({
   );
 };
 
-export default function SmallWithSocial() {
+export default function Footer() {
   return (
     <Box
       mt={48}
@@ -58,7 +58,7 @@ export default function SmallWithSocial() {
         justify={{ base: "center", md: "space-between" }}
         align={{ base: "center", md: "center" }}
       >
-        <Text>© {new Date().getFullYear()} Cordly — Musician community</Text>
+        <Text>© {new Date().getFullYear()} Cordly</Text>
         <Stack direction={"row"} spacing={6}>
           <SocialButton label={"Twitter"} href={"#"}>
             <FaTwitter />

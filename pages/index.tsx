@@ -3,6 +3,9 @@ import { firestore } from "../lib/firebase";
 import Musician from "../components/Musician";
 import SvgListeningMusic from "../components/SvgListeningMusic";
 import SvgYoga from "../components/SvgYoga";
+import SvgHeart from "../components/SvgHeart";
+import SvgShape1 from "../components/SvgShape1";
+import Footer from "../components/Footer";
 import FaqAccordion from "../components/FaqAccordion";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -31,6 +34,9 @@ import {
 const urls = [
   { Youtube: "https://youtube.com" },
   { Website: "https://google.com" },
+  { Spotify: "https://spotify.com" },
+  { dizzer: "https://dizzer.com" },
+  { Instagram: "https://instagram.com" },
 ];
 
 const responsive = {
@@ -64,8 +70,10 @@ export default function Home({ musicians }) {
           flexDirection={"column"}
           alignItems={["center", "start"]}
           justify="center"
-          my={10}
+        // my={10}
         >
+          <SvgShape1 style={{ position: 'absolute', zIndex: -1 }} />
+          <SvgHeart width='200px' style={{ marginBottom: '25rem', marginLeft: '-2rem', position: 'absolute', zIndex: -1 }} />
           <Heading mb={4} textAlign={["center", "left"]} as="h2" size="3xl">
             All in one home for musicians
           </Heading>
@@ -87,27 +95,26 @@ export default function Home({ musicians }) {
           justify="center"
           flexDir="column"
           alignItems="center"
-          justifyContent="center"
-          as={"section"}
         >
-          {/* <Image w="50%" src={"/preview.png"} /> */}
           <Box
             borderColor={"gray.300"}
-            width={["90vw", "sm"]}
-            borderWidth={[12, 20]}
+            width={["90vw", 'sm']}
+            borderWidth={[12, 15]}
             borderRadius={65}
             maxH={["600px", "580px", "580px", "700px "]}
             minH={"700px"}
             overflow="hidden"
             textAlign="center"
-            my={10}
+            // my={10}
             pos={"relative"}
+            transform={'scale(0.8)'}
           >
             <Flex
               background={"gray"}
-              backgroundImage={`url("https://is.gd/oRxkiI")`}
+              backgroundImage={`url("https://is.gd/y55ADb")`}
               backgroundRepeat={"no-repeat"}
               backgroundSize={"cover"}
+              backgroundPosition={'center'}
               height={"150px"}
               w={"sm"}
               pos="absolute"
@@ -119,7 +126,7 @@ export default function Home({ musicians }) {
                 top: 0,
                 width: "100%",
                 height: "100%",
-                background: `linear-gradient(to top, #1a202c 0%, rgba(255, 255, 255, 0) 100%)`,
+                background: `linear-gradient(to top, #fff 0%, rgba(255, 255, 255, 0) 100%)`,
               }}
             />
 
@@ -128,15 +135,15 @@ export default function Home({ musicians }) {
               mt={28}
               size="lg"
               name="profile picture"
-              src={"https://is.gd/oRxkiI"}
+              src={"https://is.gd/ELrhDq"}
             />
             <Heading as={"h3"} size={"md"} mt={2}>
-              Jack
+              Morrie
             </Heading>
 
             <Flex mt={2} mb={5} justifyContent="center" alignItems="center">
               <Text fontWeight={"light"} textAlign="center">
-                @jack
+                @morriemusician
               </Text>
 
               <Badge variant="solid" colorScheme="green" ml={2}>
@@ -310,17 +317,32 @@ export default function Home({ musicians }) {
               </TabPanels>
             </Tabs>
           </Box>
+
           <Flex
-            alignItems="center"
-            mt={4}
+            alignItems='center'
+            justifyContent='center'
             borderRadius={50}
             backgroundColor="gray.700"
             px={8}
             py={4}
           >
-            <Text textColor="gray.100" fontWeight="bold" fontSize={"x-large"}>
-              cord.ly/herol3oy
-            </Text>
+            <Text
+              d={'flex'}
+              alignItems='center'
+              justifyContent='center'
+              bg='green.400'
+              w={10}
+              h={10}
+              borderRadius={64}
+              p={2}
+              fontWeight={'bold'}
+            >C</Text>
+            <Flex>
+              <Text ml={2} textColor="green.300" fontWeight='light' fontSize={"xx-large"}>
+                cord.ly/
+              </Text>
+              <Text textColor="white" fontWeight="light" fontSize={"xx-large"}>herol3oy</Text>
+            </Flex>
           </Flex>
         </Flex>
       </SimpleGrid>
@@ -331,7 +353,7 @@ export default function Home({ musicians }) {
         alignItems="center"
         my={[12, 32]}
       >
-        <SvgListeningMusic />
+        <SvgListeningMusic width={'500px'} />
         <FaqAccordion />
       </Flex>
 
@@ -351,29 +373,32 @@ export default function Home({ musicians }) {
           responsive={responsive}
         >
           {Array.from(Array(10).keys()).map((item) => (
-            <Flex
-              rounded="lg"
-              alignItems="flex-end"
-              w="xs"
-              minH="150px"
-              p={"4"}
-              backgroundRepeat={"no-repeat"}
-              backgroundSize={"cover"}
-              backgroundImage={`url('https://is.gd/oRxkiI')`}
-            >
-              <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />
+            <>
+              <Flex
+                rounded="lg"
+                alignItems="flex-end"
+                w="xs"
+                minH="150px"
+                p={"4"}
+                backgroundRepeat={"no-repeat"}
+                backgroundSize={"cover"}
+                backgroundImage={`url('https://is.gd/oRxkiI')`}
+              >
+                <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />
+
+              </Flex>
               <Flex flexDirection="column">
                 <Text fontWeight="black">Jack Johnson</Text>
                 <Text>@jack</Text>
               </Flex>
-            </Flex>
+            </>
           ))}
         </Carousel>
       </SimpleGrid>
 
-      <Flex></Flex>
+      <Footer />
 
-      <Musician data={musicians} />
+      {/* <Musician data={musicians} /> */}
     </Container>
   );
 }

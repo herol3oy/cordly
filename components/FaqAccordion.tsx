@@ -20,7 +20,7 @@ export default function FaqAccordion() {
           <h2>
             <AccordionButton>
               <Box flex="1" textAlign="left">
-                <Text fontSize="x-large">Is Cordly free?</Text>
+                <Text fontSize='large'>Is Cordly free?</Text>
               </Box>
               <AccordionIcon />
             </AccordionButton>
@@ -31,7 +31,7 @@ export default function FaqAccordion() {
           <h2>
             <AccordionButton>
               <Box flex="1" textAlign="left">
-                <Text fontSize="x-large">
+                <Text fontSize='large'>
                   I am an amateur musician. Can I be on Cordly?
                 </Text>
               </Box>
@@ -47,7 +47,7 @@ export default function FaqAccordion() {
           <h2>
             <AccordionButton>
               <Box flex="1" textAlign="left">
-                <Text fontSize="x-large">How do I get a PRO badge?</Text>
+                <Text fontSize='large'>How do I get a PRO badge?</Text>
               </Box>
               <AccordionIcon />
             </AccordionButton>
@@ -61,7 +61,7 @@ export default function FaqAccordion() {
           <h2>
             <AccordionButton>
               <Box flex="1" textAlign="left">
-                <Text fontSize="x-large">
+                <Text fontSize='large'>
                   Why should I be on Cordly instead of other link database
                   services?
                 </Text>
