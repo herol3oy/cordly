@@ -20,19 +20,24 @@ const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
     breakpoint: { max: 4000, min: 3000 },
-    items: 5
+    items: 5,
+    paritialVisibilityGutter: 60
   },
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 3
+    items: 3,
+    paritialVisibilityGutter: 60
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
-    items: 1
+    items: 1,
+    paritialVisibilityGutter: 50
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
-    items: 1
+    items: 1,
+    paritialVisibilityGutter: 10
+
   }
 };
 
@@ -85,28 +90,29 @@ export default function Home({ musicians }) {
         <FaqAccordion />
       </SimpleGrid>
 
-<SimpleGrid
-columns={[1, 2]} 
->
-
-<Flex
-        flexDir='column'
-        m={10}
-        alignContent='center'
-        justify='center'
+      <SimpleGrid
+        columns={[1]} 
       >
-        <Heading textAlign='center'>
-          Pro Community
-        </Heading>
-        <Text textAlign='center' maxW={'md'} m='auto'>
-          From fatntastic composer to a extrodinary piano player.
-          The vraiety of profiles are vast.
-      </Text>
-      </Flex>
+        <Flex
+          flexDir='column'
+          m={10}
+          alignContent='center'
+          justify='center'
+        >
+          <Heading textAlign='center'>
+            Pro Community
+          </Heading>
+          <Text textAlign='center' maxW={'md'} m='auto'>
+            From fatntastic composer to a extrodinary piano player.
+            The vraiety of profiles are vast.
+        </Text>
+        </Flex>
+        
       <Carousel
         ssr={false}
         infinite={true}
-        centerMode={true}
+        // centerMode={true}
+        partialVisbile
         responsive={responsive}>
         {
           Array.from(Array(10).keys()).map((item) => (
