@@ -16,6 +16,8 @@ import {
     Link,
     Wrap,
     WrapItem,
+    Tag,
+    TagLabel,
 } from "@chakra-ui/react";
 
 const urls = [
@@ -253,7 +255,7 @@ export default function PhonePrevHome() {
             <Flex
                 alignItems='center'
                 borderRadius={50}
-                bg="gray.700"
+                bg="green.100"
                 px={8}
                 py={4}
                 transform={'scale(0.7)'}
@@ -275,7 +277,7 @@ export default function PhonePrevHome() {
                     <Text ml={2} textColor="green.300" fontWeight='light' fontSize={"xx-large"}>
                         cord.ly/
               </Text>
-                    <Text textColor="white" fontWeight="light" fontSize={"xx-large"}>demah</Text>
+                    <Text textColor="green.800" fontWeight="light" fontSize={"xx-large"}>demah</Text>
                 </Flex>
             </Flex>
         </>

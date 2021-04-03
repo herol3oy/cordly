@@ -25,22 +25,22 @@ const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
     items: 5,
-    paritialVisibilityGutter: 60,
+    paritialVisibilityGutter: 20,
   },
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 3,
-    paritialVisibilityGutter: 60,
+    items: 2,
+    paritialVisibilityGutter: 30,
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
-    items: 2,
-    paritialVisibilityGutter: 15,
+    items: 1,
+    paritialVisibilityGutter: 35,
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
     items: 1,
-    paritialVisibilityGutter: 10,
+    paritialVisibilityGutter: 50,
   },
 };
 
@@ -74,7 +74,16 @@ export default function Home({ musicians }) {
         // my={10}
         >
           <SvgShape1 style={{ position: 'absolute', zIndex: -1 }} />
-          <SvgHeart width='200px' style={{ marginBottom: '25rem', marginLeft: '-2rem', position: 'absolute', zIndex: -1 }} />
+          <Flex
+            visibility={['hidden', 'visible']}
+            position='absolute'
+            mb={96}
+            ml={-10}
+            zIndex={-1}
+            w={48}
+          >
+            <SvgHeart />
+          </Flex>
           <Heading mb={4} textAlign={["center", "left"]} as="h2" size="3xl">
             All in one home for musicians
           </Heading>
@@ -118,18 +127,20 @@ export default function Home({ musicians }) {
 
       <Flex
         flexDirection={["column-reverse", "row"]}
-        justifyContent="center"
+        justifyContent='space-between'
         alignItems="center"
         my={[12, 32]}
       >
-        <SvgListeningMusic style={{ width: '50%' }} />
+        <Flex w={[72, 'xl']}>
+          <SvgListeningMusic />
+        </Flex>
         <FaqAccordion />
       </Flex>
 
-      <SimpleGrid columns={[1]}>
-        <Flex flexDir="column" my={10} alignContent="center" justify="center">
-          <Heading textAlign="center">Pro Community</Heading>
-          <Text textAlign="center" maxW={"md"} m="auto">
+      <SimpleGrid columns={[1, 2]}>
+        <Flex flexDir="column" my={10}  >
+          <Heading >Pro Community</Heading>
+          <Text maxW={"md"}>
             From fatntastic composer to a extrodinary piano player. The vraiety
             of profiles are vast.
           </Text>
@@ -150,7 +161,7 @@ export default function Home({ musicians }) {
               <Flex
                 rounded="lg"
                 alignItems="flex-end"
-                w="xs"
+                maxW="250px"
                 minH="150px"
                 p={"4"}
                 backgroundRepeat={"no-repeat"}
@@ -164,17 +175,17 @@ export default function Home({ musicians }) {
                 flexDir="row"
                 justifyContent='space-between'
                 mt={2}
-                w="xs"
+                maxW="250px"
               >
                 <Flex flexDir='column'>
                   <Tag size="lg" colorScheme="green" borderRadius="full">
-                    <Avatar ml={-1} mr={2} size="xs" name="Ryan Florence" src="https://bit.ly/ryan-florence" />
+                    <Avatar mr={1} size="xs" name="Ryan Florence" src="https://bit.ly/ryan-florence" />
                     <TagLabel>@jack</TagLabel>
                   </Tag>
 
-                  <Text fontWeight='bold' mt={6}>Pianist</Text>
+                  <Text fontWeight='bold' mt={6}>Pianist 🎹</Text>
                 </Flex>
-                <Text fontWeight="black">Jack Johnson</Text>
+                <Text >Jack Johnson</Text>
 
               </Flex>
             </>
