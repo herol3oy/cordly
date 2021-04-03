@@ -7,7 +7,7 @@ import { AuthProvider } from "../utils/auth";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import { useRouter } from "next/router";
-import 'emoji-mart/css/emoji-mart.css'
+import "emoji-mart/css/emoji-mart.css";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const userData = useUserData();
@@ -19,7 +19,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <UserContext.Provider value={userData}>
       <ChakraProvider resetCSS theme={theme}>
-        <Flex flexDirection={dashboard ? ['column', 'row'] : 'column'}>
+        <Flex flexDirection={dashboard ? ["column", "row"] : "column"}>
           {!isUserSlug && <Navigation dashboard={dashboard} />}
           <Component {...pageProps} />
           {/* {homepage && !dashboard && !isUserSlug && <Footer />} */}

@@ -5,8 +5,8 @@ import { UserContext } from "../lib/context";
 import { useState, useEffect, useContext } from "react";
 import NextLink from "next/link";
 import QRCode from "qrcode";
-import { Picker } from 'emoji-mart'
-import EmojiAnimation from '../components/EmojiAnimation'
+import { Picker } from "emoji-mart";
+import EmojiAnimation from "../components/EmojiAnimation";
 import { DeleteIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -47,7 +47,7 @@ export default function PhonePreview({
   const [imageUrl, setImageUrl] = useState("");
   const [stageName, stageNameSet] = useState("");
   const [pageVisit, pageVisitSet] = useState(0);
-  const [emoji, emojiSet] = useState('');
+  const [emoji, emojiSet] = useState("");
 
   const { user } = useContext(UserContext);
 
@@ -63,7 +63,7 @@ export default function PhonePreview({
       changes.forEach((i) => {
         stageNameSet(i.doc.data().bio?.stagename);
         pageVisitSet(i.doc.data()?.pageVisit);
-        emojiSet(i.doc.data()?.emoji)
+        emojiSet(i.doc.data()?.emoji);
       });
     });
   }, [user.uid, emoji]);
@@ -78,77 +78,67 @@ export default function PhonePreview({
   };
 
   const handleSelectEmoji = (emoji) => {
-
     emojiSet(emoji);
 
-    query
-      .doc(user.uid)
-      .update({ emoji });
-
-  }
+    query.doc(user.uid).update({ emoji });
+  };
 
   const deleteEmoji = () => {
+    emojiSet("");
 
-    emojiSet('');
-
-    query
-      .doc(user.uid)
-      .update({ emoji: '' });
-  }
-
+    query.doc(user.uid).update({ emoji: "" });
+  };
 
   return (
-    <Flex
-      direction='column'
-      w='100%'
-    >
+    <Flex direction="column" w="100%">
       <Flex
-        w='100%'
-        direction={['column-reverse', 'column']}
-        alignItems={'center'}
-        justifyContent={'center'}
+        w="100%"
+        direction={["column-reverse", "column"]}
+        alignItems={"center"}
+        justifyContent={"center"}
       >
-
         <Flex
-          pos='sticky'
-          bottom='0'
-          alignSelf='stretch'
-          color={'green.400'}
-          w='100%'
-          zIndex='3'
+          pos="sticky"
+          bottom="0"
+          alignSelf="stretch"
+          color={"green.400"}
+          w="100%"
+          zIndex="3"
 
-        // zIndex='1'
+          // zIndex='1'
         >
           <Flex
-            border='solid 1px transparent'
-            borderRightColor='black'
+            border="solid 1px transparent"
+            borderRightColor="black"
             py={8}
             px={[3, 9]}
-            bg='green.100'
-            alignItems='center'
-            justifyContent='space-between'
-
+            bg="green.100"
+            alignItems="center"
+            justifyContent="space-between"
           >
             <Link
               mr={2}
               textAlign="left"
               href={`/${userNameValue || user.uid.slice(0, 5)}`}
-              isExternal>
+              isExternal
+            >
               <Text
-                color='gray.800'
-                fontSize={['md', 'xx-large']}
-                fontWeight={'bold'}
-                letterSpacing={1}>
+                color="gray.800"
+                fontSize={["md", "xx-large"]}
+                fontWeight={"bold"}
+                letterSpacing={1}
+              >
                 {userProfileUrl}
               </Text>
             </Link>
             <Button
               mr={2}
               onClick={onCopy}
-              size='xs'
-              colorScheme='green'
-              variant='solid'
-              leftIcon={<FaRegCopy />}>
+              size="xs"
+              colorScheme="green"
+              variant="solid"
+              leftIcon={<FaRegCopy />}
+            >
               {hasCopied ? "Copied" : "Copy"}
             </Button>
             <Button
@@ -156,31 +146,27 @@ export default function PhonePreview({
               href={imageUrl}
               download
               onClick={() => generateQrCode()}
-              size='xs'
-              colorScheme='green'
-              variant='solid'
-              leftIcon={<FaDownload />}>
+              size="xs"
+              colorScheme="green"
+              variant="solid"
+              leftIcon={<FaDownload />}
+            >
               QR
-                    </Button>
+            </Button>
           </Flex>
           <Flex
-            justify='center'
-            alignItems='center'
-            bg='green.200'
-            w='100%'
-            color='green.900'
+            justify="center"
+            alignItems="center"
+            bg="green.200"
+            w="100%"
+            color="green.900"
           >
-            <FaEye size='30px' />
-            <Text
-              fontSize={['md', 'x-large']}
-              fontWeight='bold'
-              ml={2}
-            >
+            <FaEye size="30px" />
+            <Text fontSize={["md", "x-large"]} fontWeight="bold" ml={2}>
               {pageVisit}
             </Text>
           </Flex>
         </Flex>
-
 
         <Box
           // zIndex='1'
@@ -195,11 +181,9 @@ export default function PhonePreview({
           my={10}
           pos={"relative"}
           bg={bgColor}
-
         >
-
           <Flex
-            zIndex='2'
+            zIndex="2"
             background={"gray"}
             backgroundImage={`url("${avatarCoverImg.cover}")`}
             backgroundRepeat={"no-repeat"}
@@ -220,7 +204,7 @@ export default function PhonePreview({
           />
 
           <Avatar
-            zIndex='3'
+            zIndex="3"
             mt={28}
             size="lg"
             name="profile picture"
@@ -241,9 +225,9 @@ export default function PhonePreview({
           </Flex>
 
           <Tabs
-            zIndex='2'
-            pos='absolute'
-            w='100%'
+            zIndex="2"
+            pos="absolute"
+            w="100%"
             isFitted
             align="center"
             variant="line"
@@ -274,25 +258,28 @@ export default function PhonePreview({
             </TabPanels>
           </Tabs>
 
-
           <EmojiAnimation slug={false} emoji={emoji} />
-
         </Box>
         <Popover>
           <ButtonGroup size="sm" isAttached variant="outline">
             <Button mr="-px">What's your vibe today?</Button>
             <PopoverTrigger>
-              <Button>{emoji || '🤔'}</Button>
+              <Button>{emoji || "🤔"}</Button>
             </PopoverTrigger>
-            {emoji && <IconButton onClick={deleteEmoji} aria-label="delete" icon={<DeleteIcon />} />}
+            {emoji && (
+              <IconButton
+                onClick={deleteEmoji}
+                aria-label="delete"
+                icon={<DeleteIcon />}
+              />
+            )}
           </ButtonGroup>
           <PopoverContent>
-
             <Picker
               onSelect={(emoji) => handleSelectEmoji(emoji.native)}
               showPreview={true}
-              theme={'dark'}
-              set='apple'
+              theme={"dark"}
+              set="apple"
             />
           </PopoverContent>
         </Popover>

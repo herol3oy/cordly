@@ -33,13 +33,10 @@ import {
 const ReactPlayer = dynamic(() => import("react-player/lazy"));
 
 export default function User({ data }) {
-
   const query = firestore.collection("users");
 
   useEffect(() => {
-    query
-      .doc(data.uid)
-      .update({ pageVisit: increment(1) });
+    query.doc(data.uid).update({ pageVisit: increment(1) });
 
     // query.where("uid", "==", user.uid).onSnapshot((snapshot) => {
     //   let changes = snapshot.docChanges();
@@ -108,7 +105,7 @@ export default function User({ data }) {
         textAlign="center"
       >
         CORDLY
-        </Text>
+      </Text>
       <EmojiAnimation slug={true} emoji={data.emoji} />
     </Flex>
   );
@@ -272,7 +269,8 @@ const ProfileLinks = ({ data }) => {
 
     const isYoutube = getYouTubeID(urlAddress);
 
-    const clickHandle = (url) => (row === url ? setRow(undefined) : setRow(url));
+    const clickHandle = (url) =>
+      row === url ? setRow(undefined) : setRow(url);
 
     return (
       <Box key={i} onClick={() => clickHandle(url)}>

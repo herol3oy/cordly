@@ -183,25 +183,19 @@ const SignInPage = () => {
   };
 
   return (
-    <Stack
-      alignSelf="center"
-      p={[4, 6, 8]}
-      spacing={{ base: 8 }}
-      minW={'sm'}
-    >
-
+    <Stack alignSelf="center" p={[4, 6, 8]} spacing={{ base: 8 }} minW={"sm"}>
       <Box>
         {!hasAccount ? (
           <>
             <Heading
-              textAlign='center'
+              textAlign="center"
               color={"gray.50"}
               lineHeight={1.1}
-              fontSize={['2xl', '3xl', '5xl']}
+              fontSize={["2xl", "3xl", "5xl"]}
               mb={4}
             >
               Welcome.
-                </Heading>
+            </Heading>
 
             <Center>
               <Stack spacing={2} align={"center"} maxW={"lg"} w={"full"}>
@@ -226,7 +220,7 @@ const SignInPage = () => {
                   <Center>
                     <Text onClick={signInWithFacebook}>
                       Sign in with Facebook
-                  </Text>
+                    </Text>
                   </Center>
                 </Button>
 
@@ -244,7 +238,7 @@ const SignInPage = () => {
                       }}
                     >
                       Sign in with Email
-                  </Text>
+                    </Text>
                   </Center>
                 </Button>
               </Stack>
@@ -252,7 +246,9 @@ const SignInPage = () => {
 
             <Divider mt={10} />
 
-            <Text textAlign='center' mt={-4} mb={4} >Or, sign up with your email</Text>
+            <Text textAlign="center" mt={-4} mb={4}>
+              Or, sign up with your email
+            </Text>
 
             <Box as={"form"} onSubmit={handleSubmit(handleSignUp)}>
               {errors.emailSignUp && `Please type your email.`}
@@ -317,7 +313,7 @@ const SignInPage = () => {
                 }}
               >
                 SIGN UP
-                  </Button>
+              </Button>
             </Box>
           </>
         ) : (
@@ -325,10 +321,10 @@ const SignInPage = () => {
             {forgotPassword ? (
               <>
                 <Heading
-                  textAlign='center'
+                  textAlign="center"
                   color={"gray.50"}
                   lineHeight={1.1}
-                  fontSize={['2xl', '3xl', '5xl']}
+                  fontSize={["2xl", "3xl", "5xl"]}
                   mb={4}
                 >
                   Forgot password
@@ -369,25 +365,21 @@ const SignInPage = () => {
                     }}
                   >
                     Send password
-                      </Button>
+                  </Button>
                 </Box>
               </>
             ) : (
               <>
                 <Heading
-                  textAlign='center'
+                  textAlign="center"
                   color={"gray.50"}
                   lineHeight={1.1}
-                  fontSize={['2xl', '3xl', '5xl']}
+                  fontSize={["2xl", "3xl", "5xl"]}
                   mb={4}
                 >
                   Sign in
                 </Heading>
-                <Box
-                  as={"form"}
-                  mt={10}
-                  onSubmit={handleSubmit(handleLogin)}
-                >
+                <Box as={"form"} mt={10} onSubmit={handleSubmit(handleLogin)}>
                   {errors.email && `Please type your email`}
                   <br />
                   {errors.password && `Please type your password`}
@@ -433,7 +425,7 @@ const SignInPage = () => {
                     }}
                   >
                     Log In
-                      </Button>
+                  </Button>
                   {!forgotPassword && (
                     <Link onClick={() => forgotPasswordSet(true)}>
                       Forgot password?
@@ -447,8 +439,6 @@ const SignInPage = () => {
           </>
         )}
       </Box>
-
     </Stack>
   );
 };
-

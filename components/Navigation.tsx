@@ -99,7 +99,7 @@ export default function Navigation({ dashboard }) {
 
   return (
     <Stack
-      direction={dashboard && ['row', 'row', 'column', 'column']}
+      direction={dashboard && ["row", "row", "column", "column"]}
       justify={"center"}
       px={{ base: "3", md: "6", lg: "3" }}
       py={3}
@@ -111,7 +111,9 @@ export default function Navigation({ dashboard }) {
     >
       <NextLink href={"/"} passHref>
         <Link>
-          <Heading fontSize='x-large' textStyle={"logo"}>{dashboard ? 'C' : 'Cordly'}</Heading>
+          <Heading fontSize="x-large" textStyle={"logo"}>
+            {dashboard ? "C" : "Cordly"}
+          </Heading>
         </Link>
       </NextLink>
 

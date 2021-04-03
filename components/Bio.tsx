@@ -29,9 +29,8 @@ import {
   Heading,
   useColorModeValue,
   Code,
-  HStack
+  HStack,
 } from "@chakra-ui/react";
-
 
 const yearOfBirths = [];
 
@@ -95,16 +94,16 @@ export default function Bio({
           cover: doc.coverImg,
         });
 
-        const skills = doc?.bio?.skills
-        const stagename = doc?.bio?.stagename
-        const influences = doc?.bio?.influences
-        const education = doc?.bio?.education
-        const styles = doc?.bio?.styles
-        const gender = doc?.bio?.gender
-        const birthdate = doc?.bio?.birthdate
-        const location = doc?.bio?.location
-        const collaboration = doc?.bio?.collaboration
-        const teaching = doc?.bio?.teaching
+        const skills = doc?.bio?.skills;
+        const stagename = doc?.bio?.stagename;
+        const influences = doc?.bio?.influences;
+        const education = doc?.bio?.education;
+        const styles = doc?.bio?.styles;
+        const gender = doc?.bio?.gender;
+        const birthdate = doc?.bio?.birthdate;
+        const location = doc?.bio?.location;
+        const collaboration = doc?.bio?.collaboration;
+        const teaching = doc?.bio?.teaching;
 
         setValue("stagename", stagename);
         setValue("skills", skills);
@@ -337,7 +336,6 @@ export default function Bio({
                 placeholder="Year of Birth"
                 ref={register({ required: true })}
               >
-
                 {yearOfBirths.map((i, idx) => (
                   <option key={idx} value={i}>
                     {i}
@@ -347,8 +345,8 @@ export default function Bio({
             </InputGroup>
 
             <FormHelperText textAlign="left">
-              It won't be published on your profile page.
-              Only for query through our search engine.
+              It won't be published on your profile page. Only for query through
+              our search engine.
             </FormHelperText>
           </FormControl>
 
@@ -380,7 +378,8 @@ export default function Bio({
               </Box>
             </InputGroup>
             <FormHelperText textAlign="left">
-              Current location: <Code colorScheme="green">{currentLocation}</Code>
+              Current location:{" "}
+              <Code colorScheme="green">{currentLocation}</Code>
             </FormHelperText>
           </FormControl>
 

@@ -52,8 +52,8 @@ const DashboardPanel = () => {
       <Flex
         height="100vh"
         justifyContent="space-between"
-        w='100%'
-        flexDirection={['column', 'column', 'row', 'row']}
+        w="100%"
+        flexDirection={["column", "column", "row", "row"]}
         columns={[1, 1, 3, 3]}
         // spacing={5}
         // display='flex'
@@ -61,7 +61,7 @@ const DashboardPanel = () => {
         // alignItems='stretch'
         minW={["xs", "sm", "md", "xl"]}
 
-      // flexDir={["column", "column", "column", "row"]}
+        // flexDir={["column", "column", "column", "row"]}
       >
         <Tabs
           alignSelf="stretch"
