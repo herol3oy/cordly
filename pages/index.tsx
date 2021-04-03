@@ -45,27 +45,29 @@ export default function Home({ musicians }) {
       <SimpleGrid columns={[1, 2]} h='100%'>
         <Flex
           flexDirection={"column"}
-          alignItems={"start"}
+          alignItems={["center", 'start  ']}
           justify='center'
+          my={10}
         >
           <Heading
             mb={4}
-            textAlign={"left"}
+            textAlign={['center', 'left']}
             as="h2"
-            size="4xl"
+            size="3xl"
           >
-            Cordly is all in one home for musicians
+            All in one home for musicians
             </Heading>
 
           <Heading
-            textAlign={"left"}
+            textAlign={['center', 'left']}
             fontSize='larger  '
             maxW={"container.md"}
             fontWeight='thin'
           >
-            Let your fans know all about you in one single page, where talent agencies can trust to look you up.
+            Let your fans know all about you in one single page
+            
             </Heading>
-          <Button mt='8' size='lg' variant='solid' colorScheme='green'>Sign In</Button>
+          <Button mt='8' size='lg' variant='solid' colorScheme='green'>Create account for free</Button>
         </Flex>
 
         <Flex justify='center' flexDir='column' alignItems='center' justifyContent='center'>
@@ -83,7 +85,11 @@ export default function Home({ musicians }) {
         <FaqAccordion />
       </SimpleGrid>
 
-      <Flex
+<SimpleGrid
+columns={[1, 2]} 
+>
+
+<Flex
         flexDir='column'
         m={10}
         alignContent='center'
@@ -125,10 +131,11 @@ export default function Home({ musicians }) {
 
       </Carousel>
 
-
+</SimpleGrid>
 
 
       <Musician data={musicians} />
+
     </Container>
   );
 }

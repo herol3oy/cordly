@@ -111,7 +111,7 @@ export default function Navigation({ dashboard }) {
     >
       <NextLink href={"/"} passHref>
         <Link>
-          <Heading textStyle={"logo"}>{dashboard ? 'C' : 'Cordly'}</Heading>
+          <Heading fontSize='x-large' textStyle={"logo"}>{dashboard ? 'C' : 'Cordly'}</Heading>
         </Link>
       </NextLink>
 
