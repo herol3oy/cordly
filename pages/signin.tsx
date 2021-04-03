@@ -189,7 +189,6 @@ const SignInPage = () => {
           <>
             <Heading
               textAlign="center"
-              color={"gray.50"}
               lineHeight={1.1}
               fontSize={["2xl", "3xl", "5xl"]}
               mb={4}
@@ -322,7 +321,7 @@ const SignInPage = () => {
               <>
                 <Heading
                   textAlign="center"
-                  color={"gray.50"}
+                  // color={"gray.50"}
                   lineHeight={1.1}
                   fontSize={["2xl", "3xl", "5xl"]}
                   mb={4}
@@ -372,7 +371,7 @@ const SignInPage = () => {
               <>
                 <Heading
                   textAlign="center"
-                  color={"gray.50"}
+                  // color={"gray.50"}
                   lineHeight={1.1}
                   fontSize={["2xl", "3xl", "5xl"]}
                   mb={4}

@@ -274,10 +274,10 @@ export default function PhonePrevHome() {
                     color={'white'}
                 >C</Text>
                 <Flex>
-                    <Text ml={2} textColor="green.300" fontWeight='light' fontSize={"xx-large"}>
+                    <Text ml={2} textColor="green.300" fontWeight='bold' fontSize={"xx-large"}>
                         cord.ly/
               </Text>
-                    <Text textColor="green.800" fontWeight="light" fontSize={"xx-large"}>demah</Text>
+                    <Text textColor="black" fontWeight="light" fontSize={"xx-large"}>demah</Text>
                 </Flex>
             </Flex>
         </>

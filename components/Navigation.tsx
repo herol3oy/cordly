@@ -134,18 +134,18 @@ export default function Navigation({ dashboard }) {
 
       <Spacer />
 
-      <IconButton
-        size="md"
-        onClick={toggleColorMode}
-        // mr={2}
-        // mb={{ base: "0", md: "3" }}
-        isRound
-        icon={<SwitchIcon />}
-        fontSize="lg"
-        colorScheme="whiteAlpha"
-        color="current"
-        aria-label={`Switch to ${text} mode`}
-      />
+      {/* <IconButton
+          size="md"
+          onClick={toggleColorMode}
+          // mr={2}
+          // mb={{ base: "0", md: "3" }}
+          isRound
+          icon={<SwitchIcon />}
+          fontSize="lg"
+          colorScheme="whiteAlpha"
+          color="current"
+          aria-label={`Switch to ${text} mode`}
+        /> */}
 
       {!user && (
         <Stack direction="column">
