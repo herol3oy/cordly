@@ -353,7 +353,7 @@ export default function Home({ musicians }) {
         alignItems="center"
         my={[12, 32]}
       >
-        <SvgListeningMusic width={'500px'} />
+        <SvgListeningMusic width={'70%'} />
         <FaqAccordion />
       </Flex>
 
@@ -369,8 +369,12 @@ export default function Home({ musicians }) {
         <Carousel
           ssr={false}
           infinite={true}
+          showDots={false}
+          autoPlay
           partialVisbile
           responsive={responsive}
+          removeArrowOnDeviceType={["tablet", "mobile"]}
+
         >
           {Array.from(Array(10).keys()).map((item) => (
             <>

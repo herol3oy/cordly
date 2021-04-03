@@ -51,14 +51,14 @@ export default function Footer() {
     >
       <Container
         as={Stack}
-        maxW={"6xl"}
+        maxW={'full'}
         py={4}
         direction={{ base: "column", md: "row" }}
         spacing={4}
         justify={{ base: "center", md: "space-between" }}
         align={{ base: "center", md: "center" }}
       >
-        <Text>© {new Date().getFullYear()} Cordly</Text>
+        <Text fontSize={'sm'}>© {new Date().getFullYear()} Made by Female Rockers</Text>
         <Stack direction={"row"} spacing={6}>
           <SocialButton label={"Twitter"} href={"#"}>
             <FaTwitter />
