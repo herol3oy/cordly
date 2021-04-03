@@ -3,6 +3,7 @@ import SvgListeningMusic from "../components/SvgListeningMusic";
 import PhonePrevHome from "../components/PhonePrevHome";
 import SvgHeart from "../components/SvgHeart";
 import SvgShape1 from "../components/SvgShape1";
+import SvgLying from "../components/SvgLying";
 import Footer from "../components/Footer";
 import FaqAccordion from "../components/FaqAccordion";
 import Carousel from "react-multi-carousel";
@@ -16,6 +17,8 @@ import {
   Button,
   Avatar,
   Box,
+  Tag,
+  TagLabel,
 } from "@chakra-ui/react";
 
 const responsive = {
@@ -119,12 +122,12 @@ export default function Home({ musicians }) {
         alignItems="center"
         my={[12, 32]}
       >
-        <SvgListeningMusic width={'70%'} />
+        <SvgListeningMusic style={{ width: '50%' }} />
         <FaqAccordion />
       </Flex>
 
       <SimpleGrid columns={[1]}>
-        <Flex flexDir="column" m={10} alignContent="center" justify="center">
+        <Flex flexDir="column" my={10} alignContent="center" justify="center">
           <Heading textAlign="center">Pro Community</Heading>
           <Text textAlign="center" maxW={"md"} m="auto">
             From fatntastic composer to a extrodinary piano player. The vraiety
@@ -137,6 +140,7 @@ export default function Home({ musicians }) {
           infinite={true}
           showDots={false}
           autoPlay
+          autoPlaySpeed={9000}
           partialVisbile
           responsive={responsive}
           removeArrowOnDeviceType={["tablet", "mobile"]}
@@ -153,17 +157,39 @@ export default function Home({ musicians }) {
                 backgroundSize={"cover"}
                 backgroundImage={`url('https://is.gd/oRxkiI')`}
               >
-                <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />
 
               </Flex>
-              <Flex flexDirection="column">
+
+              <Flex
+                flexDir="row"
+                justifyContent='space-between'
+                mt={2}
+                w="xs"
+              >
+                <Flex flexDir='column'>
+                  <Tag size="lg" colorScheme="green" borderRadius="full">
+                    <Avatar ml={-1} mr={2} size="xs" name="Ryan Florence" src="https://bit.ly/ryan-florence" />
+                    <TagLabel>@jack</TagLabel>
+                  </Tag>
+
+                  <Text fontWeight='bold' mt={6}>Pianist</Text>
+                </Flex>
                 <Text fontWeight="black">Jack Johnson</Text>
-                <Text>@jack</Text>
+
               </Flex>
             </>
           ))}
         </Carousel>
       </SimpleGrid>
+
+      <Flex mb={10} mt={28} flexDir="column" alignItems='center' alignContent="center" justify="center">
+        <Heading textAlign="center">Join Our Platform</Heading>
+        <Text textAlign="center" maxW={"md"} m="auto">
+          From fatntastic composer to a extrodinary piano player.
+          </Text>
+        <Button mt={5} variant="outline" w={'xs'} colorScheme="green" size="lg">Join Now</Button>
+        <SvgLying width='30%' />
+      </Flex>
 
       <Footer />
 

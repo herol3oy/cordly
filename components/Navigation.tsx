@@ -19,7 +19,6 @@ import {
   Heading,
   useColorModeValue,
   Spacer,
-  Flex,
   useColorMode,
   Avatar,
   Menu,
@@ -28,6 +27,8 @@ import {
   MenuItem,
   MenuDivider,
   Link,
+  Text,
+  Flex,
 } from "@chakra-ui/react";
 
 export default function Navigation({ dashboard }) {
@@ -111,9 +112,23 @@ export default function Navigation({ dashboard }) {
     >
       <NextLink href={"/"} passHref>
         <Link>
-          <Heading color="gray.600" fontSize="x-large" textStyle={"logo"}>
-            {dashboard ? "C" : "Cordly"}
-          </Heading>
+          <Flex justify='center' alignItems='center' >
+            <Text
+              d={'flex'}
+              alignItems='center'
+              justifyContent='center'
+              bg='green.400'
+              w={7}
+              h={7}
+              borderRadius={64}
+              // p={2}
+              mr={1}
+              fontWeight={'bold'}
+            >C</Text>
+            <Heading color="gray.600" fontSize="x-large" textStyle={"logo"}>
+              {dashboard ? "C" : "Cordly"}
+            </Heading>
+          </Flex>
         </Link>
       </NextLink>
 

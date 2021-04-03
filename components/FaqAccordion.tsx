@@ -15,7 +15,7 @@ export default function FaqAccordion() {
       <Heading textAlign={"center"} as="h1" size="2xl" mb={4}>
         FAQ
       </Heading>
-      <Accordion allowToggle>
+      <Accordion allowToggle maxW={'xl'}>
         <AccordionItem>
           <h2>
             <AccordionButton>

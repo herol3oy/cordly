@@ -267,8 +267,9 @@ export default function PhonePrevHome() {
                     w={10}
                     h={10}
                     borderRadius={64}
-                    p={2}
-                    fontWeight={'bold'}
+                    // p={2}
+                    fontWeight={'black'}
+                    color={'white'}
                 >C</Text>
                 <Flex>
                     <Text ml={2} textColor="green.300" fontWeight='light' fontSize={"xx-large"}>
