@@ -148,11 +148,18 @@ export default function Navigation({ dashboard }) {
         /> */}
 
       {!user && (
-        <Stack direction="column">
+        <Stack direction="row">
           <NextLink href={"/signin"} passHref>
             <Link>
-              <Button colorScheme={"blue"} variant="solid">
+              <Button colorScheme={"green"} variant="link" size='sm'>
                 Sign In
+              </Button>
+            </Link>
+          </NextLink>
+          <NextLink href={"/signin"} passHref>
+            <Link>
+              <Button colorScheme={"green"} variant="solid" size='sm'>
+                Sign Up
               </Button>
             </Link>
           </NextLink>

@@ -115,8 +115,8 @@ export default function Home({ musicians }) {
           responsive={responsivePhonePrev}>
 
 
-          {Array.from(Array(2).keys()).map(() => (
-            <Flex flexDirection='column' justify='center' alignItems='center'>
+          {Array.from(Array(2).keys()).map((i) => (
+            <Flex key={i} flexDirection='column' justify='center' alignItems='center'>
 
               <PhonePrevHome />
             </Flex>
@@ -156,8 +156,8 @@ export default function Home({ musicians }) {
           responsive={responsive}
           removeArrowOnDeviceType={["tablet", "mobile"]}
         >
-          {Array.from(Array(10).keys()).map(() => (
-            <>
+          {Array.from(Array(10).keys()).map((i) => (
+            <Box key={i}>
               <Flex
                 rounded="lg"
                 alignItems="flex-end"
@@ -188,7 +188,7 @@ export default function Home({ musicians }) {
                 <Text >Jack Johnson</Text>
 
               </Flex>
-            </>
+            </Box>
           ))}
         </Carousel>
       </SimpleGrid>
