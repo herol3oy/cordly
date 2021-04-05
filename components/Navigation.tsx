@@ -152,7 +152,7 @@ export default function Navigation({ dashboard }) {
           <NextLink href={"/signin"} passHref>
             <Link>
               <Button colorScheme={"green"} variant="link" size='sm'>
-                Sign In
+                Log in
               </Button>
             </Link>
           </NextLink>

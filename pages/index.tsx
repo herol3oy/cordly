@@ -19,6 +19,8 @@ import {
   Box,
   Tag,
   TagLabel,
+  Badge,
+  Tooltip,
 } from "@chakra-ui/react";
 
 const responsive = {
@@ -64,6 +66,7 @@ const responsivePhonePrev = {
 };
 
 export default function Home({ musicians }) {
+
   return (
     <Container h="100vh" maxW="container.xl">
       <SimpleGrid columns={[1, 2]}>
@@ -84,7 +87,7 @@ export default function Home({ musicians }) {
           >
             <SvgHeart />
           </Flex>
-          <Heading mb={4} textAlign={["center", "left"]} as="h2" size="3xl">
+          <Heading mt={[8, 0]} mb={4} textAlign={["center", "left"]} as="h2" size="3xl">
             All in one home for musicians
           </Heading>
 
@@ -97,7 +100,7 @@ export default function Home({ musicians }) {
             Let your fans know all about you in one single page
           </Heading>
           <Button mt="8" size="lg" variant="solid" colorScheme="green">
-            Create account for free
+            Sign up for free
           </Button>
         </Flex>
 
@@ -125,13 +128,56 @@ export default function Home({ musicians }) {
         </Carousel>
       </SimpleGrid>
 
+      <SimpleGrid columns={[1, 4]} my={[42, 36]} spacing={10}>
+
+        <Flex flexDir='column'>
+
+          <Heading as="h3" size="md" textAlign='center'>🔗</Heading>
+          <Heading as="h2" size="lg" textAlign='center'>Links</Heading>
+          <Text textAlign='center'>
+            Present all your social links within a well design page
+          </Text>
+        </Flex>
+
+        <Flex flexDir='column'>
+
+          <Heading as="h3" size="md" textAlign='center'>✍️</Heading>
+          <Heading as="h2" size="lg" textAlign='center'>Bio</Heading>
+          <Text textAlign='center'>
+            Less is more. All things your fan need to know about you
+          </Text>
+        </Flex>
+
+        <Flex flexDir='column'>
+          <Tag alignSelf='center' size={'sm'} variant="solid" colorScheme="green">
+            PRO
+            </Tag>
+          <Heading as="h3" size="lg" textAlign='center'>
+            Badge
+          </Heading>
+          <Text textAlign='center'>
+            Less is more. All things your fan need to know about you
+          </Text>
+        </Flex>
+
+        <Flex flexDir='column'>
+          <Heading as="h3" size="md" textAlign='center'>👁️</Heading>
+
+          <Heading as="h3" size="lg" textAlign='center'>Visits</Heading>
+          <Text textAlign='center'>
+            Less is more. All things your fan need to know about you
+          </Text>
+        </Flex>
+
+      </SimpleGrid>
+
       <Flex
         flexDirection={["column-reverse", "row"]}
         justifyContent='space-between'
         alignItems="center"
         my={[12, 32]}
       >
-        <Flex w={[72, 'xl']}>
+        <Flex w={[96, 'xl']} mt={[10, 0]}>
           <SvgListeningMusic />
         </Flex>
         <FaqAccordion />
@@ -199,7 +245,10 @@ export default function Home({ musicians }) {
           From fatntastic composer to a extrodinary piano player.
           </Text>
         <Button mt={5} variant="outline" w={'xs'} colorScheme="green" size="lg">Join Now</Button>
-        <SvgLying width='30%' />
+        <Flex w={[72, 'xs']}>
+          <SvgLying />
+
+        </Flex>
       </Flex>
 
       <Footer />
