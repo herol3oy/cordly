@@ -19,6 +19,7 @@ import {
     WrapItem,
     Tag,
     TagLabel,
+
 } from "@chakra-ui/react";
 
 const urls = [
@@ -105,6 +106,7 @@ export default function PhonePrevHome() {
                     variant="line"
                     colorScheme="green"
                     index={tabIndex}
+                    onChange={(index) => setTabIndex(index)}
                 >
                     <TabList>
                         <Tab>
@@ -116,6 +118,7 @@ export default function PhonePrevHome() {
                             <Box>✍️</Box>
                             <Text ml={3}>Bio</Text>
                         </Tab>
+
                     </TabList>
 
                     <TabPanels>
@@ -262,6 +265,7 @@ export default function PhonePrevHome() {
                         </TabPanel>
                     </TabPanels>
                 </Tabs>
+
             </Box>
             <Flex
                 alignItems='center'
