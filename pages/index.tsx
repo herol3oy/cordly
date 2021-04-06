@@ -104,28 +104,11 @@ export default function Home({ musicians }) {
           </Button>
         </Flex>
 
-        <Carousel
-          ssr={true}
-          infinite={true}
-          showDots={false}
-          swipeable={true}
-          autoPlay={true}
-          // customTransition="all 1"
-          // transitionDuration={3000}
-          autoPlaySpeed={4000}
-          partialVisbile
-          removeArrowOnDeviceType={['superLargeDesktop', 'desktop', "tablet", "mobile"]}
-          responsive={responsivePhonePrev}>
 
+        <Flex flexDirection='column' justify='center' alignItems='center'>
+          <PhonePrevHome />
+        </Flex>
 
-          {Array.from(Array(2).keys()).map((i) => (
-            <Flex key={i} flexDirection='column' justify='center' alignItems='center'>
-
-              <PhonePrevHome />
-            </Flex>
-          ))}
-
-        </Carousel>
       </SimpleGrid>
 
       <SimpleGrid columns={[1, 4]} my={[42, 36]} spacing={10}>
@@ -254,7 +237,7 @@ export default function Home({ musicians }) {
       <Footer />
 
       {/* <Musician data={musicians} /> */}
-    </Container>
+    </Container >
   );
 }
 

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import NextLink from "next/link";
 import {
     Heading,
@@ -29,6 +30,15 @@ const urls = [
 ];
 
 export default function PhonePrevHome() {
+    const [tabIndex, setTabIndex] = useState(1)
+
+    useEffect(() => {
+        setTimeout(() => {
+            setTabIndex(0)
+        }, 3000);
+    }, [setTimeout]);
+
+
     return (
         <>
             <Box
@@ -94,6 +104,7 @@ export default function PhonePrevHome() {
                     align="center"
                     variant="line"
                     colorScheme="green"
+                    index={tabIndex}
                 >
                     <TabList>
                         <Tab>
