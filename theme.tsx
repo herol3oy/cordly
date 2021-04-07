@@ -4,7 +4,7 @@ import { mode } from "@chakra-ui/theme-tools";
 const theme = extendTheme({
   textStyles: {
     logo: {
-      fontFamily: '"Shrikhand", cursive',
+      fontFamily: '"Baloo Da 2", cursive',
     },
     intro: {
       fontFamily: '"Bungee Shade", cursive',

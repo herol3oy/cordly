@@ -222,17 +222,6 @@ export default function Home({ musicians }) {
 
       </SimpleGrid>
 
-      <Flex
-        flexDirection={["column-reverse", "row"]}
-        justifyContent='space-between'
-        alignItems="center"
-        my={[12, 32]}
-      >
-        <Flex w={[96, 'xl']} mt={[10, 0]}>
-          <SvgListeningMusic />
-        </Flex>
-        <FaqAccordion />
-      </Flex>
 
       <SimpleGrid columns={[1, 2]}>
         <Flex flexDir="column" my={10}  >
@@ -290,6 +279,22 @@ export default function Home({ musicians }) {
         </Carousel>
       </SimpleGrid>
 
+
+
+      <Flex
+        flexDirection={["column-reverse", "row"]}
+        justifyContent='space-between'
+        alignItems="center"
+        my={[12, 32]}
+      >
+        <Flex w={[96, 'xl']} mt={[10, 0]}>
+          <SvgListeningMusic />
+        </Flex>
+        <FaqAccordion />
+      </Flex>
+
+
+
       <Flex mb={10} mt={28} flexDir="column" alignItems='center' alignContent="center" justify="center">
         <Heading textAlign="center">Join Our Platform</Heading>
         <Text textAlign="center" maxW={"md"} m="auto">
@@ -301,6 +306,9 @@ export default function Home({ musicians }) {
 
         </Flex>
       </Flex>
+
+
+
 
       <Footer />
 

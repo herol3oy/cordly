@@ -98,13 +98,13 @@ export default function User({ data }) {
         </TabPanels>
       </Tabs>
       <Text
-        fontSize={"xs"}
+        fontSize={"lg"}
         color={"green.300"}
         textStyle={"logo"}
         mt="auto"
         textAlign="center"
       >
-        CORDLY
+        cordly
       </Text>
       <EmojiAnimation slug={true} emoji={data.emoji} />
     </Flex>

@@ -125,8 +125,8 @@ export default function Navigation({ dashboard }) {
               mr={1}
               fontWeight={'bold'}
             >C</Text>
-            <Heading color="gray.600" fontSize="x-large" textStyle={"logo"}>
-              {dashboard ? "C" : "Cordly"}
+            <Heading fontWeight='bold' color="gray.600" fontSize="x-large" textStyle={"logo"}>
+              {dashboard ? "C" : "cordly"}
             </Heading>
           </Flex>
         </Link>
