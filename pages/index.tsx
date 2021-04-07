@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import { firestore } from "../lib/firebase";
 import SvgListeningMusic from "../components/SvgListeningMusic";
 import PhonePrevHome from "../components/PhonePrevHome";
@@ -72,12 +71,6 @@ export default function Home({ musicians }) {
 
   return (
     <Container h="100vh" maxW="container.xl">
-      <Head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
       <SimpleGrid columns={[1, 2]}>
         <Flex
           flexDirection={"column"}
