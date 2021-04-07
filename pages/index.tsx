@@ -48,24 +48,28 @@ const responsive = {
   },
 };
 
-const responsivePhonePrev = {
-  superLargeDesktop: {
-    breakpoint: { max: 4000, min: 3000 },
-    items: 1,
+const COMMUNITY = [
+  {
+    name: 'Abby K',
+    coverImg: 'https://is.gd/dDBfjY',
+    profession: 'Bassist 🎸'
   },
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 1,
+  {
+    name: 'Marry N',
+    coverImg: 'https://is.gd/QTECFD',
+    profession: 'Singer 🎙️'
   },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 1,
+  {
+    name: 'Aldana',
+    coverImg: 'https://is.gd/3Z9pol',
+    profession: 'Guitarist 🎸'
   },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-  },
-};
+  {
+    name: 'Gloria Maurel',
+    coverImg: 'https://is.gd/1mODSx',
+    profession: 'Drummer 🥁'
+  }
+]
 
 export default function Home({ musicians }) {
 
@@ -237,24 +241,23 @@ export default function Home({ musicians }) {
           infinite={true}
           showDots={false}
           autoPlay
-          autoPlaySpeed={9000}
+          autoPlaySpeed={3000}
           partialVisbile
           responsive={responsive}
-          removeArrowOnDeviceType={["tablet", "mobile"]}
+          removeArrowOnDeviceType={['superLargeDesktop', 'desktop', "tablet", "mobile"]}
         >
-          {Array.from(Array(10).keys()).map((i) => (
+          {COMMUNITY.map((musician, i) => (
             <Box key={i}>
               <Flex
+                p={"4"}
                 rounded="lg"
-                alignItems="flex-end"
                 maxW="250px"
                 minH="150px"
-                p={"4"}
-                backgroundRepeat={"no-repeat"}
                 backgroundSize={"cover"}
-                backgroundImage={`url('https://is.gd/oRxkiI')`}
+                backgroundRepeat={"no-repeat"}
+                backgroundImage={`url('${musician.coverImg}')`}
               >
-
+                <Tag size={'sm'} variant="solid" alignSelf='flex-start' colorScheme="green">PRO</Tag>
               </Flex>
 
               <Flex
@@ -265,13 +268,13 @@ export default function Home({ musicians }) {
               >
                 <Flex flexDir='column'>
                   <Tag size="lg" colorScheme="green" borderRadius="full">
-                    <Avatar mr={1} size="xs" name="Ryan Florence" src="https://bit.ly/ryan-florence" />
-                    <TagLabel>@jack</TagLabel>
+                    <Avatar mr={1} size="xs" name={musician.name} src={musician.coverImg} />
+                    <TagLabel>@{musician.name.split(' ').[0].toLowerCase()}</TagLabel>
                   </Tag>
 
-                  <Text fontWeight='bold' mt={6}>Pianist 🎹</Text>
+                  <Text fontWeight='bold' mt={6}>{musician.profession}</Text>
                 </Flex>
-                <Text >Jack Johnson</Text>
+                <Text >{musician.name}</Text>
 
               </Flex>
             </Box>
