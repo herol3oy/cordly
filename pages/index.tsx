@@ -269,7 +269,7 @@ export default function Home({ musicians }) {
                 <Flex flexDir='column'>
                   <Tag size="lg" colorScheme="green" borderRadius="full">
                     <Avatar mr={1} size="xs" name={musician.name} src={musician.coverImg} />
-                    <TagLabel>@{musician.name.split(' ').[0].toLowerCase()}</TagLabel>
+                    <TagLabel>@{musician.name.split(' ')[0].toLowerCase()}</TagLabel>
                   </Tag>
 
                   <Text fontWeight='bold' mt={6}>{musician.profession}</Text>
