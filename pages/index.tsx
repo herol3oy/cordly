@@ -19,10 +19,10 @@ import {
   Box,
   Tag,
   TagLabel,
-  Badge,
-  Tooltip,
   Icon,
   createIcon,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react";
 
 const responsive = {
@@ -186,19 +186,17 @@ export default function Home({ musicians }) {
       <SimpleGrid columns={[1, 4]} my={[42, 36]} spacing={10}>
 
         <Flex flexDir='column'>
-
           <Heading as="h3" size="md" textAlign='center'>🔗</Heading>
           <Heading as="h2" size="lg" textAlign='center'>Links</Heading>
-          <Text textAlign='center'>
+          <Text textAlign='center' maxW={'xs'} m='auto'>
             Present all your social links within a well design page
           </Text>
         </Flex>
 
         <Flex flexDir='column'>
-
           <Heading as="h3" size="md" textAlign='center'>✍️</Heading>
           <Heading as="h2" size="lg" textAlign='center'>Bio</Heading>
-          <Text textAlign='center'>
+          <Text textAlign='center' maxW={'xs'} m='auto'>
             Less is more. All things your fan need to know about you
           </Text>
         </Flex>
@@ -210,20 +208,18 @@ export default function Home({ musicians }) {
           <Heading as="h3" size="lg" textAlign='center'>
             Badge
           </Heading>
-          <Text textAlign='center'>
+          <Text textAlign='center' maxW={'xs'} m='auto'>
             Less is more. All things your fan need to know about you
           </Text>
         </Flex>
 
         <Flex flexDir='column'>
           <Heading as="h3" size="md" textAlign='center'>👁️</Heading>
-
           <Heading as="h3" size="lg" textAlign='center'>Visits</Heading>
-          <Text textAlign='center'>
+          <Text textAlign='center' maxW={'xs'} m='auto'>
             Less is more. All things your fan need to know about you
           </Text>
         </Flex>
-
       </SimpleGrid>
 
 
@@ -291,26 +287,42 @@ export default function Home({ musicians }) {
         my={[12, 32]}
       >
         <Flex w={[96, 'xl']} mt={[10, 0]}>
-          <SvgListeningMusic />
+          <SvgListeningMusic color={'#FF5678'} />
         </Flex>
         <FaqAccordion />
       </Flex>
 
 
 
-      <Flex mb={10} mt={28} flexDir="column" alignItems='center' alignContent="center" justify="center">
-        <Heading textAlign="center">Join Our Platform</Heading>
+      <SimpleGrid columns={[1, 2]} gap={6} >
+        <Flex textAlign='center' justify='center' alignItems='center'>
+          <Heading fontWeight='bold' color="green.600" fontSize='8xl' textStyle={"logo"}>
+            cordly
+          </Heading>
+        </Flex>
+        <Flex flexDir='column'>
+          <Heading>About the platform</Heading>
+          <Text>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus quam soluta omnis?
+          </Text>
+          <Text mt={6}>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt doloremque saepe, odio eius blanditiis voluptates provident in enim dolore dignissimos maxime consequuntur.
+          </Text>
+        </Flex>
+      </SimpleGrid>
+
+
+      <Flex bgGradient="linear(to-t, green.100, #f7fafc)" py={'24'} mb={'6'} mt={28} flexDir="column" alignItems='center' alignContent="center" justify="center">
+        <Heading mb={4} textAlign="center">Request your PRO badge now</Heading>
         <Text textAlign="center" maxW={"md"} m="auto">
           From fatntastic composer to a extrodinary piano player.
           </Text>
-        <Button mt={5} variant="outline" w={'xs'} colorScheme="green" size="lg">Join Now</Button>
+        <Button mt={5} variant="outline" w={'xs'} colorScheme="green" size="lg">Sign up</Button>
         <Flex w={[72, 'xs']}>
-          <SvgLying />
+          <SvgLying color={'#FF5678'} />
 
         </Flex>
       </Flex>
-
-
 
 
       <Footer />

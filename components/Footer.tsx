@@ -45,7 +45,6 @@ const SocialButton = ({
 export default function Footer() {
   return (
     <Box
-      mt={48}
       bg={useColorModeValue("gray.50", "gray.800")}
       color={useColorModeValue("gray.700", "gray.200")}
     >
@@ -58,7 +57,7 @@ export default function Footer() {
         justify={{ base: "center", md: "space-between" }}
         align={{ base: "center", md: "center" }}
       >
-        <Text fontSize={'sm'}>© {new Date().getFullYear()} Made by Female Rockers</Text>
+        <Text fontSize={'sm'}>© {new Date().getFullYear()} Created by Female Rockers</Text>
         <Stack direction={"row"} spacing={6}>
           <SocialButton label={"Twitter"} href={"#"}>
             <FaTwitter />
