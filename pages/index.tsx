@@ -3,6 +3,8 @@ import SvgListeningMusic from "../components/SvgListeningMusic";
 import PhonePrevHome from "../components/PhonePrevHome";
 import SvgHeart from "../components/SvgHeart";
 import SvgShape1 from "../components/SvgShape1";
+import SvgShape2 from "../components/SvgShape2";
+import SvgShape3 from "../components/SvgShape3";
 import SvgLying from "../components/SvgLying";
 import Footer from "../components/Footer";
 import FaqAccordion from "../components/FaqAccordion";
@@ -82,7 +84,7 @@ export default function Home({ musicians }) {
           justifyContent="center"
         // my={10}
         >
-          {/* <SvgShape1 style={{ position: 'absolute', zIndex: -1 }} /> */}
+          <SvgShape1 style={{ width: '400px', position: 'absolute', zIndex: -1 }} />
           <Flex
             visibility={['hidden', 'visible']}
             position='absolute'
@@ -193,6 +195,8 @@ export default function Home({ musicians }) {
           </Text>
         </Flex>
 
+        <SvgShape2 color={'#c6e8f6'} style={{ width: '150px', position: 'absolute', zIndex: -1 }} />
+
         <Flex flexDir='column'>
           <Heading as="h3" size="md" textAlign='center'>✍️</Heading>
           <Heading as="h2" size="lg" textAlign='center'>Bio</Heading>
@@ -212,6 +216,7 @@ export default function Home({ musicians }) {
             Less is more. All things your fan need to know about you
           </Text>
         </Flex>
+        <SvgShape3 color={'#f0e8fd'} style={{ right: '30px', width: '250px', position: 'absolute', zIndex: -1 }} />
 
         <Flex flexDir='column'>
           <Heading as="h3" size="md" textAlign='center'>👁️</Heading>
