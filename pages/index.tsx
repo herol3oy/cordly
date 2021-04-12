@@ -313,11 +313,11 @@ export default function Home({ musicians }) {
 
 
       <Flex bgGradient="linear(to-t, green.100, #f7fafc)" py={'24'} mb={'6'} mt={28} flexDir="column" alignItems='center' alignContent="center" justify="center">
-        <Heading mb={4} textAlign="center">Request your PRO badge now</Heading>
+        <Heading mb={4} textAlign="center">Are you a PRO musician?</Heading>
         <Text textAlign="center" maxW={"md"} m="auto">
-          From fatntastic composer to a extrodinary piano player.
+          Create your account and let us know about it. We verify your account for free
           </Text>
-        <Button mt={5} variant="outline" w={'xs'} colorScheme="green" size="lg">Sign up</Button>
+        <Button mt={5} variant="outline" w={'xs'} colorScheme="green" size="lg">Sign up now</Button>
         <Flex w={[72, 'xs']}>
           <SvgLying color={'#FF5678'} />
 
