@@ -437,14 +437,13 @@ export default function Bio({
           <Controller
             as={
               <RadioGroup
-                rounded={"xl"}
+                rounded={"md"}
                 px={4}
                 py={3}
                 direction={"row"}
                 alignItems={"center"}
                 spacing={2}
-                bg="gray.700"
-                color={"green.400"}
+                bg="gray.100"
                 align={"center"}
                 size={"md"}
                 ref={register}
@@ -477,14 +476,13 @@ export default function Bio({
           <Controller
             as={
               <RadioGroup
-                rounded={"xl"}
+                rounded={"md"}
                 px={4}
                 py={3}
                 direction={"row"}
                 alignItems={"center"}
                 spacing={2}
-                bg="gray.700"
-                color={"green.400"}
+                bg="gray.100"
                 align={"center"}
                 size={"md"}
                 ref={register}
@@ -513,14 +511,13 @@ export default function Bio({
 
           <HStack>
             <FormControl
-              rounded={"xl"}
+              rounded={"md"}
               px={4}
               py={3}
               direction={"row"}
               alignItems={"center"}
               spacing={2}
-              bg="gray.700"
-              color={"green.400"}
+              bg="gray.100"
               align={"center"}
               display="flex"
             >
@@ -544,14 +541,13 @@ export default function Bio({
             </FormControl>
 
             <FormControl
-              rounded={"xl"}
+              rounded={"md"}
               px={4}
               py={3}
               direction={"row"}
               alignItems={"center"}
               spacing={2}
-              bg="gray.700"
-              color={"green.400"}
+              bg="gray.100"
               align={"center"}
               display="flex"
             >

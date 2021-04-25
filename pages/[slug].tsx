@@ -72,7 +72,7 @@ export default function User({ data }) {
           width: "100%",
           height: "100%",
           background:
-            "linear-gradient(to top, #1a202c 0%, rgba(255, 255, 255, 0) 100%)",
+            "linear-gradient(to top, #effdf4 0%, rgba(255, 255, 255, 0) 40%)",
         }}
       />
       <ProfileAvatar data={data} />
@@ -131,10 +131,10 @@ const ProfileBio = ({ data }) => {
   return (
     <Stack>
       <Text
-        color={"purple.400"}
+        color={"gray.800"}
         fontWeight={600}
         fontSize={"sm"}
-        bg={useColorModeValue("purple.50", "purple.900")}
+        bg={useColorModeValue("gray.300", "gray.900")}
         p={2}
         alignSelf={"center"}
         rounded={"md"}
@@ -145,10 +145,10 @@ const ProfileBio = ({ data }) => {
       <Wrap justify={"center"}>
         <WrapItem>
           <Text
-            color={"gray.400"}
+            color={"gray.800"}
             fontWeight={600}
             fontSize={"sm"}
-            bg={useColorModeValue("gray.50", "gray.900")}
+            bg={useColorModeValue("gray.300", "gray.900")}
             p={2}
             alignSelf={"center"}
             rounded={"md"}
@@ -160,10 +160,10 @@ const ProfileBio = ({ data }) => {
         {collaboration && (
           <WrapItem>
             <Text
-              color={"gray.400"}
+              color={"gray.800"}
               fontWeight={600}
               fontSize={"sm"}
-              bg={useColorModeValue("gray.50", "gray.900")}
+              bg={useColorModeValue("gray.300", "gray.900")}
               p={2}
               alignSelf={"center"}
               rounded={"md"}
@@ -176,10 +176,10 @@ const ProfileBio = ({ data }) => {
         {teaching && (
           <WrapItem>
             <Text
-              color={"gray.400"}
+              color={"gray.800"}
               fontWeight={600}
               fontSize={"sm"}
-              bg={useColorModeValue("gray.50", "gray.900")}
+              bg={useColorModeValue("gray.300", "gray.900")}
               p={2}
               alignSelf={"center"}
               rounded={"md"}
@@ -197,10 +197,10 @@ const ProfileBio = ({ data }) => {
           .map((location, i) => (
             <WrapItem key={i}>
               <Text
-                color={"gray.400"}
+                color={"gray.800"}
                 fontWeight={600}
                 fontSize={"sm"}
-                bg={useColorModeValue("gray.50", "gray.900")}
+                bg={useColorModeValue("gray.300", "gray.900")}
                 p={3}
                 alignSelf={"flex-start"}
                 rounded={"md"}
@@ -219,10 +219,10 @@ const ProfileBio = ({ data }) => {
             <WrapItem key={i}>
               <Text
                 key={i}
-                color={"gray.400"}
+                color={"gray.800"}
                 fontWeight={600}
                 fontSize={"sm"}
-                bg={useColorModeValue("gray.50", "gray.900")}
+                bg={useColorModeValue("gray.300", "gray.900")}
                 p={3}
                 alignSelf={"flex-start"}
                 rounded={"md"}
@@ -241,10 +241,10 @@ const ProfileBio = ({ data }) => {
             <WrapItem key={i}>
               <Text
                 key={i}
-                color={"gray.400"}
+                color={"gray.800"}
                 fontWeight={600}
                 fontSize={"sm"}
-                bg={useColorModeValue("gray.50", "gray.900")}
+                bg={useColorModeValue("gray.300", "gray.900")}
                 p={3}
                 alignSelf={"center"}
                 rounded={"md"}
@@ -279,8 +279,9 @@ const ProfileLinks = ({ data }) => {
             <Button
               w={"100%"}
               size="lg"
-              color={"gray.400"}
-            // bg={useColorModeValue("gray.50", "gray.900")}
+              colorScheme='green'
+            // color={"green.100"}
+            // bg={useColorModeValue("green.400", "green.900")}
             // py={8}
             >
               {title}

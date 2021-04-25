@@ -192,7 +192,7 @@ export default function Links({ urlsSet }) {
                         w={["90vw", "70vw", "60vw", "30vw"]}
                       >
                         <Stack
-                          rounded={"xl"}
+                          rounded={"md"}
                           px={4}
                           py={3}
                           direction={"row"}
@@ -200,10 +200,10 @@ export default function Links({ urlsSet }) {
                           w={"100%"}
                           mb={2}
                           spacing={2}
-                          bg="gray.700"
+                          bg="green.500"
                         >
                           <Stack
-                            color={"green.400"}
+                            color={'whiteAlpha.900'}
                             direction={"row"}
                             align={"center"}
                             w={"100%"}

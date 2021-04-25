@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { FaEye } from "react-icons/fa";
 import { FaRegCopy, FaDownload } from "react-icons/fa";
 import { firestore } from "../lib/firebase";
@@ -57,6 +58,8 @@ export default function PhonePreview({
 
   const query = firestore.collection("users");
 
+  const emojiInputRef = useRef(null);
+
   useEffect(() => {
     query.where("uid", "==", user.uid).onSnapshot((snapshot) => {
       let changes = snapshot.docChanges();
@@ -105,7 +108,7 @@ export default function PhonePreview({
           w="100%"
           zIndex="3"
 
-          // zIndex='1'
+        // zIndex='1'
         >
           <Flex
             border="solid 1px transparent"
@@ -132,6 +135,7 @@ export default function PhonePreview({
               </Text>
             </Link>
             <Button
+              ref={emojiInputRef}
               mr={2}
               onClick={onCopy}
               size="xs"
@@ -276,10 +280,12 @@ export default function PhonePreview({
           </ButtonGroup>
           <PopoverContent>
             <Picker
+              emoji='department_store'
               onSelect={(emoji) => handleSelectEmoji(emoji.native)}
-              showPreview={true}
+              showPreview={false}
               theme={"dark"}
               set="apple"
+              onClick={() => emojiInputRef.current.focus()}
             />
           </PopoverContent>
         </Popover>

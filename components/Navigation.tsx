@@ -112,7 +112,7 @@ export default function Navigation({ dashboard }) {
     >
       <NextLink href={"/"} passHref>
         <Link>
-          <Flex justify='center' alignItems='center' >
+          <Flex justify='center' alignItems='center'>
             <Text
               d={'flex'}
               alignItems='center'
@@ -124,9 +124,11 @@ export default function Navigation({ dashboard }) {
               // p={2}
               mr={1}
               fontWeight={'bold'}
-            >C</Text>
+            >
+              C
+            </Text>
             <Heading fontWeight='bold' color="gray.600" fontSize="x-large" textStyle={"logo"}>
-              {dashboard ? "C" : "cordly"}
+              {!dashboard && "cordly"}
             </Heading>
           </Flex>
         </Link>
