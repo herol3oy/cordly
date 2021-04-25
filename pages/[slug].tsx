@@ -3,9 +3,9 @@ import { firestore, increment } from "../lib/firebase";
 import dynamic from "next/dynamic";
 import NextLink from "next/link";
 import { GetServerSideProps } from "next";
-import { CheckCircleIcon } from "@chakra-ui/icons";
 import getYouTubeID from "get-youtube-id";
 import EmojiAnimation from "../components/EmojiAnimation";
+import { ExternalLinkIcon } from '@chakra-ui/icons'
 import {
   Tab,
   Tabs,
@@ -274,17 +274,26 @@ const ProfileLinks = ({ data }) => {
 
     return (
       <Box key={i} onClick={() => clickHandle(url)}>
-        <Button
-          w={"100%"}
-          size="lg"
-          // py={8}
-          color={"gray.400"}
-          bg={useColorModeValue("gray.50", "gray.900")}
-        >
-          <NextLink href={urlAddress} passHref>
-            <Link isExternal>{title}</Link>
-          </NextLink>
-        </Button>
+        <NextLink href={urlAddress} passHref={isYoutube ? false : true}>
+          <Link isExternal>
+            <Button
+              w={"100%"}
+              size="lg"
+              color={"gray.400"}
+            // bg={useColorModeValue("gray.50", "gray.900")}
+            // py={8}
+            >
+              {title}
+              {isYoutube &&
+                <NextLink href={urlAddress} passHref>
+                  <Link isExternal>
+                    <ExternalLinkIcon ml='2' />
+                  </Link>
+                </NextLink>
+              }
+            </Button>
+          </Link>
+        </NextLink>
         {isYoutube && (
           <ReactPlayer
             url={urlAddress}

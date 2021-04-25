@@ -4,6 +4,7 @@ import { updateProfilePicture } from "../utils/db";
 import { firestore, storage, STATE_CHANGED } from "../lib/firebase";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { useForm, Controller } from "react-hook-form";
+import { InfoIcon } from '@chakra-ui/icons';
 import {
   Divider,
   Flex,
@@ -30,6 +31,7 @@ import {
   useColorModeValue,
   Code,
   HStack,
+  Tooltip,
 } from "@chakra-ui/react";
 
 const yearOfBirths = [];
@@ -259,6 +261,7 @@ export default function Bio({
               opacity={0}
               pos="absolute"
               inset="0"
+              accept=".png, .jpg, .jpeg"
             />
           </Flex>
         </InputGroup>
@@ -292,6 +295,7 @@ export default function Bio({
               opacity={0}
               pos="absolute"
               inset="0"
+              accept=".png, .jpg, .jpeg"
             />
           </Flex>
         </InputGroup>
@@ -323,7 +327,7 @@ export default function Bio({
               />
             </InputGroup>
             <FormHelperText textAlign="left">
-              Displays on your card in front page.
+              {/* Displays on your card in front page. */}
             </FormHelperText>
           </FormControl>
 
@@ -345,8 +349,7 @@ export default function Bio({
             </InputGroup>
 
             <FormHelperText textAlign="left">
-              It won't be published on your profile page. Only for query through
-              our search engine.
+              It won't be published on your profile page.
             </FormHelperText>
           </FormControl>
 
@@ -489,7 +492,7 @@ export default function Bio({
                 value={radioEdu}
               >
                 <Stack direction="row">
-                  <Text>📚 Education:</Text>
+                  <Text>📚 Music Education:</Text>
                   <Spacer />
                   <Radio
                     isDisabled={disabled}
@@ -533,7 +536,11 @@ export default function Bio({
                 size={"lg"}
                 colorScheme={"green"}
                 ref={register}
+                mr={'auto'}
               />
+              <Tooltip hasArrow label="Activating this option shows the viewer that you are willing to collaborate with their project, be it recording sessions, concerts, songwriting, etc." >
+                <InfoIcon />
+              </Tooltip>
             </FormControl>
 
             <FormControl
@@ -560,7 +567,11 @@ export default function Bio({
                 size={"lg"}
                 colorScheme={"green"}
                 ref={register}
+                mr={'auto'}
               />
+              <Tooltip hasArrow label="Activating this option shows the viewer that you’re a music teacher and willing to teach your instrument and skills" >
+                <InfoIcon />
+              </Tooltip>
             </FormControl>
           </HStack>
 
