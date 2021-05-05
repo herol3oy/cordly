@@ -118,7 +118,7 @@ export default function Links({ urlsSet }) {
     >
       <VStack my={"6"}>
         <Heading borderBottom={"1px"} pb={2} fontWeight="500" as="h1">
-          Social Links
+          Links
         </Heading>
         <Text
           fontSize={["xl", "2xl"]}

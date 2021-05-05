@@ -189,7 +189,7 @@ export default function Home({ musicians }) {
 
         <Flex flexDir='column'>
           <Heading as="h3" size="md" textAlign='center'>🔗</Heading>
-          <Heading as="h2" size="lg" textAlign='center'>Links</Heading>
+          <Heading as="h2" size="lg" textAlign='center'>Add Links</Heading>
           <Text textAlign='center' maxW={'xs'} m='auto'>
             Present all your social links within a well design page
           </Text>
@@ -199,9 +199,9 @@ export default function Home({ musicians }) {
 
         <Flex flexDir='column'>
           <Heading as="h3" size="md" textAlign='center'>✍️</Heading>
-          <Heading as="h2" size="lg" textAlign='center'>Bio</Heading>
+          <Heading as="h2" size="lg" textAlign='center'>Mini Bio</Heading>
           <Text textAlign='center' maxW={'xs'} m='auto'>
-            Less is more. All things your fan need to know about you
+            Less is more. Everything your fans need to know about you in a compact manner.
           </Text>
         </Flex>
 
@@ -210,19 +210,19 @@ export default function Home({ musicians }) {
             PRO
             </Tag>
           <Heading as="h3" size="lg" textAlign='center'>
-            Badge
+            Claim a Badge
           </Heading>
           <Text textAlign='center' maxW={'xs'} m='auto'>
-            Less is more. All things your fan need to know about you
+            Let you fans know that you're a professional by submitting your best auditions.
           </Text>
         </Flex>
         <SvgShape3 color={'#f0e8fd'} style={{ right: '30px', width: '250px', position: 'absolute', zIndex: -1 }} />
 
         <Flex flexDir='column'>
           <Heading as="h3" size="md" textAlign='center'>👁️</Heading>
-          <Heading as="h3" size="lg" textAlign='center'>Visits</Heading>
+          <Heading as="h3" size="lg" textAlign='center'>Visits Count</Heading>
           <Text textAlign='center' maxW={'xs'} m='auto'>
-            Less is more. All things your fan need to know about you
+            Every time someone visits your page, we count that and you'll know.
           </Text>
         </Flex>
       </SimpleGrid>
@@ -230,10 +230,9 @@ export default function Home({ musicians }) {
 
       <SimpleGrid columns={[1, 2]}>
         <Flex flexDir="column" my={10}  >
-          <Heading >Pro Community</Heading>
+          <Heading >Our Pro Community</Heading>
           <Text maxW={"md"}>
-            From fatntastic composer to a extrodinary piano player. The vraiety
-            of profiles are vast.
+            Every pro musician can be here, no matter what instrument they play.
           </Text>
         </Flex>
 
@@ -306,21 +305,24 @@ export default function Home({ musicians }) {
           </Heading>
         </Flex>
         <Flex flexDir='column'>
-          <Heading>About the platform</Heading>
+          <Heading>Our story</Heading>
           <Text>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus quam soluta omnis?
+            Cordly is created to assist musicians showcase their career in one page.
+            Our experts created a dashboard where you can enter your career information
+            and let your fans see it in a presentable manner.
           </Text>
           <Text mt={6}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt doloremque saepe, odio eius blanditiis voluptates provident in enim dolore dignissimos maxime consequuntur.
+            This will spice up your career and you won't have to worry about explaining it to everyone.
+            Just share your username link and you're good to go.
           </Text>
         </Flex>
       </SimpleGrid>
 
 
       <Flex bgGradient="linear(to-t, green.100, #f7fafc)" py={'24'} mb={'6'} mt={28} flexDir="column" alignItems='center' alignContent="center" justify="center">
-        <Heading mb={4} textAlign="center">Are you a PRO musician?</Heading>
+        <Heading mb={4} textAlign="center">Are you a musician? Pro, or not!</Heading>
         <Text textAlign="center" maxW={"md"} m="auto">
-          Create your account and let us know about it. We verify your account for free
+          Create your own account, and we'll check you out.
           </Text>
         <Button mt={5} variant="outline" w={'xs'} colorScheme="green" size="lg">Sign up now</Button>
         <Flex w={[72, 'xs']}>
