@@ -35,7 +35,9 @@ import {
   PopoverTrigger,
   IconButton,
   ButtonGroup,
+  Skeleton,
 } from "@chakra-ui/react";
+import SvgYoga from './SvgYoga';
 
 export default function PhonePreview({
   urls,
@@ -301,6 +303,15 @@ export default function PhonePreview({
 const LinksPreviewPanel = ({ urls }) => {
   return (
     <Stack>
+      {!urls.length && (
+        <>
+          <Stack>
+            <Skeleton startColor="green.200" height="40px" />
+            <Skeleton startColor="green.200" height="40px" />
+            <Skeleton startColor="green.200" height="40px" />
+          </Stack>
+        </>
+      )}
       {urls?.map((i, idx) => (
         <Button size="lg" key={idx} w={"100%"} colorScheme='green'>
           <NextLink href={Object.values(i)[0].toString()} passHref>

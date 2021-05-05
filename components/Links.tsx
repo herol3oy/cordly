@@ -8,6 +8,7 @@ import _ from "lodash";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import isAbsoluteUrl from "is-absolute-url";
 import { v4 as uuidv4 } from "uuid";
+import SvgYoga from './SvgYoga';
 import {
   Button,
   Input,
@@ -166,6 +167,16 @@ export default function Links({ urlsSet }) {
       </FormControl>
 
       <Divider my={5} />
+
+      {!urlItems.length && (
+        <>
+          <SvgYoga style={{ width: '300px' }} />
+          <Text
+            fontSize={["xl", "2xl"]}
+            textAlign="center"
+          >No links added!</Text>
+        </>
+      )}
 
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId="urls">

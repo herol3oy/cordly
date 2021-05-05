@@ -1,12 +1,31 @@
 export default function SvgYoga(props) {
   return (
     <svg
+      className='up-and-down'
       {...props}
       viewBox="0 0 1024 768"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
+      <style jsx>{`
+        .up-and-down {
+          animation: updown 2s ease infinite;
+      }
+      @keyframes updown {
+        0% {
+          transform: translateY(-3%);
+        }
+      
+        50% {
+          transform: translateY(3%);
+        }
+      
+        100% {
+          transform: translateY(-3%);
+        }
+      }
+      `}</style>
       <title>Character/meditating</title>
       <desc>cordly/meditating.</desc>
       <g

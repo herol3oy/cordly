@@ -28,6 +28,7 @@ import {
   Link,
   Avatar,
   Badge,
+  Skeleton,
 } from "@chakra-ui/react";
 
 const ReactPlayer = dynamic(() => import("react-player/lazy"));
@@ -308,6 +309,13 @@ const ProfileLinks = ({ data }) => {
 
   return (
     <Flex align="center" alignItems="stretch" direction="column">
+      {!links.length && (
+        <Stack>
+          <Skeleton startColor="green.200" height="40px" />
+          <Skeleton startColor="green.200" height="40px" />
+          <Skeleton startColor="green.200" height="40px" />
+        </Stack>
+      )}
       <VStack spacing={3} align="stretch">
         {links}
       </VStack>
