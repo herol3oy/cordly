@@ -174,7 +174,7 @@ export default function PhonePreview({
 
         <Box
           // zIndex='1'
-          borderColor={"gray.300"}
+          borderColor={"gray.800"}
           width={["90vw", "sm"]}
           borderWidth={[12, 20]}
           borderRadius={65}
@@ -184,11 +184,12 @@ export default function PhonePreview({
           textAlign="center"
           my={10}
           pos={"relative"}
-          bg={bgColor}
+          // bg={bgColor}
+          bg={'green.50'}
         >
           <Flex
             zIndex="2"
-            background={"gray"}
+            // background={"gray"}
             backgroundImage={`url("${avatarCoverImg.cover}")`}
             backgroundRepeat={"no-repeat"}
             backgroundSize={"cover"}
@@ -203,7 +204,10 @@ export default function PhonePreview({
               top: 0,
               width: "100%",
               height: "100%",
-              background: `linear-gradient(to top, ${bgColor} 0%, rgba(255, 255, 255, 0) 100%)`,
+              background: `
+              linear-gradient(to top, 
+                #effdf4
+                0%, rgba(255, 255, 255, 0) 100%)`,
             }}
           />
 
@@ -265,7 +269,7 @@ export default function PhonePreview({
           <EmojiAnimation slug={false} emoji={emoji} />
         </Box>
         <Popover>
-          <ButtonGroup size="sm" isAttached variant="outline">
+          <ButtonGroup size="sm" isAttached variant="outline" colorScheme='green'>
             <Button mr="-px">What's your vibe today?</Button>
             <PopoverTrigger>
               <Button>{emoji || "🤔"}</Button>
@@ -274,7 +278,7 @@ export default function PhonePreview({
               <IconButton
                 onClick={deleteEmoji}
                 aria-label="delete"
-                icon={<DeleteIcon />}
+                icon={<DeleteIcon color={"red.500"} />}
               />
             )}
           </ButtonGroup>
@@ -298,7 +302,7 @@ const LinksPreviewPanel = ({ urls }) => {
   return (
     <Stack>
       {urls?.map((i, idx) => (
-        <Button size="lg" key={idx} w={"100%"}>
+        <Button size="lg" key={idx} w={"100%"} colorScheme='green'>
           <NextLink href={Object.values(i)[0].toString()} passHref>
             <Link isExternal>{Object.keys(i)[0].toString()}</Link>
           </NextLink>
@@ -331,11 +335,11 @@ const BioPreviewPanel = ({ user }) => {
   return (
     <Stack>
       <Text
-        color={"purple.400"}
+        color={"gray.800"}
         fontWeight={600}
         fontSize={"sm"}
-        // bg={useColorModeValue('purple.50', 'purple.900')}
-        bg={"purple.900"}
+        // bg={useColorModeValue("gray.300", "gray.900")}
+        bg={"gray.300"}
         p={2}
         alignSelf={"center"}
         rounded={"md"}
@@ -346,10 +350,10 @@ const BioPreviewPanel = ({ user }) => {
       <Wrap justify={"center"}>
         <WrapItem>
           <Text
-            color={"gray.400"}
+            color={"gray.800"}
             fontWeight={600}
             fontSize={"sm"}
-            bg={"gray.900"}
+            bg={"gray.300"}
             p={2}
             alignSelf={"center"}
             rounded={"md"}

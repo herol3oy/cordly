@@ -72,7 +72,7 @@ export default function User({ data }) {
           width: "100%",
           height: "100%",
           background:
-            "linear-gradient(to top, #effdf4 0%, rgba(255, 255, 255, 0) 40%)",
+            "linear-gradient(to top, #effdf4 0%, rgba(255, 255, 255, 0) 100%)",
         }}
       />
       <ProfileAvatar data={data} />

@@ -61,7 +61,7 @@ const DashboardPanel = () => {
         // alignItems='stretch'
         minW={["xs", "sm", "md", "xl"]}
 
-        // flexDir={["column", "column", "column", "row"]}
+      // flexDir={["column", "column", "column", "row"]}
       >
         <Tabs
           alignSelf="stretch"
@@ -91,10 +91,10 @@ const DashboardPanel = () => {
               <Text ml={3}>Bio</Text>
             </Tab>
 
-            <Tab _selected={{ color: "white", bg: "green.400" }}>
+            {/* <Tab _selected={{ color: "white", bg: "green.400" }}>
               <Box>🎨</Box>
               <Text ml={3}>Design</Text>
-            </Tab>
+            </Tab> */}
 
             <Tab _selected={{ color: "white", bg: "green.400" }}>
               <Box>👑</Box>
@@ -114,9 +114,9 @@ const DashboardPanel = () => {
               />
             </TabPanel>
 
-            <TabPanel>
+            {/* <TabPanel>
               <Design bgColorSet={bgColorSet} />
-            </TabPanel>
+            </TabPanel> */}
 
             <TabPanel>
               <Username

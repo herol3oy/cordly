@@ -219,7 +219,7 @@ export default function Links({ urlsSet }) {
                               <Text fontSize={"xl"} fontWeight={"bold"}>
                                 {Object.keys(i)[0]}
                               </Text>
-                              <Text color="gray.300" fontSize={"sm"}>
+                              <Text color="gray.200" fontSize={"sm"}>
                                 {Object.values(i)[0].toString().slice(0, 35)}
                               </Text>
                             </Link>
