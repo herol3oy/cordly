@@ -104,8 +104,8 @@ export default function Navigation({ dashboard }) {
       justify={"center"}
       px={{ base: "3", md: "6", lg: "3" }}
       py={3}
-      color={"white"}
-      // bg={"gray.700"}
+      color={"gray.800"}
+      // bg={'whiteAlpha.300'}
       shadow="0 0 10px 0 rgba(0,0,0, 0.035);"
       alignItems="center"
       borderBottomColor={["red", "green"]}
@@ -175,6 +175,7 @@ export default function Navigation({ dashboard }) {
               aria-label="Menu button"
               icon={
                 <Avatar
+                  border='green solid 1px'
                   name={user.displayName}
                   src={newProfileImg || user.photoURL}
                   size="sm"
@@ -183,7 +184,7 @@ export default function Navigation({ dashboard }) {
               size="xs"
               variant="outline"
             />
-            <MenuList>
+            <MenuList bg='green.200'>
               <MenuItem>
                 <NextLink href={"/dashboard"} passHref>
                   <Link>Dashboard</Link>

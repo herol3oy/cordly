@@ -376,10 +376,10 @@ const BioPreviewPanel = ({ user }) => {
         {bio?.collaboration && (
           <WrapItem>
             <Text
-              color={"gray.400"}
+              color={"gray.800"}
               fontWeight={600}
               fontSize={"sm"}
-              bg={"gray.900"}
+              bg={"gray.300"}
               p={2}
               alignSelf={"center"}
               rounded={"md"}
@@ -392,10 +392,10 @@ const BioPreviewPanel = ({ user }) => {
         {bio?.teaching && (
           <WrapItem>
             <Text
-              color={"gray.400"}
+              color={"gray.800"}
               fontWeight={600}
               fontSize={"sm"}
-              bg={"gray.900"}
+              bg={"gray.300"}
               p={2}
               alignSelf={"center"}
               rounded={"md"}
@@ -414,10 +414,10 @@ const BioPreviewPanel = ({ user }) => {
             <WrapItem key={idx}>
               <Text
                 key={idx}
-                color={"gray.400"}
+                color={"gray.800"}
                 fontWeight={600}
                 fontSize={"sm"}
-                bg={"gray.900"}
+                bg={"gray.300"}
                 p={3}
                 alignSelf={"flex-start"}
                 rounded={"md"}
@@ -436,10 +436,10 @@ const BioPreviewPanel = ({ user }) => {
             <WrapItem key={idx}>
               <Text
                 key={idx}
-                color={"gray.400"}
+                color={"gray.800"}
                 fontWeight={600}
                 fontSize={"sm"}
-                bg={"gray.900"}
+                bg={"gray.300"}
                 p={3}
                 alignSelf={"flex-start"}
                 rounded={"md"}
@@ -458,10 +458,10 @@ const BioPreviewPanel = ({ user }) => {
             <WrapItem key={idx}>
               <Text
                 key={idx}
-                color={"gray.400"}
+                color={"gray.800"}
                 fontWeight={600}
                 fontSize={"sm"}
-                bg={"gray.900"}
+                bg={"gray.300"}
                 p={3}
                 alignSelf={"center"}
                 rounded={"md"}
