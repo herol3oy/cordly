@@ -57,7 +57,7 @@ export default function PhonePrevHome() {
             >
                 <Flex
                     background={"gray"}
-                    backgroundImage={`url("https://is.gd/y55ADb")`}
+                    backgroundImage={`url("https://res.cloudinary.com/dxu6gcib2/image/upload/v1620309960/cordly/133751329_3689019391175208_5494170415265926808_n_padgf9.jpg")`}
                     backgroundRepeat={"no-repeat"}
                     backgroundSize={"cover"}
                     backgroundPosition={'center'}
@@ -81,7 +81,7 @@ export default function PhonePrevHome() {
                     mt={28}
                     size="lg"
                     name="profile picture"
-                    src={"https://is.gd/ELrhDq"}
+                    src={"https://res.cloudinary.com/dxu6gcib2/image/upload/v1620309868/cordly/132503985_754994128475741_1470691035892395924_n_ccqrac.jpg"}
                 />
                 <Heading as={"h3"} size={"md"} mt={2}>
                     Morrie
@@ -125,7 +125,7 @@ export default function PhonePrevHome() {
                         <TabPanel>
                             <Stack>
                                 {urls?.map((i, idx) => (
-                                    <Button size="lg" key={idx} w={"100%"}>
+                                    <Button bg="green.300" size="lg" key={idx} w={"100%"}>
                                         <NextLink
                                             href={Object.values(i)[0].toString()}
                                             passHref
@@ -140,11 +140,11 @@ export default function PhonePrevHome() {
                         <TabPanel>
                             <Stack>
                                 <Text
-                                    color={"purple.400"}
+                                    color={"gray.800"}
                                     fontWeight={600}
                                     fontSize={"sm"}
                                     // bg={useColorModeValue('purple.50', 'purple.900')}
-                                    bg={"purple.900"}
+                                    bg={"gray.200"}
                                     p={2}
                                     alignSelf={"center"}
                                     rounded={"md"}
@@ -155,10 +155,10 @@ export default function PhonePrevHome() {
                                 <Wrap justify={"center"}>
                                     <WrapItem>
                                         <Text
-                                            color={"gray.400"}
+                                            color={"gray.800"}
                                             fontWeight={600}
                                             fontSize={"sm"}
-                                            bg={"gray.900"}
+                                            bg={"gray.200"}
                                             p={2}
                                             alignSelf={"center"}
                                             rounded={"md"}
@@ -169,10 +169,10 @@ export default function PhonePrevHome() {
 
                                     <WrapItem>
                                         <Text
-                                            color={"gray.400"}
+                                            color={"gray.800"}
                                             fontWeight={600}
                                             fontSize={"sm"}
-                                            bg={"gray.900"}
+                                            bg={"gray.200"}
                                             p={2}
                                             alignSelf={"center"}
                                             rounded={"md"}
@@ -183,10 +183,10 @@ export default function PhonePrevHome() {
 
                                     <WrapItem>
                                         <Text
-                                            color={"gray.400"}
+                                            color={"gray.800"}
                                             fontWeight={600}
                                             fontSize={"sm"}
-                                            bg={"gray.900"}
+                                            bg={"gray.200"}
                                             p={2}
                                             alignSelf={"center"}
                                             rounded={"md"}
@@ -197,17 +197,17 @@ export default function PhonePrevHome() {
                                 </Wrap>
 
                                 <Wrap justify={"center"}>
-                                    {"Piano"
+                                    {"Piano, Guitar"
                                         ?.split(",")
                                         .slice(0, 5)
                                         .map((i, idx) => (
                                             <WrapItem key={idx}>
                                                 <Text
                                                     key={idx}
-                                                    color={"gray.400"}
+                                                    color={"gray.800"}
                                                     fontWeight={600}
                                                     fontSize={"sm"}
-                                                    bg={"gray.900"}
+                                                    bg={"gray.200"}
                                                     p={3}
                                                     alignSelf={"flex-start"}
                                                     rounded={"md"}
@@ -219,17 +219,17 @@ export default function PhonePrevHome() {
                                 </Wrap>
 
                                 <Wrap justify={"center"}>
-                                    {"Rock"
+                                    {"Rock, Metall, Alternative Rock"
                                         ?.split(",")
                                         .slice(0, 3)
                                         .map((i, idx) => (
                                             <WrapItem key={idx}>
                                                 <Text
                                                     key={idx}
-                                                    color={"gray.400"}
+                                                    color={"gray.800"}
                                                     fontWeight={600}
                                                     fontSize={"sm"}
-                                                    bg={"gray.900"}
+                                                    bg={"gray.200"}
                                                     p={3}
                                                     alignSelf={"flex-start"}
                                                     rounded={"md"}
@@ -248,10 +248,10 @@ export default function PhonePrevHome() {
                                             <WrapItem key={idx}>
                                                 <Text
                                                     key={idx}
-                                                    color={"gray.400"}
+                                                    color={"gray.800"}
                                                     fontWeight={600}
                                                     fontSize={"sm"}
-                                                    bg={"gray.900"}
+                                                    bg={"gray.200"}
                                                     p={3}
                                                     alignSelf={"center"}
                                                     rounded={"md"}

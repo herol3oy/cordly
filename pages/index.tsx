@@ -52,23 +52,23 @@ const responsive = {
 
 const COMMUNITY = [
   {
-    name: 'Abby K',
-    coverImg: 'https://is.gd/dDBfjY',
-    profession: 'Bassist 🎸'
-  },
-  {
-    name: 'Marry N',
-    coverImg: 'https://is.gd/QTECFD',
+    name: 'Sam K',
+    coverImg: 'https://res.cloudinary.com/dxu6gcib2/image/upload/v1620310902/cordly/sam-moqadam-Pu_Oz7gKakk-unsplash_khaa7p.jpg',
     profession: 'Singer 🎙️'
   },
   {
-    name: 'Aldana',
-    coverImg: 'https://is.gd/3Z9pol',
+    name: 'Andrew',
+    coverImg: 'https://res.cloudinary.com/dxu6gcib2/image/upload/v1620310902/cordly/andrew-petrischev-qTKt5aeMFBQ-unsplash_ygkvyl.jpg',
+    profession: 'Drummer 🥁'
+  },
+  {
+    name: 'Megan',
+    coverImg: 'https://res.cloudinary.com/dxu6gcib2/image/upload/v1620310901/cordly/sam-moqadam-j-SyYCIksTI-unsplash_liar17.jpg',
     profession: 'Guitarist 🎸'
   },
   {
-    name: 'Gloria Maurel',
-    coverImg: 'https://is.gd/1mODSx',
+    name: 'Josh rocklage',
+    coverImg: 'https://res.cloudinary.com/dxu6gcib2/image/upload/v1620310901/cordly/neonbrand-TOf0z0ykWO8-unsplash_ydrbtb.jpg',
     profession: 'Drummer 🥁'
   }
 ]
