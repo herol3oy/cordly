@@ -181,7 +181,7 @@ export default function Navigation({ dashboard }) {
                   size="sm"
                 />
               }
-              size="xs"
+              size="md"
               variant="outline"
             />
             <MenuList bg='green.200'>

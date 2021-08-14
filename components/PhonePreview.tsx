@@ -303,7 +303,7 @@ export default function PhonePreview({
 const LinksPreviewPanel = ({ urls }) => {
   return (
     <Stack>
-      {!urls.length && (
+      {!urls?.length && (
         <>
           <Stack>
             <Skeleton startColor="green.200" height="40px" />
