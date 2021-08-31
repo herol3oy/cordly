@@ -9,6 +9,7 @@ import SvgLying from "../components/SvgLying";
 import Footer from "../components/Footer";
 import FaqAccordion from "../components/FaqAccordion";
 import Carousel from "react-multi-carousel";
+import NextLink from "next/link";
 import "react-multi-carousel/lib/styles.css";
 import {
   Heading,
@@ -107,9 +108,11 @@ export default function Home({ musicians }) {
           >
             Let your fans know all about you in one single page
           </Heading>
-          <Button mt="8" size="lg" variant="solid" colorScheme="green">
-            Sign up for free
-          </Button>
+          <NextLink href={"/signin"} passHref>
+            <Button mt="8" size="lg" variant="solid" colorScheme="green">
+              Sign up for free
+            </Button>
+          </NextLink>
         </Flex>
 
 

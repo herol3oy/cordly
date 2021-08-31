@@ -288,12 +288,16 @@ export default function PhonePrevHome() {
                     fontWeight={'black'}
                     color={'white'}
                 >C</Text>
-                <Flex>
-                    <Text ml={2} textColor="green.300" fontWeight='bold' fontSize={"xx-large"}>
-                        cord.ly/
-              </Text>
-                    <Text textColor="black" fontWeight="light" fontSize={"xx-large"}>demah</Text>
-                </Flex>
+                <a href="https://cord.ly/herol3oy">
+                    <Flex>
+                        <Text ml={2} textColor="green.300" fontWeight='bold' fontSize={"xx-large"}>
+                            cord.ly/
+                        </Text>
+                        <Text textColor="black" fontWeight="light" fontSize={"xx-large"}>
+                            herol3oy
+                        </Text>
+                    </Flex>
+                </a>
             </Flex>
         </>
     )
