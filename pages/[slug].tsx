@@ -275,7 +275,7 @@ const ProfileLinks = ({ data }) => {
 
     return (
       <Box key={i} onClick={() => clickHandle(url)}>
-        <NextLink href={urlAddress} passHref={isYoutube ? false : true}>
+        <NextLink href={urlAddress} passHref={isYoutube ? false : true} legacyBehavior>
           <Link isExternal>
             <Button
               w={"100%"}
@@ -287,7 +287,7 @@ const ProfileLinks = ({ data }) => {
             >
               {title}
               {isYoutube &&
-                <NextLink href={urlAddress} passHref>
+                <NextLink href={urlAddress} passHref legacyBehavior>
                   <Link isExternal>
                     <ExternalLinkIcon ml='2' />
                   </Link>

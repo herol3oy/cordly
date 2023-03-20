@@ -108,7 +108,7 @@ export default function Home({ musicians }) {
           >
             Let your fans know all about you in one single page
           </Heading>
-          <NextLink href={"/signin"} passHref>
+          <NextLink href={"/signin"} passHref legacyBehavior>
             <Button mt="8" size="lg" variant="solid" colorScheme="green">
               Sign up for free
             </Button>

@@ -110,7 +110,7 @@ export default function Navigation({ dashboard }) {
       alignItems="center"
       borderBottomColor={["red", "green"]}
     >
-      <NextLink href={"/"} passHref>
+      <NextLink href={"/"} passHref legacyBehavior>
         <Link>
           <Flex justify='center' alignItems='center'>
             <Text
@@ -151,14 +151,14 @@ export default function Navigation({ dashboard }) {
 
       {!user && (
         <Stack direction="row">
-          <NextLink href={"/signin"} passHref>
+          <NextLink href={"/signin"} passHref legacyBehavior>
             <Link>
               <Button colorScheme={"green"} variant="link" size='sm'>
                 Log in
               </Button>
             </Link>
           </NextLink>
-          <NextLink href={"/signin"} passHref>
+          <NextLink href={"/signin"} passHref legacyBehavior>
             <Link>
               <Button colorScheme={"green"} variant="solid" size='sm'>
                 Sign Up
@@ -186,7 +186,7 @@ export default function Navigation({ dashboard }) {
             />
             <MenuList bg='green.200'>
               <MenuItem>
-                <NextLink href={"/dashboard"} passHref>
+                <NextLink href={"/dashboard"} passHref legacyBehavior>
                   <Link>Dashboard</Link>
                 </NextLink>
               </MenuItem>

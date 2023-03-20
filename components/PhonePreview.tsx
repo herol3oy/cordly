@@ -314,7 +314,7 @@ const LinksPreviewPanel = ({ urls }) => {
       )}
       {urls?.map((i, idx) => (
         <Button size="lg" key={idx} w={"100%"} colorScheme='green'>
-          <NextLink href={Object.values(i)[0].toString()} passHref>
+          <NextLink href={Object.values(i)[0].toString()} passHref legacyBehavior>
             <Link isExternal>{Object.keys(i)[0].toString()}</Link>
           </NextLink>
         </Button>

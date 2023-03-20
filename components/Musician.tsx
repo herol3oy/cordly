@@ -31,7 +31,7 @@ export default function Musician({ data }) {
           <Nextlink
             href={`/${i.username ? i.username : i.uid.slice(0, 5)}`}
             passHref
-          >
+            legacyBehavior>
             <Link>
               <Avatar
                 size={"lg"}
