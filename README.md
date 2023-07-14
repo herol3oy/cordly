@@ -1,6 +1,6 @@
 # 🎵 Cordly
 
-All in one home for musicians
+Cordly is an online platform specifically designed for musicians to create personalized mini portfolios, showcase their work, and connect with other musicians based on their location, interests, influences, and skills. It serves as a virtual hub where musicians can highlight their talent, share their social links, and discover like-minded artists in their community.
 
 ### Tech stacks
 
